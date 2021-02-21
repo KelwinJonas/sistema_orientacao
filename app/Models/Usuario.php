@@ -13,4 +13,8 @@ class Usuario extends Model
         return $this->hasOne('App\Models\Instituicao');
         //REVER - Um usuário possui uma instituição ou mais de uma? 
     }
+
+    public function endereco(){
+        return $this->hasOne('App\Models\Endereco');
+    }
 }
