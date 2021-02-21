@@ -12,4 +12,8 @@ class Instituicao extends Model
     public function templateAtividade(){
         return $this->hasMany('App\Models\TemplateAtividade');
     }
+
+    public function usuarios(){
+        return $this->hasMany('App\Models\Usuario');
+    }
 }
