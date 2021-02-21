@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class TemplateAtividade extends Model
 {
     use HasFactory;
+
+    public function secoes(){
+        return $this->hasMany('App\Models\Secao');
+    }
 }
