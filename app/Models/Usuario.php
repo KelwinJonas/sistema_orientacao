@@ -21,4 +21,8 @@ class Usuario extends Model
     public function telefone(){
         return $this->hasOne('App\Models\Telefone');
     }
+
+    public function atividadeUsuario(){
+        return $this->hasMany('App\Models\AtividadeUsuario');
+    }
 }
