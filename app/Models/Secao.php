@@ -12,4 +12,8 @@ class Secao extends Model
     public function secoes(){
         return $this->hasMany('App\Models\Secao');
     }
+
+    public function campos(){
+        return $this->hasMany('App\Models\Campo');
+    }
 }
