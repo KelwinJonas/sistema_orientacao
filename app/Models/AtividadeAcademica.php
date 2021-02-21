@@ -12,4 +12,8 @@ class AtividadeAcademica extends Model
     public function atividadeUsuario(){
         return $this->hasMany('App\Models\AtividadeUsuario');
     }
+
+    public function secoes(){
+        return $this->hasMany('App\Models\Secao');
+    }
 }
