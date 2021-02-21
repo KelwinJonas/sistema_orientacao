@@ -25,4 +25,8 @@ class Usuario extends Model
     public function atividadeUsuario(){
         return $this->hasMany('App\Models\AtividadeUsuario');
     }
+
+    public function anotacoes(){
+        return $this->hasMany('App\Models\Anotacao');
+    }
 }
