@@ -17,4 +17,8 @@ class Usuario extends Model
     public function endereco(){
         return $this->hasOne('App\Models\Endereco');
     }
+
+    public function telefone(){
+        return $this->hasOne('App\Models\Telefone');
+    }
 }
