@@ -51,7 +51,7 @@
                     <div class="form-row">
                         <label for='senha' class="col-md-1 col-form-label">Senha</label>
                     </div>
-                    <input type='text' class="form-control @error('senha') is-invalid @enderror" placeholder = "Digite sua senha" name='senha' id='senha' value="{{old('senha')}}"/>    
+                    <input type='password' class="form-control @error('senha') is-invalid @enderror" placeholder = "Digite sua senha" name='senha' id='senha' value="{{old('senha')}}"/>    
                     @error('senha')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{$message}}</strong>

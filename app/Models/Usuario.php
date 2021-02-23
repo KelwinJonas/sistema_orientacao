@@ -9,6 +9,15 @@ class Usuario extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['nome', 'cpf', 'email' , 'senha'];
+
+    public static $rules = [
+                           'nome' => 'required|min:3|max:100',
+                           'cpf' => 'required|min:14|max:14',
+                           'email' => 'required|email',
+                           'senha' => 'required|confirmed|min:8|max:64',
+    ];
+
     public function instituicao(){
         return $this->hasOne('App\Models\Instituicao');
         //REVER - Um usuário possui uma instituição ou mais de uma? 
