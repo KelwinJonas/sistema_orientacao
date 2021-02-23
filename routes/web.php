@@ -18,4 +18,7 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/cadastrar_instituicao', [InstituicaoController::class, 'cadastroInstituicao']);
+Route::prefix('/cadastrar_instituicao')->name('cadastrarInstituicao')->group(function (){
+    Route::get('/', [InstituicaoController::class, 'cadastroInstituicao']);
+    Route::post('/salvar', [InstituicaoController::class, 'salvarCadastrarInstituicao'])->name('.salvar');
+});

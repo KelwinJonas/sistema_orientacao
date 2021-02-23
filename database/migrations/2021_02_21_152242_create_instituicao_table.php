@@ -13,7 +13,7 @@ class CreateInstituicaoTable extends Migration
      */
     public function up()
     {
-        Schema::create('instituicao', function (Blueprint $table) {
+        Schema::create('instituicaos', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
             $table->timestamps();

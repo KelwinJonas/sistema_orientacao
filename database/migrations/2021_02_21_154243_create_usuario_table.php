@@ -20,7 +20,7 @@ class CreateUsuarioTable extends Migration
             $table->string('email')->unique();
             $table->string('senha');
             $table->unsignedBigInteger('instituicao_id');
-            $table->foreign('instituicao_id')->references('id')->on('instituicao');
+            $table->foreign('instituicao_id')->references('id')->on('instituicaos');
             $table->timestamps();
         });
     }

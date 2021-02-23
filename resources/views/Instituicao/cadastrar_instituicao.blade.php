@@ -2,8 +2,7 @@
 
 @section('content')
     <div class="container-main">
-        <form action="" method="POST"> 
-            {{-- {{route('')}} --}}
+        <form action="{{route('cadastrarInstituicao.salvar')}}" method="POST"> 
             @csrf
             <br>
             <h1 class="col-md-1">Cadastro</h1>
