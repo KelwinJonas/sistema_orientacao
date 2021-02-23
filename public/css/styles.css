@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
 
+/* Navbar e foooter */
 body{
     font-family: 'Roboto Condensed', sans-serif;
     font-style: normal;
@@ -41,4 +42,13 @@ footer .container .row{
     min-height: 700px;
     width: 100%;
     background-color: #ffffff;
+}
+
+/* Botão para cadastrar */
+.cor-botao{
+    background: #326d94;
+}
+
+#botao-cadastrar:hover{
+    background-color: #326d94;
 }
