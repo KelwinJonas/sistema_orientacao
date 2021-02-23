@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\InstituicaoController;
+use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,4 +22,8 @@ Route::get('/', function () {
 Route::prefix('/cadastrar_instituicao')->name('cadastrarInstituicao')->group(function (){
     Route::get('/', [InstituicaoController::class, 'cadastroInstituicao']);
     Route::post('/salvar', [InstituicaoController::class, 'salvarCadastrarInstituicao'])->name('.salvar');
+});
+
+Route::prefix('cadastrar_usuario')->name('cadastrarUsuario')->group(function(){
+    Route::get('/', [UsuarioController::class, 'cadastroUsuario']);
 });
