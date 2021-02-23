@@ -2,14 +2,14 @@
 
 @section('content')
     <div class="container-main">
-        <form action="{{route('cadastrarInstituicao.salvar')}}" method="POST"> 
+        <form action="{{route('cadastrarUsuario.salvar')}}" method="POST"> 
             @csrf
             <br>
             <div class="row">
                 <h1 class="col-md-1">Cadastro</h1>
             </div>
             <div class="row">
-                <h2 class="col-md-6">Informações do usuário</h2>
+                <h2 class="col-md-6">Dados pessoais</h2>
             </div>
             <div class="row">
                 <div class="col">
@@ -69,13 +69,29 @@
                         <strong>{{$message}}</strong>
                     </span>
                     @enderror
-                </div><div class="col">
+                </div>
+                <div class="col">
+                    <div class="form-row">
+                        <label for='instituicao' class="col-md-6 col-form-label">Instituição</label>
+                    </div>
+                    <select name="instituicao" id="instituicao" class="form-control @error('instituicao') is-invalid @enderror" value="{{old('instituicao')}}"> 
+                        <option selected>Selecione sua instituição</option>
+                        @foreach ($instituicoes as $instituicao)
+                            <option value="{{$instituicao->id}}">{{$instituicao->nome}}</option>
+                        @endforeach
+
+                    @error('instituicao')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{$message}}</strong>
+                    </span>
+                    @enderror        
+                    </select>
                 </div>
             </div>
             <br>
             <hr>
             <div class="row">
-                <h2 class="col-md-6">Informações para contato</h2>
+                <h2 class="col-md-6">Contato</h2>
             </div>
             <div class="row">
                 <div class="col">
@@ -100,14 +116,12 @@
                     </span>
                     @enderror
                 </div>
-                <div class="col">
-
-                </div>
+                <div class="col"></div>
             </div>
             <br>
             <hr>
             <div class="row">
-                <h2 class="col-md-6">Informações sobre endereço</h2>
+                <h2 class="col-md-6">Endereço</h2>
             </div>
             <div class="row">
                 <div class="col">

@@ -20,7 +20,7 @@ class CreateAnotacaoTable extends Migration
             $table->unsignedBigInteger('campo_id');
             $table->foreign('campo_id')->references('id')->on('campo');
             $table->unsignedBigInteger('usuario_id');
-            $table->foreign('usuario_id')->references('id')->on('usuario');
+            $table->foreign('usuario_id')->references('id')->on('usuarios');
             $table->timestamps();
         });
     }

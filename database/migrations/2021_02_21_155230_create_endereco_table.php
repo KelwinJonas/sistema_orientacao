@@ -13,7 +13,7 @@ class CreateEnderecoTable extends Migration
      */
     public function up()
     {
-        Schema::create('endereco', function (Blueprint $table) {
+        Schema::create('enderecos', function (Blueprint $table) {
             $table->id();
             $table->string('rua');
             $table->integer('numero');
@@ -22,7 +22,7 @@ class CreateEnderecoTable extends Migration
             $table->string('cidade');
             $table->string('estado');
             $table->unsignedBigInteger('usuario_id');
-            $table->foreign('usuario_id')->references('id')->on('usuario');
+            $table->foreign('usuario_id')->references('id')->on('usuarios');
             $table->timestamps();
         });
     }

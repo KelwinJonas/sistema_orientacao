@@ -26,7 +26,7 @@ class InstituicaoController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $instituicao = new Instituicao;
+        $instituicao = new Instituicao();
         $instituicao->nome = $entrada['nome'];
         $instituicao->save();
 
