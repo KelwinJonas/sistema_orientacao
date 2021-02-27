@@ -13,7 +13,7 @@ class CreateAtividadeAcademicaTable extends Migration
      */
     public function up()
     {
-        Schema::create('atividade_academica', function (Blueprint $table) {
+        Schema::create('atividade_academicas', function (Blueprint $table) {
             $table->id();
             $table->string('tipo');
             $table->string('titulo');

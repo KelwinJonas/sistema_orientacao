@@ -13,7 +13,7 @@ class CreateTemplateAtividadeTable extends Migration
      */
     public function up()
     {
-        Schema::create('template_atividade', function (Blueprint $table) {
+        Schema::create('template_atividades', function (Blueprint $table) {
             $table->id();
             $table->string('tipo');
             $table->string('titulo');

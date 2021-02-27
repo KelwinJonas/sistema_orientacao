@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container-main">
-        <form action="{{route('cadastrarInstituicao.salvar')}}" method="POST"> 
+        <form action="{{route('cadastrarAtividade.salvar')}}" method="POST"> 
             @csrf
             <br>
             <h1 class="col-md-1">Cadastro</h1>
@@ -27,19 +27,19 @@
                     </span>
                     @enderror
                 </div>
-                <label for='data-inicio' class="col-md-2 col-form-label">Data início</label>
+                <label for='data_inicio' class="col-md-2 col-form-label">Data início</label>
                 <div class="col-md-6">
-                    <input type='date' class="form-control @error('data-inicio') is-invalid @enderror" placeholder = "" name='data-inicio' id='data-inicio' value="{{old('data-inicio')}}"/>    
-                    @error('titulo')
+                    <input type='date' class="form-control @error('data_inicio') is-invalid @enderror" placeholder = "" name='data_inicio' id='data_inicio' value="{{old('data_inicio')}}"/>    
+                    @error('data_inicio')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{$message}}</strong>
                     </span>
                     @enderror
                 </div>
-                <label for='data-fim' class="col-md-2 col-form-label">Data fim</label>
+                <label for='data_fim' class="col-md-2 col-form-label">Data fim</label>
                 <div class="col-md-6">
-                    <input type='date' class="form-control @error('data-fim') is-invalid @enderror" placeholder = "" name='data-fim' id='data-fim' value="{{old('data-fim')}}"/>    
-                    @error('data-fim')
+                    <input type='date' class="form-control @error('data_fim') is-invalid @enderror" placeholder = "" name='data_fim' id='data_fim' value="{{old('data_fim')}}"/>    
+                    @error('data_fim')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{$message}}</strong>
                     </span>
