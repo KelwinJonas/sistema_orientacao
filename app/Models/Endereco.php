@@ -18,4 +18,13 @@ class Endereco extends Model
                                'estado' => array('regex:/^(AC|AL|AM|AP|BA|CE|DF|ES|GO|MA|MG|MS|MT|PA|PB|PE|PI|PR|RJ|RN|RO|RR|RS|SC|SE|SP|TO)/'),
                                'cidade' => array('regex:/^[\pL\s]+$/u'),
                             ];
+
+    public static $messages = [ 
+                                'rua.regex' => 'O nome da rua está inválido',
+                                'bairro.alpha'=>'O nome do bairro está inválido',
+                                'numero.regex' => 'O número está inválido',
+                                'cep.regex' => "O CEP está inválido",
+                                'estado.regex' => "O Estado está invalido (UF)",
+                                'cidade.alpha' => "A cidade está inválida",
+    ];
 }

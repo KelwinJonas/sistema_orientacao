@@ -38,7 +38,7 @@ class UsuarioController extends Controller
             return redirect()->back()->withErrors($validatorTelefone)->withInput();
         }
 
-        $validatorEndereco = Validator::make($entrada, Endereco::$rules, $messages);
+        $validatorEndereco = Validator::make($entrada, Endereco::$rules, Endereco::$messages);
         if($validatorEndereco->fails()){
             return redirect()->back()->withErrors($validatorEndereco)->withInput();
         }
