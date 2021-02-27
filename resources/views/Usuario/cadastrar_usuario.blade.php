@@ -121,7 +121,7 @@
             <br>
             <hr>
             <div class="row">
-                <h2 class="col-md-6">Endereço</h2>
+                <h2 class="col-md-6">Endereço (Opcional)</h2>
             </div>
             <div class="row">
                 <div class="col">
