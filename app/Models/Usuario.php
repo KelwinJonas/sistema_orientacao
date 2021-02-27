@@ -13,7 +13,7 @@ class Usuario extends Model
 
     public static $rules = [
                            'nome' => 'required|min:3|max:100',
-                           'cpf' => 'required|min:14|max:14',
+                           'cpf' => 'required|cpf',
                            'email' => 'required|email',
                            'senha' => 'required|confirmed|min:8|max:64',
     ];

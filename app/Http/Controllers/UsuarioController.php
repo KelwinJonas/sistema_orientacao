@@ -21,8 +21,6 @@ class UsuarioController extends Controller
 
         $messages = [
             'required' => 'O campo :attribute é obrigatório.',
-            'min' => 'O campo :attribute deve ter no mínimo :min caracteres.',
-            'max' => 'O campo :attribute deve ter no máximo :max caracteres.',
             'email' => 'O campo email deve ser preenchido com um email válido.',
             'confirmed' => 'A confirmação da senha deve ser igual à senha digitada',
             'digits' => 'O campo :attribute deve conter 11 digitos',
