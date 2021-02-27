@@ -32,7 +32,7 @@
         <div class="container-fluid" aling="center">
             <div class="pt-5">
                 <p class="texto-footer">
-                  Ínicio • Sobre
+                  Início • Sobre
                 </p>
             </div>
             <div class="container py-4 border-top border-light">
