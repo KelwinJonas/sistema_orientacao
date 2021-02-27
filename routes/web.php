@@ -35,3 +35,6 @@ Route::prefix('cadastrar_atividade')->name('cadastrarAtividade')->group(function
     Route::get('/', [AtividadeAcademicaController::class, 'cadastroAtividade']);
     Route::post('/salvar', [AtividadeAcademicaController::class, 'salvarCadastrarAtividade'])->name('.salvar');
 });
+
+Route::get('/listar_atividades', [AtividadeAcademicaController::class, 'listarAtividades']);
+Route::get('/ver_atividade', [AtividadeAcademicaController::class, 'verAtividade'])->name('verAtividade');
