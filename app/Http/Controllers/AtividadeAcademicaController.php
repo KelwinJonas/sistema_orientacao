@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\Validator;
 class AtividadeAcademicaController extends Controller
 {
     public function cadastroAtividade(){
-        //ENVIAR APENAS AS ATIVIDADES ASSOCIADAS AO USUARIO LOGADO
         return view('AtividadeAcademica.cadastrar_atividade_academica');
     }
 
     public function listarAtividades(){
+        //ENVIAR APENAS AS ATIVIDADES ASSOCIADAS AO USUARIO LOGADO
         return view('AtividadeAcademica.listar_atividades_academicas')->with('atividades', AtividadeAcademica::all());
     }
 
