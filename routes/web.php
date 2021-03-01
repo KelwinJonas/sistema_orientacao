@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AtividadeAcademicaController;
 use App\Http\Controllers\InstituicaoController;
+use App\Http\Controllers\SecaoController;
 use App\Http\Controllers\UsuarioController;
 use App\Models\AtividadeAcademica;
 use Illuminate\Support\Facades\Route;
@@ -36,5 +37,7 @@ Route::prefix('cadastrar_atividade')->name('cadastrarAtividade')->group(function
     Route::post('/salvar', [AtividadeAcademicaController::class, 'salvarCadastrarAtividade'])->name('.salvar');
 });
 
-Route::get('/listar_atividades', [AtividadeAcademicaController::class, 'listarAtividades']);
+Route::get('/listar_atividades', [AtividadeAcademicaController::class, 'listarAtividades'])->name('listarAtividades');
 Route::get('/ver_atividade', [AtividadeAcademicaController::class, 'verAtividade'])->name('verAtividade');
+
+Route::post('/salvar_secao', [SecaoController::class, 'salvarAdicionarSecao'])->name('salvarSecao');
