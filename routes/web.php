@@ -38,6 +38,6 @@ Route::prefix('cadastrar_atividade')->name('cadastrarAtividade')->group(function
 });
 
 Route::get('/listar_atividades', [AtividadeAcademicaController::class, 'listarAtividades'])->name('listarAtividades');
-Route::get('/ver_atividade', [AtividadeAcademicaController::class, 'verAtividade'])->name('verAtividade');
+Route::get('/ver_atividade/{atividade_id}', [AtividadeAcademicaController::class, 'verAtividade'])->name('verAtividade');
 
 Route::post('/salvar_secao', [SecaoController::class, 'salvarAdicionarSecao'])->name('salvarSecao');

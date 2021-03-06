@@ -17,8 +17,12 @@ class AtividadeAcademicaController extends Controller
         return view('AtividadeAcademica.listar_atividades_academicas')->with('atividades', AtividadeAcademica::all());
     }
 
-    public function verAtividade(){
-        return view('AtividadeAcademica.ver_atividade_academica');
+    public function verAtividade($atividade_id){
+        $atividade = AtividadeAcademica::find($atividade_id);
+        if($atividade){
+            return view('AtividadeAcademica.ver_atividade_academica', ['atividade' => $atividade]);
+        }
+        //Coloca msg de erro caso a reunião não exista
     }
 
     public function salvarCadastrarAtividade(Request $request){

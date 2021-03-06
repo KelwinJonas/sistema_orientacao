@@ -3,6 +3,10 @@
 @section('content')
     <div class="container-main">
         <br>
+        <div>
+            <h2>Título do projeto: {{$atividade->titulo}}</h2>
+        </div>
+        <br>
         <div class="form-row">
             <div class="col">
                 <a type="button" class="btn btn-success" data-toggle = "modal" data-target="#adicionarSecao" href="" >Adicionar seção +</a>
