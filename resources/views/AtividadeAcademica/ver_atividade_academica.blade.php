@@ -15,7 +15,7 @@
              
         </div>
         <br>
-        <div id="conteudo-secoes" class="jumbotron">
+        <div id="conteudo-secoes" style="display:none" class="jumbotron">
             <div>
                 <a type="button" class="btn btn-success" data-toggle = "modal" data-target="#adicionarCampo" href="" >Adicionar campo +</a>
             </div>
@@ -96,21 +96,32 @@
 
         function montarBotaoNovoSecao(ordem, valorNomeSecao){
             return `<div id="${ordem}" class="row-md-5">
-                        <button type="button" class="btn btn-primary mx-2" onclick="adicionarConteudoSecao(${ordem})">${valorNomeSecao}</button>
+                        <button id="${ordem}"type="button" class="btn btn-primary mx-2" onclick="mostrarConteudo()">${valorNomeSecao}</button>
                     </div>
                     `;
         }
 
-        //Colocar para exibir conteúdo apenas quando houver o click do botão da seção
-        function adicionarConteudoSecao(ordemSecao){
-            conteudoSecao = montarConteudoSecao(ordemSecao);
-            $('#conteudo-secoes').append(conteudoSecao);
-        }
+        function mostrarConteudo(){
+            var display = document.getElementById('conteudo-secoes').style.display;
+            if(display == "none")
+                document.getElementById('conteudo-secoes').style.display = 'block';
+            else
+                document.getElementById('conteudo-secoes').style.display = 'none';
 
-        function montarConteudoSecao(ordemSecao){
-            return `
-                    `;
         }
+        //<button type="button" class="btn btn-primary mx-2" onclick="adicionarConteudoSecao(${ordem})">${valorNomeSecao}</button>
+
+
+        //Colocar para exibir conteúdo apenas quando houver o click do botão da seção
+        // function adicionarConteudoSecao(ordemSecao){
+        //     conteudoSecao = montarConteudoSecao(ordemSecao);
+        //     $('#conteudo-secoes').append(conteudoSecao);
+        // }
+
+        // function montarConteudoSecao(ordemSecao){
+        //     return `
+        //             `;
+        // }
 
         function adicionarCampo(event){
             event.preventDefault();
