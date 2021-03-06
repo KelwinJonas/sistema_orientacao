@@ -19,7 +19,7 @@ class CreateUsuarioTable extends Migration
             $table->string('cpf');
             $table->string('email')->unique();
             $table->string('senha');
-            $table->unsignedBigInteger('instituicao_id');
+            $table->unsignedBigInteger('instituicao_id')->nullable();
             $table->foreign('instituicao_id')->references('id')->on('instituicaos');
             $table->timestamps();
         });

@@ -41,13 +41,17 @@ class UsuarioController extends Controller
             return redirect()->back()->withErrors($validatorEndereco)->withInput();
         }
 
-        $instituicao = Instituicao::find($entrada['instituicao']);
         $usuario = new Usuario();
         $usuario->nome = $entrada['nome'];
         $usuario->cpf = $entrada['cpf'];
         $usuario->email = $entrada['email'];
         $usuario->senha = Hash::make($entrada['senha']);
-        $usuario->instituicao_id = $instituicao->id;
+        if($entrada['instituicao'] === "outros"){
+            $usuario->instituicao_id = null;
+        }else{
+            $instituicao = Instituicao::find($entrada['instituicao']);
+            $usuario->instituicao_id = $instituicao->id;
+        }
         $usuario->save();
         
         $telefone = new Telefone();

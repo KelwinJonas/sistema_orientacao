@@ -79,6 +79,7 @@
                         @foreach ($instituicoes as $instituicao)
                             <option value="{{$instituicao->id}}">{{$instituicao->nome}}</option>
                         @endforeach
+                        <option value="outros">Outros</option>
 
                     @error('instituicao')
                     <span class="invalid-feedback" role="alert">
