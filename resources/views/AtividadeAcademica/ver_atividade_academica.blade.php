@@ -20,6 +20,9 @@
         </div>
         <br>
         <div id="conteudo-secoes" style="display:none" class="jumbotron">
+            <div id="legenda_secao">
+
+            </div>
             <div>
                 <a type="button" class="btn btn-success" data-toggle = "modal" data-target="#adicionarCampo" href="" >Adicionar campo +</a>
             </div>
@@ -78,6 +81,12 @@
                                 <input type="text" class="form-control" name='nomeSecao' id='nomeSecao' placeholder="Digite o nome da seção" required>
                             </div>
                         </div>
+                        <div class="form-row">
+                            <div class="col-md-12 mb-4">
+                                <label>Legenda</label>
+                                <input type="text" class="form-control" name='legendaSecao' id='legendaSecao' placeholder="Digite a legenda da seção" required>
+                            </div>
+                        </div>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                         <button id="botaoAdicionarSecao" type="submit" data-dismiss="modal" class="btn btn-success" onclick="adicionarSecao(event)">Adicionar</button>
                     </div>
@@ -94,11 +103,12 @@
             event.preventDefault();
             ordem += 1;
             nomeSecao = document.getElementById('nomeSecao');
-            botaoNovo = montarBotaoNovoSecao(ordem, nomeSecao.value);
+            legendaSecao = document.getElementById('legendaSecao');
+            botaoNovo = montarBotaoNovoSecao(ordem, nomeSecao.value, legendaSecao.value);
             $('#secoes').append(botaoNovo);
         }
 
-        function montarBotaoNovoSecao(ordem, valorNomeSecao){
+        function montarBotaoNovoSecao(ordem, valorNomeSecao, legendaSecao){
             return `<div id="${ordem}" class="row-md-5">
                         <button id="${ordem}"type="button" class="btn btn-primary mx-2" onclick="mostrarConteudo()">${valorNomeSecao}</button>
                     </div>
