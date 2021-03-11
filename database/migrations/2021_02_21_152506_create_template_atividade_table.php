@@ -13,12 +13,12 @@ class CreateTemplateAtividadeTable extends Migration
      */
     public function up()
     {
-        Schema::create('template_atividade', function (Blueprint $table) {
+        Schema::create('template_atividades', function (Blueprint $table) {
             $table->id();
             $table->string('tipo');
             $table->string('titulo');
             $table->unsignedBigInteger('instituicao_id');
-            $table->foreign('instituicao_id')->references('id')->on('instituicao');
+            $table->foreign('instituicao_id')->references('id')->on('instituicaos');
             $table->timestamps();
         });
     }

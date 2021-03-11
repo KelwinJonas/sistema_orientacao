@@ -13,12 +13,12 @@ class CreateTelefoneTable extends Migration
      */
     public function up()
     {
-        Schema::create('telefone', function (Blueprint $table) {
+        Schema::create('telefones', function (Blueprint $table) {
             $table->id();
             $table->string('telefone_primario');
-            $table->string('telefone_secundario');
+            $table->string('telefone_secundario')->nullable();
             $table->unsignedBigInteger('usuario_id');
-            $table->foreign('usuario_id')->references('id')->on('usuario');
+            $table->foreign('usuario_id')->references('id')->on('usuarios');
             $table->timestamps();
         });
     }

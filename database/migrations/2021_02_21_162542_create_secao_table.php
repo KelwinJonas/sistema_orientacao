@@ -13,13 +13,14 @@ class CreateSecaoTable extends Migration
      */
     public function up()
     {
-        Schema::create('secao', function (Blueprint $table) {
+        Schema::create('secaos', function (Blueprint $table) {
             $table->id();
             $table->string('tipo');
             $table->string('nome');
+            $table->string('legenda');
             $table->integer('ordem');
             $table->unsignedBigInteger('atividade_academica_id');
-            $table->foreign('atividade_academica_id')->references('id')->on('atividade_academica');
+            $table->foreign('atividade_academica_id')->references('id')->on('atividade_academicas');
             $table->timestamps();
         });
     }

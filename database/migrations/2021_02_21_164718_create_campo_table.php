@@ -13,12 +13,12 @@ class CreateCampoTable extends Migration
      */
     public function up()
     {
-        Schema::create('campo', function (Blueprint $table) {
+        Schema::create('campos', function (Blueprint $table) {
             $table->id();
             $table->string('titulo');
             $table->text('conteudo');
             $table->unsignedBigInteger('secao_id');
-            $table->foreign('secao_id')->references('id')->on('secao');
+            $table->foreign('secao_id')->references('id')->on('secaos');
             $table->timestamps();
         });
     }

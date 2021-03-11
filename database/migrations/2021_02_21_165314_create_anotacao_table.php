@@ -13,14 +13,14 @@ class CreateAnotacaoTable extends Migration
      */
     public function up()
     {
-        Schema::create('anotacao', function (Blueprint $table) {
+        Schema::create('anotacaos', function (Blueprint $table) {
             $table->id();
             $table->text('comentario');
             $table->boolean('status');
             $table->unsignedBigInteger('campo_id');
-            $table->foreign('campo_id')->references('id')->on('campo');
+            $table->foreign('campo_id')->references('id')->on('campos');
             $table->unsignedBigInteger('usuario_id');
-            $table->foreign('usuario_id')->references('id')->on('usuario');
+            $table->foreign('usuario_id')->references('id')->on('usuarios');
             $table->timestamps();
         });
     }
