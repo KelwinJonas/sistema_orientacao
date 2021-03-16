@@ -21,8 +21,8 @@ class CreateEnderecoTable extends Migration
             $table->string('cep')->nullable();
             $table->string('cidade')->nullable();
             $table->string('estado')->nullable();
-            $table->unsignedBigInteger('usuario_id');
-            $table->foreign('usuario_id')->references('id')->on('usuarios');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

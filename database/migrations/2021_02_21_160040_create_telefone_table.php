@@ -17,8 +17,8 @@ class CreateTelefoneTable extends Migration
             $table->id();
             $table->string('telefone_primario');
             $table->string('telefone_secundario')->nullable();
-            $table->unsignedBigInteger('usuario_id');
-            $table->foreign('usuario_id')->references('id')->on('usuarios');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
