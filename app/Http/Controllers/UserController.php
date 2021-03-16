@@ -5,28 +5,30 @@ namespace App\Http\Controllers;
 use App\Models\Endereco;
 use App\Models\Instituicao;
 use App\Models\Telefone;
-use App\Models\Usuario;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Hash;
 use Illuminate\Support\Facades\Validator;
 
-class UsuarioController extends Controller
+class UserController extends Controller
 {
     public function cadastroUsuario(){
-        return view('Usuario.cadastrar_usuario')->with('instituicoes', Instituicao::all());
+        return view('User.cadastrar_usuario')->with('instituicoes', Instituicao::all());
     }
 
     public function salvarCadastrarUsuario(Request $request){
         $entrada = $request->all();
 
         $messages = [
+            'name.required' => 'O campo nome é obrigatório.',
+            'password.required' => 'O campo senha é obrigatório',
             'required' => 'O campo :attribute é obrigatório.',
             'email' => 'O campo email deve ser preenchido com um email válido.',
             'confirmed' => 'A confirmação da senha deve ser igual à senha digitada',
             'digits' => 'O campo :attribute deve conter 11 digitos',
         ];
 
-        $validatorUsuario = Validator::make($entrada, Usuario::$rules, $messages);
+        $validatorUsuario = Validator::make($entrada, User::$rules, $messages);
         if($validatorUsuario->fails()){
             return redirect()->back()->withErrors($validatorUsuario)->withInput();
         }
@@ -41,11 +43,11 @@ class UsuarioController extends Controller
             return redirect()->back()->withErrors($validatorEndereco)->withInput();
         }
 
-        $usuario = new Usuario();
-        $usuario->nome = $entrada['nome'];
+        $usuario = new User();
+        $usuario->name = $entrada['name'];
         $usuario->cpf = $entrada['cpf'];
         $usuario->email = $entrada['email'];
-        $usuario->senha = Hash::make($entrada['senha']);
+        $usuario->password = Hash::make($entrada['password']);
         if($entrada['instituicao'] === "outros"){
             $usuario->instituicao_id = null;
         }else{
@@ -57,7 +59,7 @@ class UsuarioController extends Controller
         $telefone = new Telefone();
         $telefone->telefone_primario = $entrada['telefone_primario'];
         $telefone->telefone_secundario = $entrada['telefone_secundario'];
-        $telefone->usuario_id = $usuario->id;
+        $telefone->user_id = $usuario->id;
         $telefone->save();
 
         $endereco = new Endereco();
@@ -67,7 +69,7 @@ class UsuarioController extends Controller
         $endereco->cep = $entrada['cep'];
         $endereco->estado = $entrada['estado'];
         $endereco->cidade = $entrada['cidade'];
-        $endereco->usuario_id = $usuario->id;
+        $endereco->user_id = $usuario->id;
         $endereco->save();
 
         return "Usuário cadastrado com sucesso";

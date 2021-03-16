@@ -14,10 +14,10 @@
             <div class="row">
                 <div class="col">
                     <div class="form-row">
-                        <label for='nome' class="col-md-1 col-form-label">Nome</label>
+                        <label for='name' class="col-md-1 col-form-label">Nome</label>
                     </div>
-                    <input type='text' class="form-control @error('nome') is-invalid @enderror" placeholder = "Digite seu nome" name='nome' id='nome' value="{{old('nome')}}"/>    
-                    @error('nome')
+                    <input type='text' class="form-control @error('name') is-invalid @enderror" placeholder = "Digite seu nome" name='name' id='name' value="{{old('name')}}"/>    
+                    @error('name')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{$message}}</strong>
                     </span>
@@ -49,10 +49,10 @@
             <div class="row">
                 <div class="col">
                     <div class="form-row">
-                        <label for='senha' class="col-md-1 col-form-label">Senha</label>
+                        <label for='password' class="col-md-1 col-form-label">Senha</label>
                     </div>
-                    <input type='password' class="form-control @error('senha') is-invalid @enderror" placeholder = "Digite sua senha" name='senha' id='senha' value="{{old('senha')}}"/>    
-                    @error('senha')
+                    <input type='password' class="form-control @error('password') is-invalid @enderror" placeholder = "Digite sua senha" name='password' id='password' value="{{old('password')}}"/>    
+                    @error('password')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{$message}}</strong>
                     </span>
@@ -61,10 +61,10 @@
 
                 <div class="col">
                     <div class="form-row">
-                        <label for='senha_confirmation' class="col-md-6 col-form-label">Confirme sua senha</label>
+                        <label for='password_confirmation' class="col-md-6 col-form-label">Confirme sua senha</label>
                     </div>
-                    <input type='password' class="form-control @error('senha_confirmation') is-invalid @enderror" placeholder = "Digite sua senha novamente" name='senha_confirmation' id='senha_confirmation'/>  
-                    @error('senha_confirmation')
+                    <input type='password' class="form-control @error('password_confirmation') is-invalid @enderror" placeholder = "Digite sua senha novamente" name='password_confirmation' id='password_confirmation'/>  
+                    @error('password_confirmation')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{$message}}</strong>
                     </span>
