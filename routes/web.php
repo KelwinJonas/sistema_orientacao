@@ -6,6 +6,7 @@ use App\Http\Controllers\SecaoController;
 use App\Http\Controllers\UserController;
 use App\Models\AtividadeAcademica;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('home');
 });
+
+Route::get('/login/google', [LoginController::class, 'redirectToGoogleProvider']);
+Route::get('/login/google/callback',[LoginController::class,'handleProviderGoogleCallback']);
 
 Route::prefix('/cadastrar_instituicao')->name('cadastrarInstituicao')->group(function (){
     Route::get('/', [InstituicaoController::class, 'cadastroInstituicao']);
@@ -41,3 +45,6 @@ Route::get('/listar_atividades', [AtividadeAcademicaController::class, 'listarAt
 Route::get('/ver_atividade/{atividade_id}', [AtividadeAcademicaController::class, 'verAtividade'])->name('verAtividade');
 
 Route::post('/salvar_secao', [SecaoController::class, 'salvarAdicionarSecao'])->name('salvarSecao');
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -21,6 +21,9 @@ class User extends Authenticatable
         'cpf',
         'email',
         'password',
+        'refresh_token',
+        'token', 
+        'expires_in',
     ];
 
     public static $rules = [
