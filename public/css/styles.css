@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
 
-/* Navbar e foooter */
+/* Navbar e foooter
 body{
     font-family: 'Roboto Condensed', sans-serif;
     font-style: normal;
@@ -42,7 +42,19 @@ footer .container .row{
     min-height: 900px;
     width: 100%;
     background-color: #ffffff;
+} */
+
+/* Navbar */
+
+.navbar{
+    box-shadow: 2px 10px 53px -6px rgba(0,0,0,0.16);
+    -webkit-box-shadow: 2px 10px 53px -6px rgba(0,0,0,0.16);
+    -moz-box-shadow: 2px 10px 53px -6px rgba(0,0,0,0.16); padding-bottom: 2px;
 }
+
+#logo-navbar{
+    width: 35px;
+}   
 
 /* Botão para cadastrar */
 .cor-botao{
