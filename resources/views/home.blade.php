@@ -4,7 +4,7 @@
     <div class="container-main">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-8" id="div-conteudo-login">
+                <div class="col-md-8" id="div-conteudo">
                     <div class="container" id="div-conteudo-container">
                         <div class="row">
                             <div class="col-md-6">
@@ -15,7 +15,7 @@
                                     <div class="col-md-12" id="div-texto">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</div>
                                 </div>
                             </div>
-                            <div class="col-md-6" id="div-login">
+                            <div class="col-md-6" id="div-coluna2">
                                 <div class="col-md-12" id="div-cabecalho-login">Olá, seja bem vindo(a)!</div>
                                 <form>
                                     <div class="form-group" id="div-campo-email">
