@@ -1,49 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
 
-/* Navbar e foooter
-body{
-    font-family: 'Roboto Condensed', sans-serif;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 18px;
-    line-height: 21px;
-    background: #ffffff;
-}
-
-.navegação{
-    background: #326d94;
-}
-
-footer{
-    background: #326d94;
-    color: white;
-}
-
-.texto-footer{
-    text-align: center;
-}
-
-.imagem{
-    background: transparent;
-    border: none;
-}
-
-.redesocial{
-    width: 60px;
-    height: 60px;
-}
-
-footer .container .row{
-    text-align: center;
-}
-
-.container-main{
-    min-height: 900px;
-    width: 100%;
-    background-color: #ffffff;
-} */
-
 /* Navbar */
 
 .navbar{
@@ -55,6 +12,69 @@ footer .container .row{
 #logo-navbar{
     width: 35px;
 }   
+
+#cor-texto-logo-navbar{
+    color: #3498db;
+}
+
+/* Footer */
+
+#rodape{
+    background-color:#BDC3C7; 
+    display: flex; 
+    flex-wrap: wrap; 
+    justify-content: center;
+    padding-bottom:5rem
+}
+
+#conteudo-rodape{
+    margin-top:5rem;
+    text-align:center"
+}
+
+#linha-rodape{
+    background-color:#fff
+}
+
+#div-logo-lmts{
+    text-align:center; 
+    margin-bottom:2rem;
+}
+
+#div-label-lmts{
+    margin-bottom: 10px;
+     color:#fff;
+}
+
+#div-logo-ufape{
+    text-align:center; 
+    margin-bottom:2rem;
+}
+
+#div-label-ufape{
+    color:#fff;
+}
+
+#div-conteudo-redes-sociais{
+    text-align:center;
+}
+
+#div-label-redes-sociais{
+    margin-bottom: 2rem; 
+    color:#fff;
+}
+
+.imagens-redes-sociais{
+    margin-left: 10px; 
+    margin-right: 10px;
+}
+
+/* Conteudo-login */
+.container-main{
+    min-height: 640px;
+    width: 100%;
+    background-color: #ffffff;
+}
 
 /* Botão para cadastrar */
 .cor-botao{
