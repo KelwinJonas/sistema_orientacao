@@ -14,13 +14,14 @@
 
         <link rel="stylesheet" href="{{ asset('/css/styles.css') }}">
 
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+
     </head>
     <body>
         @include('layouts.navbar')
 
-        <div class="container-main">
-            @yield('content')
-        </div>
+        @yield('content')
+       
     </body>
 
     {{-- Footer --}}
@@ -47,13 +48,13 @@
                 <div class="row justify-content-center" id="div-conteudo-redes-sociais">
                     <div class="col-12" id="div-label-redes-sociais">Redes sociais:</div>
                     <a href="https://www.facebook.com/LMTSUFAPE/">
-                        <img src="{{asset("images/logo_facebook_branco.png")}}" width="40px" height="40px" class="imagens-redes-sociais">
+                        <img src="{{asset("images/logo_facebook_branco.png")}}" class="imagens-redes-sociais">
                     </a>
                     <a href="https://www.instagram.com/lmts_ufape">
-                        <img src="{{asset("images/logo_instagram_branco.png")}}" width="40px" height="40px" class="imagens-redes-sociais">
+                        <img src="{{asset("images/logo_instagram_branco.png")}}" class="imagens-redes-sociais">
                     </a>
                     <a href="" target="_blank">
-                        <img src="{{asset("images/logo_twitter_branco.png")}}" width="40px" height="40px" class="imagens-redes-sociais">
+                        <img src="{{asset("images/logo_twitter_branco.png")}}" class="imagens-redes-sociais">
                     </a>
                 </div>
             </div>

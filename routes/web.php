@@ -23,7 +23,7 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/login/google', [LoginController::class, 'redirectToGoogleProvider']);
+Route::get('/login/google', [LoginController::class, 'redirectToGoogleProvider'])->name('loginGoogle');
 Route::get('/login/google/callback',[LoginController::class,'handleProviderGoogleCallback']);
 
 Route::prefix('/cadastrar_instituicao')->name('cadastrarInstituicao')->group(function (){
