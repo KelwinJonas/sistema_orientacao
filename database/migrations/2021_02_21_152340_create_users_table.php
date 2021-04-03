@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
-            $table->string('refresh_token');
+            $table->string('refresh_token')->nullable();
             $table->unsignedBigInteger('instituicao_id')->nullable();
             $table->foreign('instituicao_id')->references('id')->on('instituicaos');
             $table->rememberToken();

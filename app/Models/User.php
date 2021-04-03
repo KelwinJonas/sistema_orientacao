@@ -29,6 +29,7 @@ class User extends Authenticatable
     public static $rules = [
         'name' => 'required|min:3|max:100',
         'cpf' => 'required|cpf',
+        'instituicao' => 'required',
         'email' => 'required|email',
         'password' => 'required|confirmed|min:8|max:64',
     ];
@@ -55,10 +56,6 @@ class User extends Authenticatable
     public function instituicao(){
         return $this->hasOne('App\Models\Instituicao');
         //REVER - Um usuário possui uma instituição ou mais de uma? 
-    }
-
-    public function endereco(){
-        return $this->hasOne('App\Models\Endereco');
     }
 
     public function telefone(){

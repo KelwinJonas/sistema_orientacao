@@ -29,15 +29,6 @@
                                         @enderror
                                     </div>
                                     <div class="form-group" >
-                                        <label for="sobrenome">Sobrenome <span class="cor-obrigatorio">(obrigatório)</span></label>
-                                        <input type="text" class="form-control campos-cadastro @error('sobrenome') is-invalid @enderror" placeholder="Digite seu sobrenome" name="sobrenome" id="sobrenome" value="{{old('sobrenome')}}"/>
-                                        @error('sobrenome')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{$message}}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group" >
                                         <label for="cpf">CPF <span class="cor-obrigatorio">(obrigatório)</span></label>
                                         <input type='text' class="form-control campos-cadastro @error('cpf') is-invalid @enderror" placeholder = "Digite seu CPF" name='cpf' id='cpf' value="{{old('cpf')}}"/>    
                                         @error('cpf')
@@ -49,7 +40,7 @@
                                     <div class="form-group">
                                         <label for="instituicao">Instituição <span class="cor-obrigatorio">(obrigatório)</span></label>
                                         <select class="form-control campos-cadastro @error('instituicao') is-invalid @enderror" name="instituicao" id="instituicao" value="{{old('instituicao')}}">
-                                                <option selected>Selecione sua instituição</option>
+                                                <option value="" selected>Selecione sua instituição</option>
 
                                                 @foreach ($instituicoes as $instituicao)
                                                     <option value="{{$instituicao->id}}">{{$instituicao->nome}}</option>
@@ -73,7 +64,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="form-group">
+                                    {{-- <div class="form-group">
                                         <label for="email_confirmation">Confirmar e-mail <span class="cor-obrigatorio">(obrigatório)</span></label>
                                         <input type="email" class="form-control campos-cadastro @error('email_confirmation') is-invalid @enderror" id="email_confirmation" name="email_confirmation" placeholder="Confirme seu e-mail" value="{{old('email_confirmation')}}">
                                         @error('email_confirmation')
@@ -81,10 +72,10 @@
                                                 <strong>{{$message}}</strong>
                                             </span>
                                         @enderror
-                                    </div>
+                                    </div> --}}
                                     <div class="form-group">
                                         <label for="password">Senha <span class="cor-obrigatorio">(obrigatório)</span></label>
-                                        <input type="password" class="form-control campos-cadastro @error('password') is-invalid @enderror" id="password" placeholder="Digite sua senha" value="{{old('password')}}">
+                                        <input type="password" class="form-control campos-cadastro @error('password') is-invalid @enderror" id="password" name="password" placeholder="Digite sua senha">
                                         @error('password')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{$message}}</strong>
@@ -93,7 +84,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="password_confirmation">Confirmar senha <span class="cor-obrigatorio">(obrigatório)</span></label>
-                                        <input type="email" class="form-control campos-cadastro @error('password_confirmation') is-invalid @enderror" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Confirme sua senha" value="{{old('password_confirmation')}}">
+                                        <input type="password" class="form-control campos-cadastro @error('password_confirmation') is-invalid @enderror" id="password_confirmation" name="password_confirmation" placeholder="Confirme sua senha">
                                         @error('password_confirmation')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{$message}}</strong>
