@@ -15,6 +15,10 @@ class UserController extends Controller
         return view('User.cadastrar_usuario')->with('instituicoes', Instituicao::all());
     }
 
+    public function redefinirSenha(){
+        return view('esqueceu_senha');
+    }
+
     public function salvarCadastrarUsuario(Request $request){
         $entrada = $request->all();
 

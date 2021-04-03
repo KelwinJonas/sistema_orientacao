@@ -228,3 +228,24 @@
 .botoes-cadastro{
     width: 100%;
 }
+
+/* Tela esqueceu senha */
+
+#legenda-redefinicao-senha{
+    line-height: 20px;
+    margin-top: 20px; 
+    color: gray;
+}
+
+#div-email-esqueceu-senha{
+    margin-top: 2rem;
+}
+
+#div-conteudo-esqueceu-senha{
+    margin: 2rem;
+    border-radius: 12px; 
+    box-shadow: 2px 2px 29px -2px rgba(0,0,0,0.52);
+    -webkit-box-shadow: 2px 2px 29px -2px rgba(0,0,0,0.52);
+    -moz-box-shadow: 2px 2px 29px -2px rgba(0,0,0,0.52);
+    padding-bottom: 40px;
+}

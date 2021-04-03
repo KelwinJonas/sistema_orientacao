@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Models\AtividadeAcademica;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
+use Faker\Guesser\Name;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,8 @@ Route::get('/', function () {
 
 Route::get('/login/google', [LoginController::class, 'redirectToGoogleProvider'])->name('loginGoogle');
 Route::get('/login/google/callback',[LoginController::class,'handleProviderGoogleCallback']);
+
+Route::get('redefinir_senha', [UserController::class, 'redefinirSenha'])->name('redefinirSenha');
 
 Route::prefix('/cadastrar_instituicao')->name('cadastrarInstituicao')->group(function (){
     Route::get('/', [InstituicaoController::class, 'cadastroInstituicao']);

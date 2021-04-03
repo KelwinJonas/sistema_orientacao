@@ -33,7 +33,7 @@
                                     <a href="./pagina_inicial.html" class="btn btn-success" id="botao-entrar">Entrar</a>
                                 </form>
                                     <div id="div-esqueceu-senha">
-                                        <a href="#" >Esqueceu sua senha?</a>
+                                        <a href="{{route('redefinirSenha')}}" >Esqueceu sua senha?</a>
                                     </div>
                                     <div id="div-ou">
                                         <h6>OU</h4>
