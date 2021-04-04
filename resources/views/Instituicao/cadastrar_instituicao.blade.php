@@ -2,27 +2,63 @@
 
 @section('content')
     <div class="container-main">
-        <form action="{{route('cadastrarInstituicao.salvar')}}" method="POST"> 
-            @csrf
-            <br>
-            <h1 class="col-md-1">Cadastro</h1>
-            <h2 class="col-md-6">Informações da Instituição</h2>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8" id="div-conteudo-esqueceu-senha">
+                    <div class="container" id="div-conteudo-container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="row" id="div-coluna1-logo">
+                                    <div class="col-md-12" id="div-logo">
+                                        <img src="{{asset("images/logo_bussola_2.png")}}" alt="Orientação" width="100%"> 
+                                    </div>
+                                    <div class="col-md-12" id="div-texto">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6" id="div-coluna2">
+                                <div class="col-md-12" id="cabecalho-cadastro-usuario">Cadastro da instituição</div>
 
-            <div class="form-group">
-                <label for='nome' class="col-md-1 col-form-label">Nome</label>
-                <div class="col-md-6">
-                    <input type='text' class="form-control @error('nome') is-invalid @enderror" placeholder = "Digite o nome da instituição" name='nome' id='nome' value="{{old('nome')}}"/>    
-                    @error('nome')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{$message}}</strong>
-                    </span>
-                    @enderror
+                                <form action="{{route('cadastrarInstituicao.salvar')}}" method="POST">
+                                    @csrf
+                                    <div class="form-group" id="div-email-esqueceu-senha">
+                                        <label for="nome">Nome <span class="cor-obrigatorio">(obrigatório)</span></label>
+                                        <input type='text' class="form-control  campos-cadastro @error('nome') is-invalid @enderror" placeholder = "Digite o nome da instituição" name='nome' id='nome' value="{{old('nome')}}"/>    
+                                          @error('nome')
+                                              <span class="invalid-feedback" role="alert">
+                                                  <strong>{{$message}}</strong>
+                                              </span>
+                                          @enderror
+                                    </div>
+                                        <button type="submit" class="btn btn-success botoes-cadastro">Cadastrar</button>
+                                        <hr>
+                                        <a href="{{route('home')}}" class="btn btn-primary botoes-cadastro" >Voltar para a tela de login</a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-1">
-                <button id="botao-cadastrar" type='submit' class="btn btn-primary cor-botao" >Cadastrar</button>
-            </div>
-            
-        </form>
+        </div>
     </div>
+    {{-- <form action="{{route('cadastrarInstituicao.salvar')}}" method="POST"> 
+        @csrf
+        <br>
+        <h1 class="col-md-1">Cadastro</h1>
+        <h2 class="col-md-6">Informações da Instituição</h2>
+
+        <div class="form-group">
+            <label for='nome' class="col-md-1 col-form-label">Nome</label>
+            <div class="col-md-6">
+                <input type='text' class="form-control @error('nome') is-invalid @enderror" placeholder = "Digite o nome da instituição" name='nome' id='nome' value="{{old('nome')}}"/>    
+                @error('nome')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{$message}}</strong>
+                </span>
+                @enderror
+            </div>
+        </div>
+        <div class="col-md-1">
+            <button id="botao-cadastrar" type='submit' class="btn btn-primary cor-botao" >Cadastrar</button>
+        </div>
+    </form> --}}
 @endsection
