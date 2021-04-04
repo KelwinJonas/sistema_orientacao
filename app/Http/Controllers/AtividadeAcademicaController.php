@@ -32,7 +32,8 @@ class AtividadeAcademicaController extends Controller
             'required' => 'O campo :attribute é obrigatório.',
             'min' => 'O campo :attribute deve ter no mínimo :min caracteres.',
             'max' => 'O campo :attribute deve ter no máximo :max caracteres.',
-            'date' => 'O campo :attribute está inválido'
+            'date' => 'O campo :attribute está inválido.',
+            'cor_card.required' => 'O campo cor é obrigatório.',
         ];
 
         $validator = Validator::make($entrada, AtividadeAcademica::$rules, $messages);
@@ -45,10 +46,11 @@ class AtividadeAcademicaController extends Controller
         $atividadeAcademica->titulo = $entrada['titulo'];
         $atividadeAcademica->data_inicio = $entrada['data_inicio'];
         $atividadeAcademica->data_fim = $entrada['data_fim'];
+        $atividadeAcademica->cor_card = $entrada['cor_card'];
         $atividadeAcademica->save();
 
         //ASSOCIAR AO USUARIO QUE ESTA LOGADO NO SISTEMA
 
-        return "Atividade cadastrada com sucesso.";
+        return redirect()->route('listarAtividades');
     }
 }

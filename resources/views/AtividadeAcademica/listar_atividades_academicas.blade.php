@@ -3,11 +3,81 @@
 @section('content')
     <div class="container-main">
         <div class="container">
-            <div class="col-md-12" id="cabecalho-listar-atividades">Minhas atividades</div>
             <div id="div-lista-de-atividades">
+                <hr>
                 <div class="row">
+                    <div class="col-md-9" id="cabecalho-listar-atividades"> Minhas atividades</div>
+                    <div class="col-md-3"><button class="btn btn-primary" id="botao-criar-atividade" data-toggle="modal" data-target="#modal-criar-atividade">Criar atividade</button></div>
+                    <hr>
+                </div>
+                <hr>
+                <div class="row">
+                    {{-- Tela modal para criar uma atividade --}}
+                    <div id="modal-criar-atividade" class="modal fade" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <h5 class="modal-title" id="header-modal-criar-atividade">Criar atividade</h5>
+                                    <hr>
+                                    <form action="{{route('cadastrarAtividade.salvar')}}" method="POST">
+                                        @csrf
+                                        <div class="form-group">
+                                            <label for="tipo">Tipo <span class="cor-obrigatorio">(obrigatório)</span></label>
+                                            <input type='text' class="form-control campos-cadastro @error('tipo') is-invalid @enderror" placeholder = "Digite o tipo" name='tipo' id='tipo' value="{{old('tipo')}}"/>    
+                                            @error('tipo')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{$message}}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="titulo">Título <span class="cor-obrigatorio">(obrigatório)</span></label>
+                                            <input type='text' class="form-control campos-cadastro @error('titulo') is-invalid @enderror" placeholder = "Digite o titulo" name='titulo' id='titulo' value="{{old('titulo')}}"/>    
+                                            @error('titulo')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{$message}}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="data_inicio">Data início <span class="cor-obrigatorio">(obrigatório)</span></label>
+                                            <input type='date' class="form-control campos-cadastro @error('data_inicio') is-invalid @enderror" name='data_inicio' id='data_inicio' value="{{old('data_inicio')}}"/>    
+                                            @error('data_inicio')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{$message}}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="data_fim">Data fim <span class="cor-obrigatorio">(obrigatório)</span></label>
+                                            <input type='date' class="form-control campos-cadastro @error('data_fim') is-invalid @enderror" name='data_fim' id='data_fim' value="{{old('data_fim')}}"/>    
+                                            @error('data_fim')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{$message}}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="cor_card">Cor do card <span class="cor-obrigatorio">(obrigatório)</span></label>
+                                            <input type='color' class="form-control campos-cadastro @error('cor_card') is-invalid @enderror" name='cor_card' id='cor_card' value="{{old('cor_card')}}"/>    
+                                            @error('cor_card')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{$message}}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                        <hr>
+                                        <div class="float-right">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                            <button type="submit" class="btn btn-success">Criar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     @foreach ($atividades as $atividade)
-                        <div class="style_card_tema">
+                        <div class="style_card_tema" style="background-color: {{$atividade->cor_card}}">
                             <div class="container div-conteudo-card">
                                 <div class="row">
                                     <div class="col-md-12 div-titulo-card">

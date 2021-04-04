@@ -39,8 +39,9 @@ Route::prefix('cadastrar_usuario')->name('cadastrarUsuario')->group(function(){
     Route::post('/salvar', [UserController::class, 'salvarCadastrarUsuario'])->name('.salvar');
 });
 
+//Ajeitar essa rota (deixar apenas a /salvar)
 Route::prefix('cadastrar_atividade')->name('cadastrarAtividade')->group(function(){
-    Route::get('/', [AtividadeAcademicaController::class, 'cadastroAtividade']);
+    // Route::get('/', [AtividadeAcademicaController::class, 'cadastroAtividade']);
     Route::post('/salvar', [AtividadeAcademicaController::class, 'salvarCadastrarAtividade'])->name('.salvar');
 });
 

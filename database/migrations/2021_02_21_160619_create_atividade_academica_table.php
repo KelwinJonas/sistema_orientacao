@@ -19,6 +19,7 @@ class CreateAtividadeAcademicaTable extends Migration
             $table->string('titulo');
             $table->date('data_inicio');
             $table->date('data_fim');
+            $table->string('cor_card');
             $table->timestamps();
         });
     }
