@@ -22,7 +22,27 @@ class AtividadeAcademicaController extends Controller
         if($atividade){
             return view('AtividadeAcademica.ver_atividade_academica', ['atividade' => $atividade]);
         }
-        //Coloca msg de erro caso a reunião não exista
+    }
+
+    public function verSecoes($atividade_id){
+        $atividade = AtividadeAcademica::find($atividade_id);
+        if($atividade){
+            return view('AtividadeAcademica.secoes', ['atividade' => $atividade]);
+        }
+    }
+
+    public function verArquivos($atividade_id){
+        $atividade = AtividadeAcademica::find($atividade_id);
+        if($atividade){
+            return view('AtividadeAcademica.arquivos', ['atividade' => $atividade]);
+        }
+    }
+
+    public function verPessoas($atividade_id){
+        $atividade = AtividadeAcademica::find($atividade_id);
+        if($atividade){
+            return view('AtividadeAcademica.pessoas', ['atividade' => $atividade]);
+        }
     }
 
     public function salvarCadastrarAtividade(Request $request){

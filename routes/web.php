@@ -46,7 +46,14 @@ Route::prefix('cadastrar_atividade')->name('cadastrarAtividade')->group(function
 });
 
 Route::get('/listar_atividades', [AtividadeAcademicaController::class, 'listarAtividades'])->name('listarAtividades');
-Route::get('/ver_atividade/{atividade_id}', [AtividadeAcademicaController::class, 'verAtividade'])->name('verAtividade');
+#Route::get('/ver_atividade/{atividade_id}', [AtividadeAcademicaController::class, 'verAtividade'])->name('verAtividade');
+
+Route::prefix('ver_atividade/{atividade_id}')->name('verAtividade')->group(function(){
+    Route::get('/mural', [AtividadeAcademicaController::class, 'verAtividade'])->name('.verMural');
+    Route::get('/secoes', [AtividadeAcademicaController::class, 'verSecoes'])->name('.verSecoes');
+    Route::get('/arquivos', [AtividadeAcademicaController::class, 'verArquivos'])->name('.verArquivos');
+    Route::get('/pessoas', [AtividadeAcademicaController::class, 'verPessoas'])->name('.verPessoas');
+});
 
 Route::post('/salvar_secao', [SecaoController::class, 'salvarAdicionarSecao'])->name('salvarSecao');
 Auth::routes();

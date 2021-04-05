@@ -334,3 +334,47 @@
     color: #3498db;
     font-weight: bold;
 }
+
+/* Tela ver atividade */
+.style_card_container{
+    margin-top: 10px; height: 40px;
+}
+
+.style_card_tema_largo{
+    margin:0.5rem; border-radius: 8px; 
+    box-shadow: 2px 2px 29px -2px rgba(0,0,0,0.15);
+    -webkit-box-shadow: 2px 2px 29px -2px rgba(0,0,0,0.15);
+    -moz-box-shadow: 2px 2px 29px -2px rgba(0,0,0,0.15);
+}
+
+.style_card_tema_titulo{
+    font-size: 24px; font-family: Arial, Helvetica, sans-serif; font-weight: bold; line-height: 28px;
+}
+
+.style_card_menu{
+    margin-top: -9px; margin-bottom: 10px;
+}
+
+#container-ver-atividade{
+    padding-right: 2rem; 
+    padding-left:2rem;
+    padding-top: 1rem;
+}
+
+#container-conteudo-ver-atividade{
+    padding-top: 10px;
+}
+
+#menu-ver-atividade{
+    text-align: center;
+}
+
+.link-menu-ver-atividade{
+    margin-left: 3px; 
+    margin-right:3px; 
+    color: black
+}
+
+.link-menu-selecionado{
+    font-weight: 600;
+}

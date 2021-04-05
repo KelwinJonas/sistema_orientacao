@@ -81,7 +81,7 @@
                             <div class="container div-conteudo-card">
                                 <div class="row">
                                     <div class="col-md-12 div-titulo-card">
-                                        <a class="link-titulo-atividade" href="#">{{$atividade->titulo}}</a>
+                                        <a class="link-titulo-atividade" href="{{route('verAtividade.verMural', ['atividade_id' => $atividade->id])}}">{{$atividade->titulo}}</a>
                                     </div>
                                     <div class="col-md-12">
                                         Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a...
