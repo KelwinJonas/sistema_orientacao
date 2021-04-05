@@ -16,11 +16,11 @@ class CreateAnotacaoTable extends Migration
         Schema::create('anotacaos', function (Blueprint $table) {
             $table->id();
             $table->text('comentario');
-            $table->boolean('status');
+            $table->boolean('status')->default(true);
             $table->unsignedBigInteger('campo_id');
             $table->foreign('campo_id')->references('id')->on('campos');
-            $table->unsignedBigInteger('usuario_id');
-            $table->foreign('usuario_id')->references('id')->on('usuarios');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
