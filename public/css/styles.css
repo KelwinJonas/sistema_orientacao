@@ -326,6 +326,10 @@
     margin-top: -9px; margin-left: -15px;
 }
 
+#span-nome-proprietario{
+    font-size: 15px;
+}
+
 #botao-criar-atividade{
     float:right;
     margin-top: 1rem;

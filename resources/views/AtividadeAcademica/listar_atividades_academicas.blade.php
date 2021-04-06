@@ -90,7 +90,7 @@
                                 <hr>
                                 <div class="col-md-12 div-usuario">
                                     <img src="{{asset('images/logo_user_default.png')}}" alt="Orientação" width="35px"> 
-                                    <span style="font-size: 15px;">{{$atividadeUsuario->dono->name}}</span>
+                                    <span id="span-nome-proprietario">{{$atividadeUsuario->dono->name}}</span>
                                 </div>
                             </div>
                         </div>
