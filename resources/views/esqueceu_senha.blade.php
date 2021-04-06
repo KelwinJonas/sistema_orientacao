@@ -33,7 +33,7 @@
                                     </div>
                                         <button type="submit" class="btn btn-success botoes-cadastro">Enviar link para redefinição de senha</button>
                                         <hr>
-                                        <a href="{{route('home')}}" class="btn btn-primary botoes-cadastro" >Voltar para a tela de login</a>
+                                        <a href="{{route('login')}}" class="btn btn-primary botoes-cadastro" >Voltar para a tela de login</a>
                                 </form>
                             </div>
                         </div>
