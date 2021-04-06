@@ -85,6 +85,6 @@ class AtividadeAcademicaController extends Controller
         $papel->atividade_usuario_id = $atividadeUsuario->id;
         $papel->save();
 
-        return $this->listarAtividades();
+        return redirect()->route('listarAtividades');
     }
 }
