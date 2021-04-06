@@ -17,20 +17,21 @@
                             </div>
                             <div class="col-md-6" id="div-coluna2">
                                 <div class="col-md-12" id="div-cabecalho-login">Olá, seja bem vindo(a)!</div>
-                                <form>
+                                <form action="{{route('login')}}" method="POST">
+                                    @csrf
                                     <div class="form-group" id="div-campo-email">
                                       <label for="email">E-mail</label>
-                                      <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Digite seu e-mail">
+                                      <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Digite seu e-mail" name="email">
                                     </div>
                                     <div class="form-group">
                                       <label for="password">Senha</label>
-                                      <input type="password" class="form-control" id="password" placeholder="Digite sua senha">
+                                      <input type="password" class="form-control" id="password" placeholder="Digite sua senha" name="password">
                                     </div>
                                     <div class="form-check" id="div-lembrar-senha">
                                       <input type="checkbox" class="form-check-input" id="exampleCheck1">
                                       <label class="form-check-label" for="exampleCheck1">Lembrar Senha </label>
                                     </div>
-                                    <a href="./pagina_inicial.html" class="btn btn-success" id="botao-entrar">Entrar</a>
+                                    <button type="submit" class="btn btn-success" id="botao-entrar">Entrar</button>
                                 </form>
                                     <div id="div-esqueceu-senha">
                                         <a href="{{route('redefinirSenha')}}" >Esqueceu sua senha?</a>
