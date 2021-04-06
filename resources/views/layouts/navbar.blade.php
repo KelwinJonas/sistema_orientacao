@@ -1,7 +1,7 @@
 <nav class="navbar navbar navbar-expand-lg navbar-light bg-light">
     <div class="col-md-10">
         <div class="navbar-header">
-            <a href="#" class="navbar-brand" id="cor-texto-logo-navbar">
+            <a href="/login" class="navbar-brand" id="cor-texto-logo-navbar">
                 <img id="logo-navbar" src="{{asset("images/logo_bussola_1.png")}}" alt="">
                 Orientação
             </a>   
