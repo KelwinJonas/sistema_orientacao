@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Endereco;
 use App\Models\Instituicao;
 use App\Models\Telefone;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Hash;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -16,15 +15,21 @@ class UserController extends Controller
         return view('User.cadastrar_usuario')->with('instituicoes', Instituicao::all());
     }
 
+    public function redefinirSenha(){
+        return view('esqueceu_senha');
+    }
+
     public function salvarCadastrarUsuario(Request $request){
         $entrada = $request->all();
 
         $messages = [
             'name.required' => 'O campo nome é obrigatório.',
-            'password.required' => 'O campo senha é obrigatório',
+            'instituicao.required' => 'O campo instituição é obrigatório.',
+            'password.required' => 'O campo senha é obrigatório.',
+            'password.confirmed' => 'O campo confirmar senha é obrigatório.',
             'required' => 'O campo :attribute é obrigatório.',
             'email' => 'O campo email deve ser preenchido com um email válido.',
-            'confirmed' => 'A confirmação da senha deve ser igual à senha digitada',
+            'confirmed' => 'A confirmação da senha deve ser igual à senha digitada;',
             'digits' => 'O campo :attribute deve conter 11 digitos',
         ];
 
@@ -36,11 +41,6 @@ class UserController extends Controller
         $validatorTelefone = Validator::make($entrada, Telefone::$rules, $messages);
         if($validatorTelefone->fails()){
             return redirect()->back()->withErrors($validatorTelefone)->withInput();
-        }
-
-        $validatorEndereco = Validator::make($entrada, Endereco::$rules, Endereco::$messages);
-        if($validatorEndereco->fails()){
-            return redirect()->back()->withErrors($validatorEndereco)->withInput();
         }
 
         $usuario = new User();
@@ -62,16 +62,7 @@ class UserController extends Controller
         $telefone->user_id = $usuario->id;
         $telefone->save();
 
-        $endereco = new Endereco();
-        $endereco->rua = $entrada['rua'];
-        $endereco->bairro = $entrada['bairro'];
-        $endereco->numero = $entrada['numero'];
-        $endereco->cep = $entrada['cep'];
-        $endereco->estado = $entrada['estado'];
-        $endereco->cidade = $entrada['cidade'];
-        $endereco->user_id = $usuario->id;
-        $endereco->save();
 
-        return "Usuário cadastrado com sucesso";
+        return redirect()->route('listarAtividades');
     }
 }

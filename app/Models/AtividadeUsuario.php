@@ -12,4 +12,12 @@ class AtividadeUsuario extends Model
     public function papel(){
         return $this->hasOne('App\Models\Papel');
     }
+
+    public function dono(){
+        return $this->belongsTo('App\Models\User', 'user_id');
+    }
+
+    public function atividadeAcademica(){
+        return $this->belongsTo('App\Models\AtividadeAcademica');
+    }
 }

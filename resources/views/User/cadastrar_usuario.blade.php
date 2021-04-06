@@ -2,7 +2,127 @@
 
 @section('content')
     <div class="container-main">
-        <form action="{{route('cadastrarUsuario.salvar')}}" method="POST"> 
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8" id="div-conteudo">
+                    <div class="container" id="div-conteudo-container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="row" id="div-coluna1-logo">
+                                    <div class="col-md-12" id="div-logo">
+                                        <img src="{{asset("images/logo_bussola_2.png")}}" alt="Orientação" width="100%"> 
+                                    </div>
+                                    <div class="col-md-12" id="div-texto">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6" id="div-coluna2">
+                                <div class="col-md-12" id="cabecalho-cadastro-usuario">Cadastro</div>
+                                <form action="{{route('cadastrarUsuario.salvar')}}" method="POST">
+                                    @csrf
+                                    <div class="form-group" id="div-campo-nome">
+                                        <label for="name">Nome <span class="cor-obrigatorio">(obrigatório)</span></label>
+                                        <input type='text' class="form-control campos-cadastro @error('name') is-invalid @enderror" placeholder = "Digite seu nome" name='name' id='name' value="{{old('name')}}"/>    
+                                        @error('name')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{$message}}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group" >
+                                        <label for="cpf">CPF <span class="cor-obrigatorio">(obrigatório)</span></label>
+                                        <input type='text' class="form-control campos-cadastro @error('cpf') is-invalid @enderror" placeholder = "Digite seu CPF" name='cpf' id='cpf' value="{{old('cpf')}}"/>    
+                                        @error('cpf')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{$message}}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="instituicao">Instituição <span class="cor-obrigatorio">(obrigatório)</span></label>
+                                        <select class="form-control campos-cadastro @error('instituicao') is-invalid @enderror" name="instituicao" id="instituicao" value="{{old('instituicao')}}">
+                                                <option value="" selected>Selecione sua instituição</option>
+
+                                                @foreach ($instituicoes as $instituicao)
+                                                    <option value="{{$instituicao->id}}">{{$instituicao->nome}}</option>
+                                                @endforeach
+
+                                                <option value="outros">Outros</option>
+                        
+                                                @error('instituicao')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{$message}}</strong>
+                                                    </span>
+                                                @enderror        
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="email">E-mail <span class="cor-obrigatorio">(obrigatório)</span></label>
+                                      <input type='text' class="form-control  campos-cadastro @error('email') is-invalid @enderror" placeholder = "Digite seu email" name='email' id='email' value="{{old('email')}}"/>    
+                                        @error('email')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{$message}}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    {{-- <div class="form-group">
+                                        <label for="email_confirmation">Confirmar e-mail <span class="cor-obrigatorio">(obrigatório)</span></label>
+                                        <input type="email" class="form-control campos-cadastro @error('email_confirmation') is-invalid @enderror" id="email_confirmation" name="email_confirmation" placeholder="Confirme seu e-mail" value="{{old('email_confirmation')}}">
+                                        @error('email_confirmation')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{$message}}</strong>
+                                            </span>
+                                        @enderror
+                                    </div> --}}
+                                    <div class="form-group">
+                                        <label for="password">Senha <span class="cor-obrigatorio">(obrigatório)</span></label>
+                                        <input type="password" class="form-control campos-cadastro @error('password') is-invalid @enderror" id="password" name="password" placeholder="Digite sua senha">
+                                        @error('password')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{$message}}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password_confirmation">Confirmar senha <span class="cor-obrigatorio">(obrigatório)</span></label>
+                                        <input type="password" class="form-control campos-cadastro @error('password_confirmation') is-invalid @enderror" id="password_confirmation" name="password_confirmation" placeholder="Confirme sua senha">
+                                        @error('password_confirmation')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{$message}}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="telefone_primario">Telefone primário <span class="cor-obrigatorio">(obrigatório)</span></label>
+                                        <input type='text' class="form-control campos-cadastro @error('telefone_primario') is-invalid @enderror" placeholder = "Digite seu telefone primário" name='telefone_primario' id='telefone_primario' value="{{old('telefone_primario')}}"/>  
+                                        @error('telefone_primario')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{$message}}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="telefone_secundario">Telefone secundário <span class="cor-obrigatorio">(opcional)</span></label>
+                                        <input type='text' class="form-control campos-cadastro @error('telefone_secundario') is-invalid @enderror" placeholder = "Digite seu telefone primário" name='telefone_secundario' id='telefone_secundario' value="{{old('telefone_secundario')}}"/>  
+                                        @error('telefone_secundario')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{$message}}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-check" id="div-lembrar-senha">
+                                        <input type="checkbox" class="form-check-input campos-cadastro" id="lembrar_senha">
+                                        <label class="form-check-label" for="lembrar_senha">Lembrar Senha </label>
+                                    </div>
+                                    <button type="submit" class="btn btn-success botoes-cadastro">Entrar</button>
+                                    <hr>
+                                    <a href="{{route('login')}}" class="btn btn-primary botoes-cadastro" >Voltar para a tela de login</a>
+                                  </form>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- <form action="{{route('cadastrarUsuario.salvar')}}" method="POST"> 
             @csrf
             <br>
             <div class="row">
@@ -230,6 +350,6 @@
                     <button id="botao-cadastrar" type='submit' class="btn btn-primary btn-block cor-botao" >Cadastrar</button>
                 </div>
             </div>
-        </form>
+        </form> --}}
     </div>
 @endsection

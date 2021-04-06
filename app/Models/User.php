@@ -21,11 +21,15 @@ class User extends Authenticatable
         'cpf',
         'email',
         'password',
+        'refresh_token',
+        'token', 
+        'expires_in',
     ];
 
     public static $rules = [
         'name' => 'required|min:3|max:100',
         'cpf' => 'required|cpf',
+        'instituicao' => 'required',
         'email' => 'required|email',
         'password' => 'required|confirmed|min:8|max:64',
     ];
@@ -54,15 +58,11 @@ class User extends Authenticatable
         //REVER - Um usuário possui uma instituição ou mais de uma? 
     }
 
-    public function endereco(){
-        return $this->hasOne('App\Models\Endereco');
-    }
-
     public function telefone(){
         return $this->hasOne('App\Models\Telefone');
     }
 
-    public function atividadeUsuario(){
+    public function atividadesUsuario(){
         return $this->hasMany('App\Models\AtividadeUsuario');
     }
 
