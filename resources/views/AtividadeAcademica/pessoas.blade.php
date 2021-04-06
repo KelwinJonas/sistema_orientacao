@@ -22,6 +22,37 @@
                     </div>
                 </div>
                 {{-- Conteudo aqui --}}
+                <div class="col-md-10">
+                    <div class="row" style="padding: 5px;">
+                        <div class="col-md-12" >
+                            <div class="row align-items-start">
+                                <div class="col" style=" width: 100%;"> 
+                                    <p class="style_pessoas_titulo">Membros</p>
+                                </div>
+                                <div class="col" style="text-align: right;">
+                                    <button type="button" class="btn btn-primary btn-sm" style="margin-top: 5px;">Adicionar</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12"><hr style="background-color: black; margin-top: -10px; height: 2px; margin-left: -15px; margin-right:-15px"></div>
+                        @foreach ($atividade->atividadesUsuario as $atividadeUsuario)
+                            <div class="col-md-12 style_card_pessoas_atividade">
+                                <div class="row align-items-start">
+                                    <div style="width: 40px;margin-left:15px; margin-bottom:15px;">
+                                        <img src="{{asset('images/logo_novo_user.png')}}" alt="Orientação" width="40px"> 
+                                    </div>
+                                    <div class="col" style=" width: 100%; margin-top: 10px;"> 
+                                        <div>{{$atividadeUsuario->dono->name}}  <span style="color: #909090; font-size: 13px;"> - 20/02/2021 as 10h00</span></div>
+                                    </div>
+                                    <div class="col-1" style="text-align: right; margin-top: 10px;">
+                                        <img src="{{asset('images/logo_more.png')}}" alt="Opções" width="4px"> 
+                                    </div>
+
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
             </div>
         </div>
     </div>   

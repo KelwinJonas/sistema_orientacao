@@ -19,7 +19,7 @@ class AtividadeAcademica extends Model
                             'cor_card' => 'required',
     ];
 
-    public function atividadeUsuario(){
+    public function atividadesUsuario(){
         return $this->hasMany('App\Models\AtividadeUsuario');
     }
 
