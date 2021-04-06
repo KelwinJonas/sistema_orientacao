@@ -67,7 +67,7 @@ class LoginController extends Controller
            $data
        );
        Auth::login($user, true);
-       return redirect()->to($this->$redirectTo);
+       return redirect()->to($this->redirectTo);
    }
 
    public function showLoginForm(){

@@ -62,6 +62,7 @@ class UserController extends Controller
         $telefone->user_id = $usuario->id;
         $telefone->save();
 
-        return "Usuário cadastrado com sucesso";
+
+        return redirect()->route('listarAtividades');
     }
 }

@@ -21,11 +21,21 @@
                                     @csrf
                                     <div class="form-group" id="div-campo-email">
                                       <label for="email">E-mail</label>
-                                      <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Digite seu e-mail" name="email">
+                                      <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" aria-describedby="emailHelp" placeholder="Digite seu e-mail" name="email">
+                                        @error('email')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                     <div class="form-group">
                                       <label for="password">Senha</label>
-                                      <input type="password" class="form-control" id="password" placeholder="Digite sua senha" name="password">
+                                      <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" placeholder="Digite sua senha" name="password">
+                                        @error('password')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                     <div class="form-check" id="div-lembrar-senha">
                                       <input type="checkbox" class="form-check-input" id="exampleCheck1">

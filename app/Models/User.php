@@ -62,7 +62,7 @@ class User extends Authenticatable
         return $this->hasOne('App\Models\Telefone');
     }
 
-    public function atividadeUsuario(){
+    public function atividadesUsuario(){
         return $this->hasMany('App\Models\AtividadeUsuario');
     }
 

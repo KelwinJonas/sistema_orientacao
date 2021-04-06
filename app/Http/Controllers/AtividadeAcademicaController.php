@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\AtividadeAcademica;
+use App\Models\AtividadeUsuario;
+use App\Models\Papel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class AtividadeAcademicaController extends Controller
 {
@@ -14,7 +18,8 @@ class AtividadeAcademicaController extends Controller
 
     public function listarAtividades(){
         //ENVIAR APENAS AS ATIVIDADES ASSOCIADAS AO USUARIO LOGADO
-        return view('AtividadeAcademica.listar_atividades_academicas')->with('atividades', AtividadeAcademica::all());
+        $usuarioLogado = User::find(Auth::id());
+        return view('AtividadeAcademica.listar_atividades_academicas')->with('atividadesUsuario', $usuarioLogado->atividadesUsuario);
     }
 
     public function verAtividade($atividade_id){
@@ -69,8 +74,17 @@ class AtividadeAcademicaController extends Controller
         $atividadeAcademica->cor_card = $entrada['cor_card'];
         $atividadeAcademica->save();
 
-        //ASSOCIAR AO USUARIO QUE ESTA LOGADO NO SISTEMA
+        $usuarioLogado = User::find(Auth::id());
+        $atividadeUsuario = new AtividadeUsuario();
+        $atividadeUsuario->user_id = $usuarioLogado->id;
+        $atividadeUsuario->atividade_academica_id = $atividadeAcademica->id;
+        $atividadeUsuario->save();
 
-        return redirect()->route('listarAtividades');
+        $papel = new Papel();
+        $papel->nome = "proprietario";
+        $papel->atividade_usuario_id = $atividadeUsuario->id;
+        $papel->save();
+
+        return $this->listarAtividades();
     }
 }
