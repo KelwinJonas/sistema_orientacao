@@ -310,6 +310,11 @@
     height: 70px;
 }
 
+.div-descricao-card{
+    height: 160px;
+    
+}
+
 .link-titulo-atividade{
     font-size: 24px; 
     font-family: Arial, Helvetica, sans-serif; 

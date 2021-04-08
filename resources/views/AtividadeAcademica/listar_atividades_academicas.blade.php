@@ -40,6 +40,16 @@
                                             @enderror
                                         </div>
                                         <div class="form-group">
+                                            <label for="descricao">Descrição <span class="cor-obrigatorio">(obrigatório)</span></label>
+                                            <textarea name="descricao" id="descricao" class="form-control campos-cadastro @error('descricao') is-invalid @enderror" cols="30" rows="8"></textarea>
+                                            {{-- <input type='text' class="form-control campos-cadastro @error('titulo') is-invalid @enderror" placeholder = "Digite o titulo" name='titulo' id='titulo' value="{{old('titulo')}}"/>     --}}
+                                            @error('descricao')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{$message}}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group">
                                             <label for="data_inicio">Data início <span class="cor-obrigatorio">(obrigatório)</span></label>
                                             <input type='date' class="form-control campos-cadastro @error('data_inicio') is-invalid @enderror" name='data_inicio' id='data_inicio' value="{{old('data_inicio')}}"/>    
                                             @error('data_inicio')
@@ -83,8 +93,14 @@
                                     <div class="col-md-12 div-titulo-card">
                                         <a class="link-titulo-atividade" href="{{route('verAtividade.verMural', ['atividade_id' => $atividadeUsuario->atividadeAcademica->id])}}">{{$atividadeUsuario->atividadeAcademica->titulo}}</a>
                                     </div>
-                                    <div class="col-md-12">
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a...
+                                    <div class="col-md-12 div-descricao-card">
+                                        @php
+                                            $stringExemplo = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a";
+                                            if(strlen($atividadeUsuario->atividadeAcademica->descricao) > strlen($stringExemplo)){
+                                                $atividadeUsuario->atividadeAcademica->descricao = mb_strimwidth($atividadeUsuario->atividadeAcademica->descricao, 0, strlen($stringExemplo), "...");
+                                            }
+                                        @endphp
+                                        {{$atividadeUsuario->atividadeAcademica->descricao}}
                                     </div>
                                 </div>
                                 <hr>

@@ -80,6 +80,7 @@ class AtividadeAcademicaController extends Controller
         $atividadeAcademica = new AtividadeAcademica();
         $atividadeAcademica->tipo = $entrada['tipo'];
         $atividadeAcademica->titulo = $entrada['titulo'];
+        $atividadeAcademica->descricao = $entrada['descricao'];
         $atividadeAcademica->data_inicio = $entrada['data_inicio'];
         $atividadeAcademica->data_fim = $entrada['data_fim'];
         $atividadeAcademica->cor_card = $entrada['cor_card'];

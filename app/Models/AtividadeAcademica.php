@@ -9,11 +9,12 @@ class AtividadeAcademica extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['tipo', 'titulo', 'data_inicio', 'data_fim', 'cor_card'];
+    protected $fillable = ['tipo', 'titulo', 'descricao', 'data_inicio', 'data_fim', 'cor_card'];
 
     public static $rules = [
-                            'tipo' => 'required|min:5|max:50',
+                            'tipo' => 'required|min:3|max:50',
                             'titulo' => 'required|min:5|max:50',
+                            'descricao' => 'required|min:10|max:200',
                             'data_inicio' => 'required|date',
                             'data_fim' => 'required|date',
                             'cor_card' => 'required',
