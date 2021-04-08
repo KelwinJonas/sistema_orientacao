@@ -20,7 +20,7 @@ class CreateAtividadeAcademicaTable extends Migration
             $table->text('descricao');
             $table->date('data_inicio');
             $table->date('data_fim');
-            $table->string('cor_card');
+            $table->string('cor_card')->default('#F0D882');
             $table->timestamps();
         });
     }

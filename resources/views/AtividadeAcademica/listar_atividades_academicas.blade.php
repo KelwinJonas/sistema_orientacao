@@ -67,7 +67,7 @@
                                                 </span>
                                             @enderror
                                         </div>
-                                        <div class="form-group">
+                                        {{-- <div class="form-group">
                                             <label for="cor_card">Cor do card <span class="cor-obrigatorio">(obrigatório)</span></label>
                                             <input type='color' class="form-control campos-cadastro @error('cor_card') is-invalid @enderror" name='cor_card' id='cor_card' value="{{old('cor_card')}}"/>    
                                             @error('cor_card')
@@ -75,7 +75,7 @@
                                                     <strong>{{$message}}</strong>
                                                 </span>
                                             @enderror
-                                        </div>
+                                        </div> --}}
                                         <hr>
                                         <div class="float-right">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -86,31 +86,37 @@
                             </div>
                         </div>
                     </div>
-                    @foreach ($atividadesUsuario as $atividadeUsuario)
-                        <div class="style_card_tema" style="background-color: {{$atividadeUsuario->atividadeAcademica->cor_card}}">
-                            <div class="container div-conteudo-card">
-                                <div class="row">
-                                    <div class="col-md-12 div-titulo-card">
-                                        <a class="link-titulo-atividade" href="{{route('verAtividade.verMural', ['atividade_id' => $atividadeUsuario->atividadeAcademica->id])}}">{{$atividadeUsuario->atividadeAcademica->titulo}}</a>
+                    @if (count($atividadesUsuario) == 0)
+                        <div class="col-md-12" id="div-nenhuma-atividade">
+                            Nenhuma atividade cadastrada
+                        </div>
+                    @else
+                        @foreach ($atividadesUsuario as $atividadeUsuario)
+                            <div class="style_card_tema" style="background-color: {{$atividadeUsuario->atividadeAcademica->cor_card}}">
+                                <div class="container div-conteudo-card">
+                                    <div class="row">
+                                        <div class="col-md-12 div-titulo-card">
+                                            <a class="link-titulo-atividade" href="{{route('verAtividade.verMural', ['atividade_id' => $atividadeUsuario->atividadeAcademica->id])}}">{{$atividadeUsuario->atividadeAcademica->titulo}}</a>
+                                        </div>
+                                        <div class="col-md-12 div-descricao-card">
+                                            @php
+                                                $stringExemplo = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a";
+                                                if(strlen($atividadeUsuario->atividadeAcademica->descricao) > strlen($stringExemplo)){
+                                                    $atividadeUsuario->atividadeAcademica->descricao = mb_strimwidth($atividadeUsuario->atividadeAcademica->descricao, 0, strlen($stringExemplo), "...");
+                                                }
+                                            @endphp
+                                            {{$atividadeUsuario->atividadeAcademica->descricao}}
+                                        </div>
                                     </div>
-                                    <div class="col-md-12 div-descricao-card">
-                                        @php
-                                            $stringExemplo = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a";
-                                            if(strlen($atividadeUsuario->atividadeAcademica->descricao) > strlen($stringExemplo)){
-                                                $atividadeUsuario->atividadeAcademica->descricao = mb_strimwidth($atividadeUsuario->atividadeAcademica->descricao, 0, strlen($stringExemplo), "...");
-                                            }
-                                        @endphp
-                                        {{$atividadeUsuario->atividadeAcademica->descricao}}
+                                    <hr>
+                                    <div class="col-md-12 div-usuario">
+                                        <img src="{{asset('images/logo_user_default.png')}}" alt="Orientação" width="35px"> 
+                                        <span id="span-nome-proprietario">{{$atividadeUsuario->dono->name}}</span>
                                     </div>
-                                </div>
-                                <hr>
-                                <div class="col-md-12 div-usuario">
-                                    <img src="{{asset('images/logo_user_default.png')}}" alt="Orientação" width="35px"> 
-                                    <span id="span-nome-proprietario">{{$atividadeUsuario->dono->name}}</span>
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    @endif
                 </div>
             </div>
         </div>

@@ -83,7 +83,7 @@ class AtividadeAcademicaController extends Controller
         $atividadeAcademica->descricao = $entrada['descricao'];
         $atividadeAcademica->data_inicio = $entrada['data_inicio'];
         $atividadeAcademica->data_fim = $entrada['data_fim'];
-        $atividadeAcademica->cor_card = $entrada['cor_card'];
+        //$atividadeAcademica->cor_card = $entrada['cor_card'];
         $atividadeAcademica->save();
 
         $usuarioLogado = User::find(Auth::id());
