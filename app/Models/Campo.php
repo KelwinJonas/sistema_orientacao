@@ -9,7 +9,16 @@ class Campo extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'titulo',
+        'secao_id',
+    ];
+
     public function anotacoes(){
         return $this->hasMany('App\Models\Anotacao');
+    }
+
+    public function titulo_escapado() {
+        return json_encode($this->titulo);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AtividadeAcademica;
 use App\Models\AtividadeUsuario;
 use App\Models\Papel;
+use App\Models\Secao;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
@@ -29,10 +30,20 @@ class AtividadeAcademicaController extends Controller
         }
     }
 
-    public function verSecoes($atividade_id){
+    public function verSecoes($atividade_id, $secao_atual = 0){
+
         $atividade = AtividadeAcademica::find($atividade_id);
+        $secao = Secao::find($secao_atual);
+        if((!$secao) && ($atividade->secoes->count() > 0)) {
+            return redirect()->route("verAtividade.verSecoes", [$atividade_id, $atividade->secoes[0]]);
+        }
+
+
         if($atividade){
-            return view('AtividadeAcademica.secoes', ['atividade' => $atividade]);
+            return view('AtividadeAcademica.secoes', [
+                'atividade' => $atividade,
+                'secao' => $secao,
+            ]);
         }
     }
 
