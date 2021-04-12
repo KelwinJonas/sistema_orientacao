@@ -4,7 +4,6 @@
     <div class="container-main">
         <div class="container">
             <div id="div-lista-de-atividades">
-                <hr>
                 <div class="row">
                     <div class="col-md-9" id="cabecalho-listar-atividades"> Minhas atividades</div>
                     <div class="col-md-3"><button class="btn btn-primary" id="botao-criar-atividade" data-toggle="modal" data-target="#modal-criar-atividade">Criar atividade</button></div>
@@ -95,8 +94,142 @@
                             <div class="style_card_tema" style="background-color: {{$atividadeUsuario->atividadeAcademica->cor_card}}">
                                 <div class="container div-conteudo-card">
                                     <div class="row">
-                                        <div class="col-md-12 div-titulo-card">
+                                        <div class="col-md-10 div-titulo-card">
                                             <a class="link-titulo-atividade" href="{{route('verAtividade.verMural', ['atividade_id' => $atividadeUsuario->atividadeAcademica->id])}}">{{$atividadeUsuario->atividadeAcademica->titulo}}</a>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <a class="link-imagem-editar-card" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <div class="col-md-12">
+                                                    <img class="imagem-editar-card" src="{{asset('images/logo_more.png')}}" alt="">
+                                                </div>
+                                            </a>
+                                            {{-- Modal editar atividade --}}
+                                            <div id="modal-editar-atividade" class="modal fade" tabindex="-1" role="dialog">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-body">
+                                                            <h5 class="modal-title" id="header-modal-criar-atividade">Editar atividade</h5>
+                                                            <hr>
+                                                            <form action="{{route('cadastrarAtividade.salvar')}}" method="POST">
+                                                                @csrf
+                                                                <div class="form-group">
+                                                                    <label for="tipo">Tipo <span class="cor-obrigatorio">(obrigatório)</span></label>
+                                                                    <input type='text' class="form-control campos-cadastro @error('tipo') is-invalid @enderror" placeholder = "Digite o tipo" name='tipo' id='tipo' value="{{old('tipo')}}"/>    
+                                                                    @error('tipo')
+                                                                        <span class="invalid-feedback" role="alert">
+                                                                            <strong>{{$message}}</strong>
+                                                                        </span>
+                                                                    @enderror
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="titulo">Título <span class="cor-obrigatorio">(obrigatório)</span></label>
+                                                                    <input type='text' class="form-control campos-cadastro @error('titulo') is-invalid @enderror" placeholder = "Digite o titulo" name='titulo' id='titulo' value="{{old('titulo')}}"/>    
+                                                                    @error('titulo')
+                                                                        <span class="invalid-feedback" role="alert">
+                                                                            <strong>{{$message}}</strong>
+                                                                        </span>
+                                                                    @enderror
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="descricao">Descrição <span class="cor-obrigatorio">(obrigatório)</span></label>
+                                                                    <textarea name="descricao" id="descricao" class="form-control campos-cadastro @error('descricao') is-invalid @enderror" cols="30" rows="8"></textarea>
+                                                                    {{-- <input type='text' class="form-control campos-cadastro @error('titulo') is-invalid @enderror" placeholder = "Digite o titulo" name='titulo' id='titulo' value="{{old('titulo')}}"/>     --}}
+                                                                    @error('descricao')
+                                                                        <span class="invalid-feedback" role="alert">
+                                                                            <strong>{{$message}}</strong>
+                                                                        </span>
+                                                                    @enderror
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="data_inicio">Data início <span class="cor-obrigatorio">(obrigatório)</span></label>
+                                                                    <input type='date' class="form-control campos-cadastro @error('data_inicio') is-invalid @enderror" name='data_inicio' id='data_inicio' value="{{old('data_inicio')}}"/>    
+                                                                    @error('data_inicio')
+                                                                        <span class="invalid-feedback" role="alert">
+                                                                            <strong>{{$message}}</strong>
+                                                                        </span>
+                                                                    @enderror
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="data_fim">Data fim <span class="cor-obrigatorio">(obrigatório)</span></label>
+                                                                    <input type='date' class="form-control campos-cadastro @error('data_fim') is-invalid @enderror" name='data_fim' id='data_fim' value="{{old('data_fim')}}"/>    
+                                                                    @error('data_fim')
+                                                                        <span class="invalid-feedback" role="alert">
+                                                                            <strong>{{$message}}</strong>
+                                                                        </span>
+                                                                    @enderror
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="cor_card">Cor do card <span class="cor-obrigatorio">(opcional)</span></label>
+                                                                    <div class="container custom-radios">
+                                                                        <div class="row justify-content-center">
+                                                                            <div>
+                                                                                <input type="radio" id="radio-cor-1" name="radio" value="#2ecc71"/>
+                                                                                <label class="label-radio" for="radio-cor-1"><span class="span-radio"></span></label>
+                                                                            </div>
+                                                                            <div>
+                                                                                <input type="radio" id="radio-cor-2" name="radio" value="#3498db"/>
+                                                                                <label class="label-radio" for="radio-cor-2"><span class="span-radio"></span></label>
+                                                                            </div>
+                                                                            <div>
+                                                                                <input type="radio" id="radio-cor-3" name="radio" value="#f1c40f"/>
+                                                                                <label class="label-radio" for="radio-cor-3"><span class="span-radio"></span></label>
+                                                                            </div>
+                                                                            <div>
+                                                                                <input type="radio" id="radio-cor-4" name="radio" value="#e74c3c"/>
+                                                                                <label class="label-radio" for="radio-cor-4"><span class="span-radio"></span></label>
+                                                                            </div>
+                                                                            <div>
+                                                                                <input type="radio" id="radio-cor-5" name="radio" value="#836FFF"/>
+                                                                                <label class="label-radio" for="radio-cor-5"><span class="span-radio"></span></label>
+                                                                            </div>
+                                                                            <div>
+                                                                                <input type="radio" id="radio-cor-6" name="radio" value="#708090"/>
+                                                                                <label class="label-radio" for="radio-cor-6"><span class="span-radio"></span></label>
+                                                                            </div>
+                                                                            <div>
+                                                                                <input type="radio" id="radio-cor-7" name="radio" value="#808000"/>
+                                                                                <label class="label-radio" for="radio-cor-7"><span class="span-radio"></span></label>
+                                                                            </div>
+                                                                            <div>
+                                                                                <input type="radio" id="radio-cor-8" name="radio" value="#BC8F8F"/>
+                                                                                <label class="label-radio" for="radio-cor-8"><span class="span-radio"></span></label>
+                                                                            </div>
+                                                                            <div>
+                                                                                <input type="radio" id="radio-cor-9" name="radio" value="#FFFF00"/>
+                                                                                <label class="label-radio" for="radio-cor-9"><span class="span-radio"></span></label>
+                                                                            </div>
+                                                                            <div>
+                                                                                <input type="radio" id="radio-cor-10" name="radio" value="#7CFC00"/>
+                                                                                <label class="label-radio" for="radio-cor-10"><span class="span-radio"></span></label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                            
+                                                                </div>
+                                                                <hr>
+                                                                <div class="float-right">
+                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                                    <button type="submit" class="btn btn-success">Criar</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {{-- Modal deletar atividade --}}
+                                            <div id="modal-deletar-atividade" class="modal fade" tabindex="-1" role="dialog">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-body">
+                                                            deletar
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="dropdown-menu card-drop" aria-labelledby="navbarDropdown">
+                                                <button class="dropdown-item botao-more-card" data-toggle="modal" data-target="#modal-editar-atividade">Editar</button>
+                                                <button class="dropdown-item botao-more-card" data-toggle="modal" data-target="#modal-deletar-atividade">Deletar</button>
+                                            </div>
                                         </div>
                                         <div class="col-md-12 div-descricao-card">
                                             @php
@@ -121,29 +254,4 @@
             </div>
         </div>
     </div>
-    {{-- <br>
-    <h2>Minhas atividades</h2>
-
-    <div style="overflow: auto; height: 450px">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col" class="">Título</th>
-                    <th scope="col" class="">Tipo da atividade</th>
-                    <th scope="col" class="">Data início</th>
-                    <th scope="col" class="">Data fim</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($atividades as $atividade)
-                    <tr class='atividade'>
-                        <td class='titulo'><a href="{{route('verAtividade', ['atividade_id' => $atividade->id])}}">{{$atividade->titulo}}</a></td>
-                        <td class='tipo'>{{$atividade->tipo}}</td>
-                        <td class='data_inicio'>{{$atividade->data_inicio}}</td>
-                        <td class='data_fim'>{{$atividade->data_fim}}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div> --}}
 @endsection
