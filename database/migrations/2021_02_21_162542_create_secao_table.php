@@ -19,8 +19,13 @@ class CreateSecaoTable extends Migration
             $table->string('nome');
             $table->string('legenda');
             $table->integer('ordem');
+
             $table->unsignedBigInteger('atividade_academica_id');
             $table->foreign('atividade_academica_id')->references('id')->on('atividade_academicas');
+
+            $table->unsignedBigInteger('secao_id')->nullable(true);
+            $table->foreign('secao_id')->references('id')->on('secaos');
+
             $table->timestamps();
         });
     }

@@ -24,6 +24,6 @@ class AtividadeAcademica extends Model
     }
 
     public function secoes(){
-        return $this->hasMany('App\Models\Secao');
+        return $this->hasMany('App\Models\Secao')->where('secao_id', NULL)->orderBy('ordem', 'asc');
     }
 }

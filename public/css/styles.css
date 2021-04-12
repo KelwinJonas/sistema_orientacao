@@ -395,3 +395,66 @@
 .style_card_pessoas_atividade{
     padding-top:15px;margin-bottom:5px;padding-bottom:0px;border-color:black; border-radius: 8px; line-height:17px; border-radius: 10px;border: 1px solid #DEDEDE; font-size: 15px;
 }
+
+
+
+
+
+
+
+/* tela - secoes */
+.style_card_secoes{
+    padding-top:10px; padding-bottom:30px;border-color:black; border-radius: 8px; line-height:17px; border-radius: 10px;border: 1px solid #DEDEDE; font-size: 15px;
+}
+.style_card_secoes_titulo{
+    margin-top:10px;margin-bottom: 15px;font-size: 17px; font-weight: 600;
+}
+.style_card_secoes_subtitulo{
+    margin-top: 30px;margin-bottom:-15px;text-align: right; font-weight: 600;
+}
+.style_card_secoes_atividade{
+    padding-top:15px;margin-bottom:5px;padding-bottom:0px;border-color:black; border-radius: 8px; line-height:17px; border-radius: 10px;border: 1px solid #DEDEDE; font-size: 15px;
+}
+
+.style_secao{
+    padding-top:10px;margin-bottom:5px;padding-bottom:20px;border-color:black; border-radius: 8px; line-height:17px; border-radius: 10px;border: 1px solid #DEDEDE; font-size: 15px; padding-top:20px; color: #909090;
+}
+.style_secao:hover{
+    box-shadow: 1px 4px 20px 0px rgba(0,0,0,0.19);
+-webkit-box-shadow: 1px 4px 20px 0px rgba(0,0,0,0.19);
+-moz-box-shadow: 1px 4px 20px 0px rgba(0,0,0,0.19);
+cursor: pointer;
+}
+.style_secao_ativo{
+    padding-top:10px;margin-bottom:5px;padding-bottom:20px;border-color:black; border-radius: 8px; line-height:17px; border-radius: 10px;border: 1px solid #DEDEDE; font-size: 15px; padding-top:20px; color: #909090; box-shadow: 1px 4px 20px 0px rgba(0,0,0,0.19);
+    -webkit-box-shadow: 1px 4px 20px 0px rgba(0,0,0,0.19);
+    -moz-box-shadow: 1px 4px 20px 0px rgba(0,0,0,0.19);
+}
+
+
+.link_secao a {
+  color: black !important;
+}
+
+.link_secao::before {
+  content: '●';
+  color: #ffa710;
+  margin-right: 4px;
+}
+
+.link_secao_ativa > a {
+  color: #c28918 !important;
+  font-weight: 600 !important;
+}
+
+
+#botao-criar-secao, #botao-editar-secao, #botao-add-subsecao {
+  cursor: pointer;
+}
+
+#botao-criar-secao:hover, #botao-editar-secao:hover, #botao-add-subsecao:hover  {
+  text-decoration: underline;
+}
+
+
+/* X tela - secoes X */

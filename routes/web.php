@@ -4,10 +4,10 @@ use App\Http\Controllers\AtividadeAcademicaController;
 use App\Http\Controllers\InstituicaoController;
 use App\Http\Controllers\SecaoController;
 use App\Http\Controllers\UserController;
-use App\Models\AtividadeAcademica;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
-use Faker\Guesser\Name;
+use App\Http\Controllers\CampoController;
+use App\Models\Campo;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -21,6 +21,10 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 Auth::routes();
+
+
+Route::get('/', function () { return redirect()->route('login'); });
+
 
 Route::get('/login/google', [LoginController::class, 'redirectToGoogleProvider'])->name('loginGoogle');
 Route::get('/login/google/callback',[LoginController::class,'handleProviderGoogleCallback']);
@@ -44,13 +48,21 @@ Route::prefix('cadastrar_atividade')->name('cadastrarAtividade')->group(function
 });
 
 Route::get('/listar_atividades', [AtividadeAcademicaController::class, 'listarAtividades'])->name('listarAtividades')->middleware('auth');
-#Route::get('/ver_atividade/{atividade_id}', [AtividadeAcademicaController::class, 'verAtividade'])->name('verAtividade');
+//Route::get('/ver_atividade/{atividade_id}', [AtividadeAcademicaController::class, 'verAtividade'])->name('verAtividade');
 
-Route::prefix('ver_atividade/{atividade_id}')->name('verAtividade')->group(function(){
-    Route::get('/mural', [AtividadeAcademicaController::class, 'verAtividade'])->name('.verMural')->middleware('auth');
-    Route::get('/secoes', [AtividadeAcademicaController::class, 'verSecoes'])->name('.verSecoes')->middleware('auth');
-    Route::get('/arquivos', [AtividadeAcademicaController::class, 'verArquivos'])->name('.verArquivos')->middleware('auth');
-    Route::get('/pessoas', [AtividadeAcademicaController::class, 'verPessoas'])->name('.verPessoas')->middleware('auth');
+
+Route::middleware('auth')->group(function() {
+    Route::prefix('ver_atividade/{atividade_id}')->name('verAtividade')->group(function(){
+        Route::get('/mural', [AtividadeAcademicaController::class, 'verAtividade'])->name('.verMural');
+        Route::get('/secoes/{secao_atual?}', [AtividadeAcademicaController::class, 'verSecoes'])->name('.verSecoes');
+        Route::get('/arquivos', [AtividadeAcademicaController::class, 'verArquivos'])->name('.verArquivos');
+        Route::get('/pessoas', [AtividadeAcademicaController::class, 'verPessoas'])->name('.verPessoas');
+    });
+
+    Route::post("/salvar_campo", [CampoController::class, 'salvarCampo'])->name('salvarCampo');
+    Route::post("/deletar_campo", [CampoController::class, 'deletarCampo'])->name('deletarCampo');
+
+    Route::post('/deletar_secao', [SecaoController::class, 'deletarSecao'])->name('deletarSecao');
+    Route::post('/salvar_secao', [SecaoController::class, 'salvarAdicionarSecao'])->name('salvarSecao');
+    Route::post('/salvar_editar_secao', [SecaoController::class, 'salvarEditarSecao'])->name('salvarEditarSecao');
 });
-
-//Route::post('/salvar_secao', [SecaoController::class, 'salvarAdicionarSecao'])->name('salvarSecao');
