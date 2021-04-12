@@ -69,7 +69,6 @@ class AtividadeAcademicaController extends Controller
             'min' => 'O campo :attribute deve ter no mínimo :min caracteres.',
             'max' => 'O campo :attribute deve ter no máximo :max caracteres.',
             'date' => 'O campo :attribute está inválido.',
-            'cor_card.required' => 'O campo cor é obrigatório.',
         ];
 
         $validator = Validator::make($entrada, AtividadeAcademica::$rules, $messages);
@@ -83,7 +82,7 @@ class AtividadeAcademicaController extends Controller
         $atividadeAcademica->descricao = $entrada['descricao'];
         $atividadeAcademica->data_inicio = $entrada['data_inicio'];
         $atividadeAcademica->data_fim = $entrada['data_fim'];
-        //$atividadeAcademica->cor_card = $entrada['cor_card'];
+        $atividadeAcademica->cor_card = "#F0D882";
         $atividadeAcademica->save();
 
         $usuarioLogado = User::find(Auth::id());
@@ -96,6 +95,43 @@ class AtividadeAcademicaController extends Controller
         $papel->nome = "proprietario";
         $papel->atividade_usuario_id = $atividadeUsuario->id;
         $papel->save();
+
+        return redirect()->route('listarAtividades');
+    }
+
+    public function salvarEditarAtividade(Request $request, $atividade_id){
+        $entrada = $request->all();
+        
+        $atividadeAcademica = AtividadeAcademica::find($atividade_id);
+        //dd($atividadeAcademica);
+        //dd($entrada);
+        $messages = [
+            'required' => 'O campo :attribute é obrigatório.',
+            'min' => 'O campo :attribute deve ter no mínimo :min caracteres.',
+            'max' => 'O campo :attribute deve ter no máximo :max caracteres.',
+            'date' => 'O campo :attribute está inválido.',
+        ];
+
+        $validator = Validator::make($entrada, AtividadeAcademica::$rules, $messages);
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $atividadeAcademica->update([
+            'tipo' => $request->input('tipo'),
+            'titulo' => $request->input('titulo'),
+            'descricao' => $request->input('descricao'),
+            'data_inicio' => $request->input('data_inicio'),
+            'data_fim' => $request->input('data_fim'),
+        ]);
+        
+        // dd($entrada['cor_card']);
+
+        if($request->input('cor_card')){
+            $atividadeAcademica->update([
+                'cor_card' => $request->input('cor_card')
+            ]);
+        }
 
         return redirect()->route('listarAtividades');
     }

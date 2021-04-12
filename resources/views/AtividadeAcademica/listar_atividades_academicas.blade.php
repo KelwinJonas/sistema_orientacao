@@ -110,11 +110,11 @@
                                                         <div class="modal-body">
                                                             <h5 class="modal-title" id="header-modal-criar-atividade">Editar atividade</h5>
                                                             <hr>
-                                                            <form action="{{route('cadastrarAtividade.salvar')}}" method="POST">
+                                                            <form action="{{route('salvarEditarAtividade', ['atividade_id' => $atividadeUsuario->atividadeAcademica->id])}}" method="POST">
                                                                 @csrf
                                                                 <div class="form-group">
                                                                     <label for="tipo">Tipo <span class="cor-obrigatorio">(obrigatório)</span></label>
-                                                                    <input type='text' class="form-control campos-cadastro @error('tipo') is-invalid @enderror" placeholder = "Digite o tipo" name='tipo' id='tipo' value="{{old('tipo')}}"/>    
+                                                                    <input type='text' class="form-control campos-cadastro @error('tipo') is-invalid @enderror" placeholder = "Digite o tipo" name='tipo' id='tipo' value="{{$atividadeUsuario->atividadeAcademica->tipo}}"/>    
                                                                     @error('tipo')
                                                                         <span class="invalid-feedback" role="alert">
                                                                             <strong>{{$message}}</strong>
@@ -123,7 +123,7 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="titulo">Título <span class="cor-obrigatorio">(obrigatório)</span></label>
-                                                                    <input type='text' class="form-control campos-cadastro @error('titulo') is-invalid @enderror" placeholder = "Digite o titulo" name='titulo' id='titulo' value="{{old('titulo')}}"/>    
+                                                                    <input type='text' class="form-control campos-cadastro @error('titulo') is-invalid @enderror" placeholder = "Digite o titulo" name='titulo' id='titulo' value="{{$atividadeUsuario->atividadeAcademica->titulo}}"/>    
                                                                     @error('titulo')
                                                                         <span class="invalid-feedback" role="alert">
                                                                             <strong>{{$message}}</strong>
@@ -132,8 +132,7 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="descricao">Descrição <span class="cor-obrigatorio">(obrigatório)</span></label>
-                                                                    <textarea name="descricao" id="descricao" class="form-control campos-cadastro @error('descricao') is-invalid @enderror" cols="30" rows="8"></textarea>
-                                                                    {{-- <input type='text' class="form-control campos-cadastro @error('titulo') is-invalid @enderror" placeholder = "Digite o titulo" name='titulo' id='titulo' value="{{old('titulo')}}"/>     --}}
+                                                                    <textarea name="descricao" id="descricao" class="form-control campos-cadastro @error('descricao') is-invalid @enderror" cols="30" rows="8" placeholder="Digite uma descrição">{{$atividadeUsuario->atividadeAcademica->descricao}}</textarea>
                                                                     @error('descricao')
                                                                         <span class="invalid-feedback" role="alert">
                                                                             <strong>{{$message}}</strong>
@@ -142,7 +141,7 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="data_inicio">Data início <span class="cor-obrigatorio">(obrigatório)</span></label>
-                                                                    <input type='date' class="form-control campos-cadastro @error('data_inicio') is-invalid @enderror" name='data_inicio' id='data_inicio' value="{{old('data_inicio')}}"/>    
+                                                                    <input type='date' class="form-control campos-cadastro @error('data_inicio') is-invalid @enderror" name='data_inicio' id='data_inicio' value="{{$atividadeUsuario->atividadeAcademica->data_inicio}}"/>    
                                                                     @error('data_inicio')
                                                                         <span class="invalid-feedback" role="alert">
                                                                             <strong>{{$message}}</strong>
@@ -151,7 +150,7 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="data_fim">Data fim <span class="cor-obrigatorio">(obrigatório)</span></label>
-                                                                    <input type='date' class="form-control campos-cadastro @error('data_fim') is-invalid @enderror" name='data_fim' id='data_fim' value="{{old('data_fim')}}"/>    
+                                                                    <input type='date' class="form-control campos-cadastro @error('data_fim') is-invalid @enderror" name='data_fim' id='data_fim' value="{{$atividadeUsuario->atividadeAcademica->data_fim}}"/>    
                                                                     @error('data_fim')
                                                                         <span class="invalid-feedback" role="alert">
                                                                             <strong>{{$message}}</strong>
@@ -163,43 +162,43 @@
                                                                     <div class="container custom-radios">
                                                                         <div class="row justify-content-center">
                                                                             <div>
-                                                                                <input type="radio" id="radio-cor-1" name="radio" value="#2ecc71"/>
+                                                                                <input type="radio" id="radio-cor-1" name="cor_card" value="#2ecc71"/>
                                                                                 <label class="label-radio" for="radio-cor-1"><span class="span-radio"></span></label>
                                                                             </div>
                                                                             <div>
-                                                                                <input type="radio" id="radio-cor-2" name="radio" value="#3498db"/>
+                                                                                <input type="radio" id="radio-cor-2" name="cor_card" value="#3498db"/>
                                                                                 <label class="label-radio" for="radio-cor-2"><span class="span-radio"></span></label>
                                                                             </div>
                                                                             <div>
-                                                                                <input type="radio" id="radio-cor-3" name="radio" value="#f1c40f"/>
+                                                                                <input type="radio" id="radio-cor-3" name="cor_card" value="#f1c40f"/>
                                                                                 <label class="label-radio" for="radio-cor-3"><span class="span-radio"></span></label>
                                                                             </div>
                                                                             <div>
-                                                                                <input type="radio" id="radio-cor-4" name="radio" value="#e74c3c"/>
+                                                                                <input type="radio" id="radio-cor-4" name="cor_card" value="#e74c3c"/>
                                                                                 <label class="label-radio" for="radio-cor-4"><span class="span-radio"></span></label>
                                                                             </div>
                                                                             <div>
-                                                                                <input type="radio" id="radio-cor-5" name="radio" value="#836FFF"/>
+                                                                                <input type="radio" id="radio-cor-5" name="cor_card" value="#836FFF"/>
                                                                                 <label class="label-radio" for="radio-cor-5"><span class="span-radio"></span></label>
                                                                             </div>
                                                                             <div>
-                                                                                <input type="radio" id="radio-cor-6" name="radio" value="#708090"/>
+                                                                                <input type="radio" id="radio-cor-6" name="cor_card" value="#708090"/>
                                                                                 <label class="label-radio" for="radio-cor-6"><span class="span-radio"></span></label>
                                                                             </div>
                                                                             <div>
-                                                                                <input type="radio" id="radio-cor-7" name="radio" value="#808000"/>
+                                                                                <input type="radio" id="radio-cor-7" name="cor_card" value="#808000"/>
                                                                                 <label class="label-radio" for="radio-cor-7"><span class="span-radio"></span></label>
                                                                             </div>
                                                                             <div>
-                                                                                <input type="radio" id="radio-cor-8" name="radio" value="#BC8F8F"/>
+                                                                                <input type="radio" id="radio-cor-8" name="cor_card" value="#BC8F8F"/>
                                                                                 <label class="label-radio" for="radio-cor-8"><span class="span-radio"></span></label>
                                                                             </div>
                                                                             <div>
-                                                                                <input type="radio" id="radio-cor-9" name="radio" value="#FFFF00"/>
+                                                                                <input type="radio" id="radio-cor-9" name="cor_card" value="#FF1493"/>
                                                                                 <label class="label-radio" for="radio-cor-9"><span class="span-radio"></span></label>
                                                                             </div>
                                                                             <div>
-                                                                                <input type="radio" id="radio-cor-10" name="radio" value="#7CFC00"/>
+                                                                                <input type="radio" id="radio-cor-10" name="cor_card" value="#7CFC00"/>
                                                                                 <label class="label-radio" for="radio-cor-10"><span class="span-radio"></span></label>
                                                                             </div>
                                                                         </div>
@@ -209,7 +208,7 @@
                                                                 <hr>
                                                                 <div class="float-right">
                                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                                    <button type="submit" class="btn btn-success">Criar</button>
+                                                                    <button type="submit" class="btn btn-success">Salvar</button>
                                                                 </div>
                                                             </form>
                                                         </div>

@@ -384,24 +384,15 @@ input[type="radio"] {
     display: inline-block;
 }
 
-.img-radio {
-    opacity: 0;
-    transition: all .3s ease;
-}
-
 input[type="radio"] + label span {
     display:inline-block;
-    width:30px;
-    height:30px;
+    width:40px;
+    height:40px;
     margin:-1px 4px 0 0;
     vertical-align:middle;
     cursor:pointer;
     -moz-border-radius:  50%;
     border-radius:  50%;
-}
-
-input[type="radio"]:checked + label span img{
-    opacity: 1;
 }
 
 #radio-cor-1 + label span {
@@ -437,7 +428,7 @@ input[type="radio"]:checked + label span img{
 }
 
 #radio-cor-9 + label span {
-    background-color: #FFFF00;
+    background-color: #FF1493;
 }
 
 #radio-cor-10 + label span {
