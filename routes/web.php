@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CampoController;
+use App\Http\Controllers\PessoaController;
 use App\Models\Campo;
 use Illuminate\Support\Facades\Auth;
 
@@ -59,6 +60,7 @@ Route::middleware('auth')->group(function() {
         Route::get('/secoes/{secao_atual?}', [AtividadeAcademicaController::class, 'verSecoes'])->name('.verSecoes');
         Route::get('/arquivos', [AtividadeAcademicaController::class, 'verArquivos'])->name('.verArquivos');
         Route::get('/pessoas', [AtividadeAcademicaController::class, 'verPessoas'])->name('.verPessoas');
+        Route::post('/salvarAdicionarPessoa', [PessoaController::class, 'salvarAdicionarPessoa'])->name('.salvarAdicionarPessoa');
     });
 
     Route::post("/salvar_campo", [CampoController::class, 'salvarCampo'])->name('salvarCampo');
