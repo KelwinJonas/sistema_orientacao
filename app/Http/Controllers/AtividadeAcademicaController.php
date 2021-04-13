@@ -20,7 +20,11 @@ class AtividadeAcademicaController extends Controller
     public function listarAtividades(){
         //ENVIAR APENAS AS ATIVIDADES ASSOCIADAS AO USUARIO LOGADO
         $usuarioLogado = User::find(Auth::id());
-        return view('AtividadeAcademica.listar_atividades_academicas')->with('atividadesUsuario', $usuarioLogado->atividadesUsuario);
+        return view('AtividadeAcademica.listar_atividades_academicas')->with
+        ([
+            'atividadesUsuario' => $usuarioLogado->atividadesUsuario,
+            'usuarioLogado' => $usuarioLogado,
+        ]);
     }
 
     public function verAtividade($atividade_id){

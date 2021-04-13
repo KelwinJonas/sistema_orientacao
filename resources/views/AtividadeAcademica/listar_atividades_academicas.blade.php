@@ -98,11 +98,16 @@
                                             <a class="link-titulo-atividade" href="{{route('verAtividade.verMural', ['atividade_id' => $atividadeUsuario->atividadeAcademica->id])}}">{{$atividadeUsuario->atividadeAcademica->titulo}}</a>
                                         </div>
                                         <div class="col-md-2">
-                                            <a class="link-imagem-editar-card" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <div class="col-md-12">
-                                                    <img class="imagem-editar-card" src="{{asset('images/logo_more.png')}}" alt="">
-                                                </div>
-                                            </a>
+                                            
+                                            {{-- Permissões - mostrar o botão more--}}
+                                            @if ((($usuarioLogado->id == $atividadeUsuario->user_id) && ($atividadeUsuario->papel->nome == "proprietario")) || (($usuarioLogado->id == $atividadeUsuario->user_id) && ($atividadeUsuario->papel->nome == "editor")))
+                                                <a class="link-imagem-editar-card" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <div class="col-md-12">
+                                                        <img class="imagem-editar-card" src="{{asset('images/logo_more.png')}}" alt="">
+                                                    </div>
+                                                </a> 
+                                            @endif
+                                            
                                             {{-- Modal editar atividade --}}
                                             <div id="modal-editar-atividade-{{$atividadeUsuario->atividadeAcademica->id}}" class="modal fade" tabindex="-1" role="dialog">
                                                 <div class="modal-dialog" role="document">
@@ -226,8 +231,12 @@
                                                 </div>
                                             </div>
                                             <div class="dropdown-menu card-drop" aria-labelledby="navbarDropdown">
-                                                <button class="dropdown-item botao-more-card" data-toggle="modal" data-target="#modal-editar-atividade-{{$atividadeUsuario->atividadeAcademica->id}}">Editar</button>
-                                                <button class="dropdown-item botao-more-card" data-toggle="modal" data-target="#modal-deletar-atividade">Deletar</button>
+                                                @if((($usuarioLogado->id == $atividadeUsuario->user_id) && ($atividadeUsuario->papel->nome == "proprietario")))
+                                                    <button class="dropdown-item botao-more-card" data-toggle="modal" data-target="#modal-editar-atividade-{{$atividadeUsuario->atividadeAcademica->id}}">Editar</button>
+                                                    <button class="dropdown-item botao-more-card" data-toggle="modal" data-target="#modal-deletar-atividade">Deletar</button>
+                                                @elseif((($usuarioLogado->id == $atividadeUsuario->user_id) && ($atividadeUsuario->papel->nome == "editor")))
+                                                    <button class="dropdown-item botao-more-card" data-toggle="modal" data-target="#modal-editar-atividade-{{$atividadeUsuario->atividadeAcademica->id}}">Editar</button>
+                                                @endif 
                                             </div>
                                         </div>
                                         <div class="col-md-12 div-descricao-card">
