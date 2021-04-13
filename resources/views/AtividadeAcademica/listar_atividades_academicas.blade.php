@@ -91,9 +91,6 @@
                         </div>
                     @else
                         @foreach ($atividadesUsuario as $atividadeUsuario)
-                            @php
-                                //var_dump($atividadeUsuario->atividadeAcademica);
-                            @endphp
                             <div class="style_card_tema" style="background-color: {{$atividadeUsuario->atividadeAcademica->cor_card}}">
                                 <div class="container div-conteudo-card">
                                     <div class="row">
@@ -219,7 +216,7 @@
                                                 </div>
                                             </div>
                                             {{-- Modal deletar atividade --}}
-                                            <div id="modal-deletar-atividade" class="modal fade" tabindex="-1" role="dialog">
+                                            <div id="modal-deletar-atividade-{{$atividadeUsuario->atividadeAcademica->id}}" class="modal fade" tabindex="-1" role="dialog">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-body">
