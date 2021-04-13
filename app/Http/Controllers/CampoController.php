@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Anotacao;
 use App\Models\Campo;
 use App\Models\Secao;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CampoController extends Controller
 {
@@ -40,4 +43,30 @@ class CampoController extends Controller
         return redirect()->back();
     }
 
+
+    public function anotacoes_html($id_campo) {
+        $campo = Campo::find($id_campo);
+        if($campo) return view('AtividadeAcademica.listagem_anotacoes', ["campo" => $campo]);
+    }
+
+
+    public function salvar_anotacao(Request $request) {
+
+        $anotacao = new Anotacao;
+        $anotacao->fill($request->all());
+        $anotacao->user_id = Auth::id();
+        $anotacao->status = 1;
+        $anotacao->save();
+        
+        return "";
+    }
+
+    public function deletar_anotacao(Request $request) {
+        try{
+            //TODO: permissoes sobre a anotação
+            $anotacao = Anotacao::find($request->anotacao_id);
+            $anotacao->delete();
+        }
+        catch(Exception $ex) {}
+    }
 }

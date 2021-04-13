@@ -32,7 +32,6 @@ class SecaoController extends Controller
         }
     }
 
-
     public function salvarAdicionarSecao(Request $request){
         $validator = Validator::make($request->all(), [
             'tipo' => 'required',
@@ -53,7 +52,6 @@ class SecaoController extends Controller
         $this->ordenar_secoes(AtividadeAcademica::find($request->atividade_academica_id)->secoes);
         return redirect()->back();
     }
-
 
     public function salvarEditarSecao(Request $request){
         $validator = Validator::make($request->all(), [
