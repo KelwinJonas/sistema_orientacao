@@ -92,6 +92,75 @@
                              document.getElementById("titulo").value = String(titulo_campo).replace("\"", "").split("").reverse().join("").replace("\"", "").split("").reverse().join("");
                              document.getElementById("btn_salvar_campo").innerHTML= "Salvar";
                          }
+
+
+                         function buscar_anotacoes_js(id_campo, callback_uso) {
+                             let url = "http://127.0.0.1:8000/anotacoes/" + id_campo;
+                             fetch(url)
+                                 .then(function (response) {
+                                     return response.text();
+                                 })
+                                 .then(function (texto) {
+                                     callback_uso(texto);
+                                 })
+                                 .catch(function (error) {
+                                     console.log("Campo " + id_campo + ", Erro para conseguir as anotações: " + error);
+                                     callback_uso("");
+                                 });
+
+                         }
+
+                         function enviar_anotacao(form, anotacoes, id_campo) {
+                             //submit
+                             const XHR = new XMLHttpRequest();
+                             const FD  = new FormData();
+                             let input_comentario;
+                             let btn_comentario;
+
+                             let urlEncodedDataPairs = [];
+                             for(let input of form.querySelectorAll("input")) {
+                                 if(input.name === "comentario" && input.value.length < 2) {return;}
+                                 FD.append(input.name, input.value);
+                                 if(input.name === "comentario") {input_comentario = input;}
+                                 if(input.name === "btn_salvar_campo") {btn_comentario = input;}
+                             }
+                             btn_comentario.style.display = "none";
+
+                             XHR.addEventListener( 'load', function(event) {
+                                 console.log(event);
+                                 input_comentario.value = "";
+                                 btn_comentario.style.display = "inline-block";
+                             } );
+
+                             XHR.addEventListener( 'error', function(event) {
+                                 alert('Não foi possivel enviar a anotação');
+                                 btn_comentario.style.display = "inline-block";
+                             } );
+
+                             XHR.open('POST', form.action);
+                             XHR.send(FD);
+
+                             //baixar anotacoes dnv
+                             buscar_anotacoes_js(id_campo, function(texto) { anotacoes.innerHTML = texto; });
+                         }
+
+                         function deletar_anotacao(id) {
+                             document.getElementById("anotacao_" + id).style.display = "none";
+                             let form = document.getElementById("form_deletar_anotacao_" + id);
+
+                             //submit
+                             const XHR = new XMLHttpRequest();
+                             const FD  = new FormData();
+
+                             let urlEncodedDataPairs = [];
+                             for(let input of form.querySelectorAll("input")) {
+                                 FD.append(input.name, input.value);
+                             }
+
+                             XHR.open('POST', form.action);
+                             XHR.send(FD);
+                         }
+                         
                         </script>
 
                         <div class="row" style="padding: 5px;">
@@ -107,7 +176,7 @@
                                             <label for="titulo" style="margin-top: 5px; font-weight: 600; color: #909090;">Campo</label>
                                         </div>
                                         <div style="float: right;">
-                                            <button type="button" class="btn btn-light" style="margin-top: -5px;margin-bottom: 7px;" onclick="abrir_fechar_add_campo(false)"><img alt="✖" width="16px" style="margin-top: -4px;"></button>
+                                            <button type="button" class="btn btn-light" style="margin-top: -5px;margin-bottom: 7px;" onclick="abrir_fechar_add_campo(false)"><div width="16px" style="margin-top: -4px;">✖</div></button>
                                         </div>
                                         <textarea class="form-control" id="titulo" placeholder="Escreva o titulo do campo." name="titulo"></textarea>
                                     </div>
@@ -122,15 +191,21 @@
 
 
                             <!-- iterator de campo -->
+                            <style>
+                             .dropdown-toggle::after {
+	                               content: none;
+                             }
+                            </style>
+
                             @foreach($secao->campos as $campo)
                                 <div class="col-md-12 style_card_secoes_atividade">
                                     <div class="row">
-                                        <div class="col" style=" width: 100%; text-align: center;">
+                                        <div id="div_titulo_campo_{{$campo->id}}" class="col" style=" width: 100%; text-align: center; cursor: pointer;">
                                             {{$campo->titulo}}
                                         </div>
                                         <div class="col-1" style="text-align: right; right: 24px;">
                                             <button id="btn_dropdown_opcoes_campo_{{$campo->id}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button" class="btn btn-light dropdown-toggle" style="margin-top: -5px;margin-bottom: 7px;" onclick="abrir_fechar_add_campo(false)">
-                                                <img alt="⠇" width="4px">
+                                                <div width="4px">⠇</div>
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="btn_dropdown_opcoes_campo_{{$campo->id}}">
                                                 <button type="button" class="dropdown-item" onclick="editar_campo('{{$campo->id}}', '{{$campo->titulo_escapado()}}')">Editar Titulo do Campo</button>
@@ -144,10 +219,45 @@
                                             
                                         </div>
                                     </div>
+                                    <!-- TODO: conteudo do campo, que provavelmente vai ser um iframe com o editor, ou seja lá como é -->
+                                    <div id="conteudo_campo_{{$campo->id}}" class="collapse col-md-12">
+                                        <hr>
+                                        conteudos nice dimai
+                                        <hr>
+
+                                        <div id="anotacoes_campo_{{$campo->id}}"></div>
+                                        <script>
+                                         buscar_anotacoes_js("{{$campo->id}}", function(texto) {
+                                             document.getElementById("anotacoes_campo_{{$campo->id}}").innerHTML = texto;
+                                         });
+                                        </script>
+
+
+                                        <form id="form_enviar_anotacao_{{$campo->id}}"
+                                              method="POST"
+                                              onsubmit="enviar_anotacao(this, anotacoes_campo_{{$campo->id}}, {{$campo->id}}); return false;"
+                                              action="{{ route('anotacoes.salvar') }}">
+                                            @csrf
+                                            <input type="hidden" name="campo_id" value="{{$campo->id}}" />
+                                            <div class="form-group">
+                                                <input class="form-control" style="display: inline-block; width: 85%;" type="text" name="comentario" />
+                                                <input name ="btn_salvar_campo" class="btn btn-success comentario_campo" style="margin-top: -4px" type="submit" value="->" />
+                                            </div>
+                                        </form>
+                                        <br>
+
+                                        
+                                    </div>
                                 </div>
+
+                                <button id="btn_conteudo_campo_{{$campo->id}}" class="btn d-none" type="button" data-toggle="collapse" data-target="#conteudo_campo_{{$campo->id}}" aria-expanded="false" aria-controls="conteudo_campo_{{$campo->id}}"></button>
+
+                                <script>
+                                 document.getElementById("div_titulo_campo_{{$campo->id}}").onclick = function() {
+                                     document.getElementById("btn_conteudo_campo_{{$campo->id}}").click();
+                                 };
+                                </script>
                             @endforeach
-
-
 
 
 

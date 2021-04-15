@@ -65,4 +65,8 @@ Route::middleware('auth')->group(function() {
     Route::post('/deletar_secao', [SecaoController::class, 'deletarSecao'])->name('deletarSecao');
     Route::post('/salvar_secao', [SecaoController::class, 'salvarAdicionarSecao'])->name('salvarSecao');
     Route::post('/salvar_editar_secao', [SecaoController::class, 'salvarEditarSecao'])->name('salvarEditarSecao');
+
+    Route::get('/anotacoes/{id_campo}', [CampoController::class, 'anotacoes_html'])->name('anotacoes');
+    Route::post('/anotacoes/salvar', [CampoController::class, 'salvar_anotacao'])->name('anotacoes.salvar');
+    Route::post('/anotacoes/deletar', [CampoController::class, 'deletar_anotacao'])->name('anotacoes.deletar');
 });

@@ -41,7 +41,7 @@
 
 #conteudo-rodape{
     margin-top:5rem;
-    text-align:center"
+    text-align:center;
 }
 
 #linha-rodape{
@@ -295,8 +295,8 @@
 @media screen and (max-width: 596px) and (min-width: 0px){
     .style_card_tema{
         margin:0.5rem; border-radius: 8px; width: 100%; height: 100%; background-color: #F0D882; box-shadow: 2px 2px 29px -2px rgba(0,0,0,0.15);
-                    -webkit-box-shadow: 2px 2px 29px -2px rgba(0,0,0,0.15);
-                    -moz-box-shadow: 2px 2px 29px -2px rgba(0,0,0,0.15);
+        -webkit-box-shadow: 2px 2px 29px -2px rgba(0,0,0,0.15);
+        -moz-box-shadow: 2px 2px 29px -2px rgba(0,0,0,0.15);
     }
 }
 
@@ -412,8 +412,17 @@
 .style_card_secoes_subtitulo{
     margin-top: 30px;margin-bottom:-15px;text-align: right; font-weight: 600;
 }
+
 .style_card_secoes_atividade{
-    padding-top:15px;margin-bottom:5px;padding-bottom:0px;border-color:black; border-radius: 8px; line-height:17px; border-radius: 10px;border: 1px solid #DEDEDE; font-size: 15px;
+    padding-top:15px;
+    margin-bottom:5px;
+    padding-bottom:0px;
+    border-color:black;
+    border-radius: 8px;
+    line-height:17px;
+    border-radius: 10px;
+    border: 1px solid #DEDEDE;
+    font-size: 15px;
 }
 
 .style_secao{
@@ -421,9 +430,9 @@
 }
 .style_secao:hover{
     box-shadow: 1px 4px 20px 0px rgba(0,0,0,0.19);
--webkit-box-shadow: 1px 4px 20px 0px rgba(0,0,0,0.19);
--moz-box-shadow: 1px 4px 20px 0px rgba(0,0,0,0.19);
-cursor: pointer;
+    -webkit-box-shadow: 1px 4px 20px 0px rgba(0,0,0,0.19);
+    -moz-box-shadow: 1px 4px 20px 0px rgba(0,0,0,0.19);
+    cursor: pointer;
 }
 .style_secao_ativo{
     padding-top:10px;margin-bottom:5px;padding-bottom:20px;border-color:black; border-radius: 8px; line-height:17px; border-radius: 10px;border: 1px solid #DEDEDE; font-size: 15px; padding-top:20px; color: #909090; box-shadow: 1px 4px 20px 0px rgba(0,0,0,0.19);
@@ -433,27 +442,27 @@ cursor: pointer;
 
 
 .link_secao a {
-  color: black !important;
+    color: black !important;
 }
 
 .link_secao::before {
-  content: '●';
-  color: #ffa710;
-  margin-right: 4px;
+    content: '●';
+    color: #ffa710;
+    margin-right: 4px;
 }
 
 .link_secao_ativa > a {
-  color: #c28918 !important;
-  font-weight: 600 !important;
+    color: #c28918 !important;
+    font-weight: 600 !important;
 }
 
 
 #botao-criar-secao, #botao-editar-secao, #botao-add-subsecao {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 #botao-criar-secao:hover, #botao-editar-secao:hover, #botao-add-subsecao:hover  {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 
