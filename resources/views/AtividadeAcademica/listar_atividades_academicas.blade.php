@@ -91,6 +91,7 @@
                         </div>
                     @else
                         @foreach ($atividadesUsuario as $atividadeUsuario)
+                        
                             <div class="style_card_tema" style="background-color: {{$atividadeUsuario->atividadeAcademica->cor_card}}">
                                 <div class="container div-conteudo-card">
                                     <div class="row">
@@ -252,6 +253,9 @@
                                     <hr>
                                     <div class="col-md-12 div-usuario">
                                         <img src="{{asset('images/logo_user_default.png')}}" alt="Orientação" width="35px"> 
+                                        @php
+                                            //dd($atividadeUsuario->dono->name);
+                                        @endphp
                                         <span id="span-nome-proprietario">{{$atividadeUsuario->dono->name}}</span>
                                     </div>
                                 </div>
