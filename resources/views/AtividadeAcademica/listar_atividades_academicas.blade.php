@@ -110,6 +110,7 @@
                                             @endif
                                             
                                             {{-- Modal editar atividade --}}
+                            
                                             <div id="modal-editar-atividade-{{$atividadeUsuario->atividadeAcademica->id}}" class="modal fade" tabindex="-1" role="dialog">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
@@ -168,7 +169,7 @@
                                                                     <div class="container custom-radios">
                                                                         <div class="row justify-content-center">
                                                                             <div>
-                                                                                <input type="radio" id="radio-cor-1" name="cor_card" value="#2ecc71"/>
+                                                                                <input type="radio" id="radio-cor-1" class="" name="cor_card" value="#2ecc71"/>
                                                                                 <label class="label-radio" for="radio-cor-1"><span class="span-radio"></span></label>
                                                                             </div>
                                                                             <div>
@@ -253,10 +254,7 @@
                                     <hr>
                                     <div class="col-md-12 div-usuario">
                                         <img src="{{asset('images/logo_user_default.png')}}" alt="Orientação" width="35px"> 
-                                        @php
-                                            //dd($atividadeUsuario->dono->name);
-                                        @endphp
-                                        <span id="span-nome-proprietario">{{$atividadeUsuario->dono->name}}</span>
+                                        <span id="span-nome-proprietario">{{$atividadeUsuario->atividadeAcademica->dono->name}}</span>
                                     </div>
                                 </div>
                             </div>

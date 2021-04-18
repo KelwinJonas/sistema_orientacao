@@ -80,6 +80,8 @@ class AtividadeAcademicaController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
+        $usuarioLogado = User::find(Auth::id());
+
         $atividadeAcademica = new AtividadeAcademica();
         $atividadeAcademica->tipo = $entrada['tipo'];
         $atividadeAcademica->titulo = $entrada['titulo'];
@@ -87,6 +89,7 @@ class AtividadeAcademicaController extends Controller
         $atividadeAcademica->data_inicio = $entrada['data_inicio'];
         $atividadeAcademica->data_fim = $entrada['data_fim'];
         $atividadeAcademica->cor_card = "#F0D882";
+        $atividadeAcademica->user_id = $usuarioLogado->id;
         $atividadeAcademica->save();
 
         $usuarioLogado = User::find(Auth::id());
