@@ -10,9 +10,58 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Google_Client;
+use Google_Service_Drive;
+use Google_Service_Drive_DriveFile;
 
 class AtividadeAcademicaController extends Controller
 {
+
+//-------------------------Funções Google Drive---------------------------
+    private $drive;
+
+   public function __construct(Google_Client $client)
+   {
+       $this->middleware(function ($request, $next) use ($client) {
+           $accessToken = [
+               'access_token' => auth()->user()->token,
+               'created' => auth()->user()->created_at->timestamp,
+               'expires_in' => auth()->user()->expires_in,
+               'refresh_token' => auth()->user()->refresh_token
+           ];
+   
+           $client->setAccessToken($accessToken);
+   
+           if ($client->isAccessTokenExpired()) {
+               if ($client->getRefreshToken()) {
+                   $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
+               }
+               auth()->user()->update([
+                   'token' => $client->getAccessToken()['access_token'],
+                   'expires_in' => $client->getAccessToken()['expires_in'],
+                   'created_at' => $client->getAccessToken()['created'],
+               ]);
+           }
+   
+           $client->refreshToken(auth()->user()->refresh_token);
+           $this->drive = new Google_Service_Drive($client);
+           return $next($request);
+       });
+   }
+
+   function createFolder($folder_name, $parent){
+        $folder_meta = new Google_Service_Drive_DriveFile(array(
+            'name' => $folder_name,
+            'mimeType' => 'application/vnd.google-apps.folder',
+            'parents' => array($parent),
+        ));
+        $folder = $this->drive->files->create($folder_meta, array(
+            'fields' => 'id'));
+        return $folder->id;
+    }
+
+ //-----------------------------------------------------------------------
+
     public function cadastroAtividade(){
         return view('AtividadeAcademica.cadastrar_atividade_academica');
     }
@@ -89,6 +138,7 @@ class AtividadeAcademicaController extends Controller
         $atividadeAcademica->data_inicio = $entrada['data_inicio'];
         $atividadeAcademica->data_fim = $entrada['data_fim'];
         $atividadeAcademica->cor_card = "#F0D882";
+        $atividadeAcademica->folder_id = "none";
         $atividadeAcademica->user_id = $usuarioLogado->id;
         $atividadeAcademica->save();
 
@@ -102,6 +152,18 @@ class AtividadeAcademicaController extends Controller
         $papel->nome = "proprietario";
         $papel->atividade_usuario_id = $atividadeUsuario->id;
         $papel->save();
+
+        //Criação da pasta da atividade acadêmica no Google Drive do usuário logado
+        if($usuarioLogado->folder_id_minhas_atividades == 'root'){        
+            $folder_id_minhas_atividades = $this->createFolder('Orientação - Minhas atividades', 'root');
+            $usuarioLogado->update([
+                'folder_id_minhas_atividades' => $folder_id_minhas_atividades,
+            ]);
+        }
+        //OBS: Título deve ser único?
+        $folder_id = $this->createFolder($atividadeAcademica->titulo, $usuarioLogado->folder_id_minhas_atividades);
+
+        $atividadeAcademica->update(['folder_id' => $folder_id]);
 
         return redirect()->route('listarAtividades');
     }

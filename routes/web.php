@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CampoController;
+use App\Http\Controllers\DriveController;
 use App\Http\Controllers\PessoaController;
 use App\Models\Campo;
 use Illuminate\Support\Facades\Auth;
