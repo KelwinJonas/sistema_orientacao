@@ -40,7 +40,7 @@ class AtividadeAcademicaController extends Controller
 
 
         if($atividade){
-            return view('AtividadeAcademica.secoes', [
+            return view('AtividadeAcademica.secao.secoes', [
                 'atividade' => $atividade,
                 'secao' => $secao,
             ]);

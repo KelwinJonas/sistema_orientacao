@@ -13,7 +13,6 @@ class Secao extends Model
         'tipo',
         'nome',
         'legenda',
-        'ordem',
         'atividade_academica_id',
         'secao_id'
     ];
@@ -43,12 +42,6 @@ class Secao extends Model
         $str_r .= "<a href=" .  route('verAtividade.verSecoes', $this->atividade_academica_id) . "/" . $this->id . ">" . $this->nome . "</a>";
 
         if($this->contem_subsecao_com_id($secao->id) || $this->id == $secao->id) {
-            if($this->id == $secao->id) {
-                $str_r .= "<span class=\"float-right\">";
-                $str_r .= "<a id=\"botao-add-subsecao\" data-toggle=\"modal\" data-target=\"#modal-criar-secao\" style=\"font-size: 15px; color: #212529 !important;\" onclick=\"add_id_na_subsecao(". $this->id .")\">Add. Subseção</a>";
-                $str_r .= "<a id=\"botao-editar-secao\" data-toggle=\"modal\" data-target=\"#modal-editar-secao\" style=\"font-size: 15px; color: #212529 !important;\"  onclick=\"add_id_na_subsecao(null)\" >Editar</a>";
-                $str_r .= "</span>";
-            }
             $str_r .= "<br />";
             $str_r .= "<div>";
             foreach($this->secoes as $subsecao) {
@@ -57,7 +50,6 @@ class Secao extends Model
             $str_r .= "</div>";
         }
 
-        
         $str_r .= "</div>";
         return $str_r;
     }

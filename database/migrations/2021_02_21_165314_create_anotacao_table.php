@@ -18,7 +18,7 @@ class CreateAnotacaoTable extends Migration
             $table->text('comentario');
             $table->boolean('status')->default(true);
             $table->unsignedBigInteger('campo_id');
-            $table->foreign('campo_id')->references('id')->on('campos');
+            $table->foreign('campo_id')->references('id')->on('campos')->onDelete('cascade');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

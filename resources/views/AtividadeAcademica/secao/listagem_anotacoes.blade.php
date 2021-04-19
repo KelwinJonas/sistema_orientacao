@@ -1,6 +1,10 @@
 <div class="row">
     <div class="col-md-12">
 
+        @if($campo->anotacoes->count() == 0)
+            Não há nenhuma anotação aqui...
+        @endif
+
         @foreach($campo->anotacoes as $anotacao)
             <div id="anotacao_{{$anotacao->id}}" class="row">
                 <div class="col-md-12">

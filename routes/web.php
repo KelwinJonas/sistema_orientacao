@@ -69,4 +69,6 @@ Route::middleware('auth')->group(function() {
     Route::get('/anotacoes/{id_campo}', [CampoController::class, 'anotacoes_html'])->name('anotacoes');
     Route::post('/anotacoes/salvar', [CampoController::class, 'salvar_anotacao'])->name('anotacoes.salvar');
     Route::post('/anotacoes/deletar', [CampoController::class, 'deletar_anotacao'])->name('anotacoes.deletar');
+
+    Route::post('/salvar_conteudo_campo', [CampoController::class, 'salvar_conteudo'])->name('salvarConteudo');
 });

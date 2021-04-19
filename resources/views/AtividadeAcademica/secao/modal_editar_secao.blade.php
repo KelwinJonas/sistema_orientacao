@@ -43,17 +43,6 @@
                         @endif
                         @enderror
                     </div>
-                    <div class="form-group">
-                        <label for="titulo">Posição da seção<span class="cor-obrigatorio">(obrigatório)</span></label>
-                        <input type='number' min="1" class="form-control campos-cadastro @error('ordem') @if(session("localizacao_erro") == "editar") is-invalid @endif @enderror" name='ordem' id='ordem' value="{{old('ordem', $secao->ordem)}}"/>
-                        @error('legenda')
-                        @if(session("localizacao_erro") == "editar")
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{$message}}</strong>
-                            </span>
-                        @endif
-                        @enderror
-                    </div>
                     <hr>
                     <div class="float-left">
                         <a href="{{route('deletarSecao')}}"

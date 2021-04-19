@@ -42,17 +42,6 @@
                         @endif
                         @enderror
                     </div>
-                    <div class="form-group">
-                        <label for="titulo">Posição da seção<span class="cor-obrigatorio">(obrigatório)</span></label>
-                        <input type='number' min="1" class="form-control campos-cadastro @error('ordem') @if(session("localizacao_erro") == "criar") is-invalid @endif @enderror" name='ordem' id='ordem' value="{{old('ordem', 1)}}"/>
-                        @error('legenda')
-                        @if(session("localizacao_erro") == "criar")
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{$message}}</strong>
-                            </span>
-                        @endif
-                        @enderror
-                    </div>
                     <hr>
                     <div class="float-right">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

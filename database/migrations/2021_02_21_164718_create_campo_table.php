@@ -16,7 +16,7 @@ class CreateCampoTable extends Migration
         Schema::create('campos', function (Blueprint $table) {
             $table->id();
             $table->string('titulo');
-            $table->text('conteudo')->nullable(true);
+            $table->longText('conteudo')->nullable(true);
             $table->unsignedBigInteger('secao_id');
             $table->foreign('secao_id')->references('id')->on('secaos');
             $table->timestamps();

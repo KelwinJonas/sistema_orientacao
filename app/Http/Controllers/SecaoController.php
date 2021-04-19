@@ -37,7 +37,6 @@ class SecaoController extends Controller
             'tipo' => 'required',
             'nome' => 'required',
             'legenda' => 'required',
-            'ordem' => 'required',
             'atividade_academica_id' => 'required|exists:atividade_academicas,id',
             'secao_id' => 'nullable|exists:secaos,id'
         ]);
@@ -49,7 +48,6 @@ class SecaoController extends Controller
         $nova_secao = new Secao;
         $nova_secao->fill($request->all());
         $nova_secao->save();
-        $this->ordenar_secoes(AtividadeAcademica::find($request->atividade_academica_id)->secoes);
         return redirect()->back();
     }
 
@@ -58,9 +56,7 @@ class SecaoController extends Controller
             'tipo' => 'required',
             'nome' => 'required',
             'legenda' => 'required',
-            'ordem' => 'required',
             'atividade_academica_id' => 'required|exists:atividade_academicas,id',
-            'secao_id' => 'required|exists:secaos,id'
         ]);
 
         if($validator->fails()) {
@@ -70,7 +66,6 @@ class SecaoController extends Controller
         $nova_secao = Secao::find($request->secao_id);
         $nova_secao->fill($request->all());
         $nova_secao->save();
-        $this->ordenar_secoes(AtividadeAcademica::find($request->atividade_academica_id)->secoes);
         return redirect()->back();
     }
 
