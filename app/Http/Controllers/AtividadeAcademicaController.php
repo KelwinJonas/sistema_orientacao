@@ -33,6 +33,12 @@ class AtividadeAcademicaController extends Controller
     public function verSecoes($atividade_id, $secao_atual = 0){
 
         $atividade = AtividadeAcademica::find($atividade_id);
+
+        if(!$atividade) {
+            return redirect()->route('login');
+        }
+
+        
         $secao = Secao::find($secao_atual);
         if((!$secao) && ($atividade->secoes->count() > 0)) {
             return redirect()->route("verAtividade.verSecoes", [$atividade_id, $atividade->secoes[0]]);

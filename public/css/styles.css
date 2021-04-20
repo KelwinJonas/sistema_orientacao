@@ -480,4 +480,24 @@
 }
 
 
+.hr_div_secoes {
+    width: 85%;
+    margin: 0 0 0 0;
+    height: 3px;
+    border: none;
+    color: #0000;
+    background-color: #0000;
+}
+
+.hr_div_secoes_ativo {
+    color: #f0f;
+    background-color: #f0f;
+}
+
+.link_secao_arrastado_sobre {
+    background-color: black;
+}
+
+
+
 /* X tela - secoes X */
