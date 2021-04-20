@@ -14,8 +14,8 @@
     margin-bottom: 5px;
     margin-left: 9px;
     margin-right: 4px;
-    margin-top: 2px; 
-}   
+    margin-top: 2px;
+}
 
 #cor-texto-logo-navbar{
     color: #3498db;
@@ -32,9 +32,9 @@
 /* Footer */
 
 #rodape{
-    background-color:#BDC3C7; 
-    display: flex; 
-    flex-wrap: wrap; 
+    background-color:#BDC3C7;
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     padding-bottom:5rem
 }
@@ -49,7 +49,7 @@
 }
 
 #div-logo-lmts{
-    text-align:center; 
+    text-align:center;
     margin-bottom:2rem;
 }
 
@@ -59,7 +59,7 @@
 }
 
 #div-logo-ufape{
-    text-align:center; 
+    text-align:center;
     margin-bottom:2rem;
 }
 
@@ -72,12 +72,12 @@
 }
 
 #div-label-redes-sociais{
-    margin-bottom: 2rem; 
+    margin-bottom: 2rem;
     color:#fff;
 }
 
 .imagens-redes-sociais{
-    margin-left: 10px; 
+    margin-left: 10px;
     margin-right: 10px;
     width: 40px;
     height: 40px;
@@ -92,7 +92,7 @@
 
 #div-conteudo{
     margin:2rem;
-    border-radius: 12px; 
+    border-radius: 12px;
     box-shadow: 2px 2px 29px -2px rgba(0,0,0,0.52);
     -webkit-box-shadow: 2px 2px 29px -2px rgba(0,0,0,0.52);
     -moz-box-shadow: 2px 2px 29px -2px rgba(0,0,0,0.52);
@@ -119,10 +119,10 @@
 }
 
 #div-cabecalho-login{
-    font-size: 25px; 
-    font-family: Arial, Helvetica, sans-serif; 
-    font-weight:bold; 
-    text-align: center; 
+    font-size: 25px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight:bold;
+    text-align: center;
     margin-top:55px;
 }
 
@@ -213,10 +213,10 @@
 
 /* Tela cadastro do usuário */
 #cabecalho-cadastro-usuario{
-    font-size: 25px; 
-    font-family: Arial, Helvetica, sans-serif; 
-    font-weight:bold; 
-    text-align: center; 
+    font-size: 25px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight:bold;
+    text-align: center;
     margin-top:55px;
 }
 
@@ -245,7 +245,7 @@
 
 #legenda-redefinicao-senha{
     line-height: 20px;
-    margin-top: 20px; 
+    margin-top: 20px;
     color: gray;
 }
 
@@ -255,12 +255,12 @@
 
 #div-conteudo-esqueceu-senha{
     margin: 2rem;
-    border-radius: 12px; 
+    border-radius: 12px;
     box-shadow: 2px 2px 29px -2px rgba(0,0,0,0.52);
     -webkit-box-shadow: 2px 2px 29px -2px rgba(0,0,0,0.52);
     -moz-box-shadow: 2px 2px 29px -2px rgba(0,0,0,0.52);
     padding-bottom: 40px;
-} 
+}
 
 /* Tela listar atividades (página inicial após logar no sistema) */
 
@@ -280,18 +280,18 @@
 }
 
 #div-lista-de-atividades{
-    padding-right: 2rem; 
+    padding-right: 2rem;
     padding-left:2rem;
     padding-top: 1rem;
     margin-bottom: 20px;
 }
 
 .style_card_tema{
-    margin:0.5rem; 
-    border-radius: 8px; 
-    width: 250px; 
-    height: 330px; 
-    background-color: #F0D882; 
+    margin:0.5rem;
+    border-radius: 8px;
+    width: 250px;
+    height: 330px;
+    background-color: #F0D882;
     box-shadow: 2px 2px 29px -2px rgba(0,0,0,0.15);
     -webkit-box-shadow: 2px 2px 29px -2px rgba(0,0,0,0.15);
     -moz-box-shadow: 2px 2px 29px -2px rgba(0,0,0,0.15);
@@ -311,7 +311,7 @@
 }
 
 .div-titulo-card{
-    margin-top: 10px; 
+    margin-top: 10px;
     height: 70px;
 }
 
@@ -343,10 +343,10 @@
 }
 
 .link-titulo-atividade{
-    font-size: 24px; 
-    font-family: Arial, Helvetica, sans-serif; 
-    font-weight: bold; 
-    line-height: 28px; 
+    font-size: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    line-height: 28px;
     color: black;
 }
 
@@ -471,7 +471,7 @@ input[type="radio"]:checked + label span{
 }
 
 .style_card_tema_largo{
-    margin:0.5rem; border-radius: 8px; 
+    margin:0.5rem; border-radius: 8px;
     box-shadow: 2px 2px 29px -2px rgba(0,0,0,0.15);
     -webkit-box-shadow: 2px 2px 29px -2px rgba(0,0,0,0.15);
     -moz-box-shadow: 2px 2px 29px -2px rgba(0,0,0,0.15);
@@ -486,7 +486,7 @@ input[type="radio"]:checked + label span{
 }
 
 #container-ver-atividade{
-    padding-right: 2rem; 
+    padding-right: 2rem;
     padding-left:2rem;
     padding-top: 1rem;
 }
@@ -500,8 +500,8 @@ input[type="radio"]:checked + label span{
 }
 
 .link-menu-ver-atividade{
-    margin-left: 3px; 
-    margin-right:3px; 
+    margin-left: 3px;
+    margin-right:3px;
     color: black
 }
 
@@ -553,14 +553,28 @@ input[type="radio"]:checked + label span{
 }
 
 .style_secao{
-    padding-top:10px;margin-bottom:5px;padding-bottom:20px;border-color:black; border-radius: 8px; line-height:17px; border-radius: 10px;border: 1px solid #DEDEDE; font-size: 15px; padding-top:20px; color: #909090;
+    padding-top:10px;
+    margin-bottom:5px;
+    padding-bottom:20px;
+    border-color:black;
+    border-radius: 8px;
+    line-height:17px;
+    border-radius: 10px;
+    border: 1px solid #DEDEDE;
+    font-size: 15px;
+    padding-top:20px;
+    color: #c28918;
 }
+
+/*
 .style_secao:hover{
     box-shadow: 1px 4px 20px 0px rgba(0,0,0,0.19);
     -webkit-box-shadow: 1px 4px 20px 0px rgba(0,0,0,0.19);
     -moz-box-shadow: 1px 4px 20px 0px rgba(0,0,0,0.19);
     cursor: pointer;
 }
+*/
+
 .style_secao_ativo{
     padding-top:10px;margin-bottom:5px;padding-bottom:20px;border-color:black; border-radius: 8px; line-height:17px; border-radius: 10px;border: 1px solid #DEDEDE; font-size: 15px; padding-top:20px; color: #909090; box-shadow: 1px 4px 20px 0px rgba(0,0,0,0.19);
     -webkit-box-shadow: 1px 4px 20px 0px rgba(0,0,0,0.19);
@@ -591,6 +605,26 @@ input[type="radio"]:checked + label span{
 #botao-criar-secao:hover, #botao-editar-secao:hover, #botao-add-subsecao:hover  {
     text-decoration: underline;
 }
+
+
+.hr_div_secoes {
+    width: 85%;
+    margin: 0 0 0 0;
+    height: 3px;
+    border: none;
+    color: #0000;
+    background-color: #0000;
+}
+
+.hr_div_secoes_ativo {
+    color: #f0f;
+    background-color: #f0f;
+}
+
+.link_secao_arrastado_sobre {
+    background-color: black;
+}
+
 
 
 /* X tela - secoes X */

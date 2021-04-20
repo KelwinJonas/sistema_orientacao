@@ -46,7 +46,7 @@ class CampoController extends Controller
 
     public function anotacoes_html($id_campo) {
         $campo = Campo::find($id_campo);
-        if($campo) return view('AtividadeAcademica.listagem_anotacoes', ["campo" => $campo]);
+        if($campo) return view('AtividadeAcademica.secao.listagem_anotacoes', ["campo" => $campo]);
     }
 
 
@@ -68,5 +68,13 @@ class CampoController extends Controller
             $anotacao->delete();
         }
         catch(Exception $ex) {}
+    }
+
+
+    public function salvar_conteudo(Request $request) {
+            $campo = Campo::find($request->id_campo);
+            $campo->conteudo = $request->conteudo;
+            $campo->save();
+            return redirect()->back();
     }
 }
