@@ -54,22 +54,24 @@ class DriveController extends Controller
         return $folder->id;
     }
 
-    function createFile($file, $atividade){
-        $name = gettype($file) === 'object' ? $file->getClientOriginalName() : $file;
-        $fileMetadata = new Google_Service_Drive_DriveFile([
-            'name' => $name,
-            'parents' => array($atividade->folder_id),
-        ]);
- 
-        $content = gettype($file) === 'object' ?  File::get($file) : Storage::get($file);
-        $mimeType = gettype($file) === 'object' ? File::mimeType($file) : Storage::mimeType($file);
- 
-        $file = $this->drive->files->create($fileMetadata, [
-            'data' => $content,
-            'mimeType' => $mimeType,
-            'uploadType' => 'multipart',
-            'fields' => 'id'
-        ]);
+    function createFile($files, $atividade){
+        foreach ($files as $file) {
+            $name = gettype($file) === 'object' ? $file->getClientOriginalName() : $file;
+            $fileMetadata = new Google_Service_Drive_DriveFile([
+                'name' => $name,
+                'parents' => array($atividade->folder_id),
+            ]);
+    
+            $content = gettype($file) === 'object' ?  File::get($file) : Storage::get($file);
+            $mimeType = gettype($file) === 'object' ? File::mimeType($file) : Storage::mimeType($file);
+    
+            $file = $this->drive->files->create($fileMetadata, [
+                'data' => $content,
+                'mimeType' => $mimeType,
+                'uploadType' => 'multipart',
+                'fields' => 'id'
+            ]);
+        }
         
         return redirect()->route('verAtividade.verArquivos', ['atividade_id' => $atividade->id]);
     }

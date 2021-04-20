@@ -31,7 +31,7 @@
                                 <form action="{{route('uploadArquivo', ['atividade_id' => $atividade->id])}}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-group">
-                                        <input type="file" name="arquivo" class="btn btn-primary btn-block">
+                                        <input type="file" name="arquivo[]" multiple="multiple" class="btn btn-primary btn-block">
                                     </div>
                                     <hr>
                                     <div class="float-right">
