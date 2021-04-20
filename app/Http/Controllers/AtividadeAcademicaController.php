@@ -10,9 +10,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Google_Client;
+use Google_Service_Drive;
+use Google_Service_Drive_DriveFile;
 
-class AtividadeAcademicaController extends Controller
+class AtividadeAcademicaController extends DriveController
 {
+
     public function cadastroAtividade(){
         return view('AtividadeAcademica.cadastrar_atividade_academica');
     }
@@ -20,7 +24,11 @@ class AtividadeAcademicaController extends Controller
     public function listarAtividades(){
         //ENVIAR APENAS AS ATIVIDADES ASSOCIADAS AO USUARIO LOGADO
         $usuarioLogado = User::find(Auth::id());
-        return view('AtividadeAcademica.listar_atividades_academicas')->with('atividadesUsuario', $usuarioLogado->atividadesUsuario);
+        return view('AtividadeAcademica.listar_atividades_academicas')->with
+        ([
+            'atividadesUsuario' => $usuarioLogado->atividadesUsuario,
+            'usuarioLogado' => $usuarioLogado,
+        ]);
     }
 
     public function verAtividade($atividade_id){
@@ -69,7 +77,6 @@ class AtividadeAcademicaController extends Controller
             'min' => 'O campo :attribute deve ter no mínimo :min caracteres.',
             'max' => 'O campo :attribute deve ter no máximo :max caracteres.',
             'date' => 'O campo :attribute está inválido.',
-            'cor_card.required' => 'O campo cor é obrigatório.',
         ];
 
         $validator = Validator::make($entrada, AtividadeAcademica::$rules, $messages);
@@ -77,12 +84,17 @@ class AtividadeAcademicaController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
+        $usuarioLogado = User::find(Auth::id());
+
         $atividadeAcademica = new AtividadeAcademica();
         $atividadeAcademica->tipo = $entrada['tipo'];
         $atividadeAcademica->titulo = $entrada['titulo'];
+        $atividadeAcademica->descricao = $entrada['descricao'];
         $atividadeAcademica->data_inicio = $entrada['data_inicio'];
         $atividadeAcademica->data_fim = $entrada['data_fim'];
-        $atividadeAcademica->cor_card = $entrada['cor_card'];
+        $atividadeAcademica->cor_card = "#F0D882";
+        $atividadeAcademica->folder_id = "none";
+        $atividadeAcademica->user_id = $usuarioLogado->id;
         $atividadeAcademica->save();
 
         $usuarioLogado = User::find(Auth::id());
@@ -95,6 +107,55 @@ class AtividadeAcademicaController extends Controller
         $papel->nome = "proprietario";
         $papel->atividade_usuario_id = $atividadeUsuario->id;
         $papel->save();
+
+        //Criação da pasta da atividade acadêmica no Google Drive do usuário logado
+        if($usuarioLogado->folder_id_minhas_atividades == 'root'){        
+            $folder_id_minhas_atividades = $this->createFolder('Orientação - Minhas atividades', 'root');
+            $usuarioLogado->update([
+                'folder_id_minhas_atividades' => $folder_id_minhas_atividades,
+            ]);
+        }
+        //OBS: Título deve ser único?
+        $folder_id = $this->createFolder($atividadeAcademica->titulo, $usuarioLogado->folder_id_minhas_atividades);
+
+        $atividadeAcademica->update(['folder_id' => $folder_id]);
+
+        return redirect()->route('listarAtividades');
+    }
+
+    public function salvarEditarAtividade(Request $request, $atividade_id){
+        $entrada = $request->all();
+        
+        $atividadeAcademica = AtividadeAcademica::find($atividade_id);
+        //dd($atividadeAcademica);
+        //dd($entrada);
+        $messages = [
+            'required' => 'O campo :attribute é obrigatório.',
+            'min' => 'O campo :attribute deve ter no mínimo :min caracteres.',
+            'max' => 'O campo :attribute deve ter no máximo :max caracteres.',
+            'date' => 'O campo :attribute está inválido.',
+        ];
+
+        $validator = Validator::make($entrada, AtividadeAcademica::$rules, $messages);
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $atividadeAcademica->update([
+            'tipo' => $request->input('tipo'),
+            'titulo' => $request->input('titulo'),
+            'descricao' => $request->input('descricao'),
+            'data_inicio' => $request->input('data_inicio'),
+            'data_fim' => $request->input('data_fim'),
+        ]);
+        
+        // dd($entrada['cor_card']);
+
+        if($request->input('cor_card')){
+            $atividadeAcademica->update([
+                'cor_card' => $request->input('cor_card')
+            ]);
+        }
 
         return redirect()->route('listarAtividades');
     }

@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->string('refresh_token')->nullable();
+            $table->string('folder_id_minhas_atividades')->default('root');
             $table->unsignedBigInteger('instituicao_id')->nullable();
             $table->foreign('instituicao_id')->references('id')->on('instituicaos');
             $table->rememberToken();

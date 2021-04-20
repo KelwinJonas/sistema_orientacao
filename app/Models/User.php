@@ -24,6 +24,7 @@ class User extends Authenticatable
         'refresh_token',
         'token', 
         'expires_in',
+        'folder_id_minhas_atividades'
     ];
 
     public static $rules = [
