@@ -8,7 +8,7 @@
                     <div class="container" id="container-conteudo-ver-atividade">
                         <div class="row">
                         <div class="col-md-12 style_card_container"><p class="style_card_tema_titulo">{{$atividade->titulo}}</p></div>
-                        <div class="col-md-12">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</div>
+                        <div class="col-md-12">{{$atividade->descricao}}</div>
                         </div>
                         <hr>
                         <div class="col-md-12 style_card_menu">
@@ -22,6 +22,47 @@
                     </div>
                 </div>
                 {{-- Conteudo aqui --}}
+                {{-- Modal adicionar pessoas --}}
+                <div id="modal-adicionar-pessoa" class="modal fade" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <h5 class="modal-title" id="header-modal-criar-atividade">Adicionar pessoa</h5>
+                                <hr>
+                                <form action="{{route('verAtividade.salvarAdicionarPessoa', ['atividade_id' => $atividade->id])}}" method="POST">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label for="email">Email <span class="cor-obrigatorio">(obrigatório)</span></label>
+                                        <input type='text' class="form-control campos-cadastro @error('email') is-invalid @enderror" placeholder = "Digite o email" name='email' id='email' value="{{old('email')}}"/>    
+                                        @error('email')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{$message}}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="papel">Papel <span class="cor-obrigatorio">(obrigatório)</span></label>
+                                        <select class="form-control campos-cadastro @error('papel') is-invalid @enderror" name='papel' id='papel' value="{{old('papel')}}">
+                                            <option value="selecione">Selecione o papel</option>
+                                            <option value="editor">Editor</option>
+                                            <option value="leitor">Leitor</option>
+                                        </select>
+                                        @error('papel')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{$message}}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <hr>
+                                    <div class="float-right">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                        <button type="submit" class="btn btn-success">Adicionar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-md-10">
                     <div class="row" style="padding: 5px;">
                         <div class="col-md-12" >
@@ -30,7 +71,8 @@
                                     <p class="style_pessoas_titulo">Membros</p>
                                 </div>
                                 <div class="col" style="text-align: right;">
-                                    <button type="button" class="btn btn-primary btn-sm" style="margin-top: 5px;">Adicionar</button>
+                                    <button type="button" class="btn btn-primary btn-sm" style="margin-top: 5px;" data-toggle="modal" data-target="#modal-adicionar-pessoa">Adicionar</button>
+                                    
                                 </div>
                             </div>
                         </div>

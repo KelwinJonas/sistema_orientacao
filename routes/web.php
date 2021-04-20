@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArquivoController;
 use App\Http\Controllers\AtividadeAcademicaController;
 use App\Http\Controllers\InstituicaoController;
 use App\Http\Controllers\SecaoController;
@@ -7,6 +8,8 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CampoController;
+use App\Http\Controllers\DriveController;
+use App\Http\Controllers\PessoaController;
 use App\Models\Campo;
 use Illuminate\Support\Facades\Auth;
 
@@ -50,6 +53,8 @@ Route::prefix('cadastrar_atividade')->name('cadastrarAtividade')->group(function
     Route::post('/salvar', [AtividadeAcademicaController::class, 'salvarCadastrarAtividade'])->name('.salvar')->middleware('auth');
 });
 
+Route::post('/salvarEditarAtividade/{atividade_id}', [AtividadeAcademicaController::class, 'salvarEditarAtividade'])->name('salvarEditarAtividade')->middleware('auth');
+
 Route::get('/listar_atividades', [AtividadeAcademicaController::class, 'listarAtividades'])->name('listarAtividades')->middleware('auth');
 //Route::get('/ver_atividade/{atividade_id}', [AtividadeAcademicaController::class, 'verAtividade'])->name('verAtividade');
 
@@ -60,6 +65,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/secoes/{secao_atual?}', [AtividadeAcademicaController::class, 'verSecoes'])->name('.verSecoes');
         Route::get('/arquivos', [AtividadeAcademicaController::class, 'verArquivos'])->name('.verArquivos');
         Route::get('/pessoas', [AtividadeAcademicaController::class, 'verPessoas'])->name('.verPessoas');
+        Route::post('/salvarAdicionarPessoa', [PessoaController::class, 'salvarAdicionarPessoa'])->name('.salvarAdicionarPessoa');
     });
 
     Route::post("/salvar_campo", [CampoController::class, 'salvarCampo'])->name('salvarCampo');
@@ -78,3 +84,5 @@ Route::middleware('auth')->group(function () {
     Route::post('/salvar_ordenar_secao', [SecaoController::class, 'salvar_ordenar_secao'])->name('editarOrdemSecao');
     Route::post('/salvar_subsecionamento', [SecaoController::class, 'salvar_subsecionar_secao'])->name('subsecionarSecao');
 });
+
+Route::post('/uploadArquivo/{atividade_id}', [ArquivoController::class, 'uploadFile'])->name('uploadArquivo');

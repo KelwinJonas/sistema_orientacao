@@ -17,9 +17,13 @@ class CreateAtividadeAcademicaTable extends Migration
             $table->id();
             $table->string('tipo');
             $table->string('titulo');
+            $table->text('descricao');
             $table->date('data_inicio');
             $table->date('data_fim');
             $table->string('cor_card');
+            $table->string('folder_id');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
