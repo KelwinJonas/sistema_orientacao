@@ -519,8 +519,13 @@ input[type="radio"]:checked + label span{
 }
 
 
-
-
+/* Tela Arquivos */
+#arquivo {
+    display: none;
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+ }
 
 
 

@@ -21,6 +21,39 @@
                         </div>
                     </div>
                 </div>
+
+                <div id="modal-adicionar-arquivos" class="modal fade" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <h5 class="modal-title" id="header-modal-criar-atividade">Adicionar arquivos</h5>
+                                <hr>
+                                <form action="{{route('uploadArquivo')}}" method="POST">
+                                    @csrf
+                                    <div class="form-group">
+                                        <input type="file" class="btn btn-primary btn-block">
+                                    </div>
+                                    <hr>
+                                    <div class="float-right">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                        <button type="submit" class="btn btn-success">Adicionar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="row" style="padding: 5px;">
+                        <div style="float: left; margin-bottom: 10px;">
+                            <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{asset('images/logo_clip_branco.png')}}" alt="Opções" width="16px" style="margin-top: -4px;"> Adicionar</button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-adicionar-arquivos">Arquivos</a>
+                            
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>  

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArquivoController;
 use App\Http\Controllers\AtividadeAcademicaController;
 use App\Http\Controllers\InstituicaoController;
 use App\Http\Controllers\SecaoController;
@@ -71,3 +72,5 @@ Route::middleware('auth')->group(function() {
     Route::post('/salvar_secao', [SecaoController::class, 'salvarAdicionarSecao'])->name('salvarSecao');
     Route::post('/salvar_editar_secao', [SecaoController::class, 'salvarEditarSecao'])->name('salvarEditarSecao');
 });
+
+Route::post('/teste', [ArquivoController::class, 'uploadArquivo'])->name('uploadArquivo');
