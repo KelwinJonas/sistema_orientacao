@@ -14,7 +14,6 @@ class Secao extends Model
         'nome',
         'legenda',
         'atividade_academica_id',
-        'secao_id'
     ];
 
 

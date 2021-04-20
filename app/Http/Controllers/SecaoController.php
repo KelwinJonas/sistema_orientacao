@@ -46,6 +46,10 @@ class SecaoController extends Controller
 
         $nova_secao = new Secao;
         $nova_secao->fill($request->all());
+        $nova_secao->secao_id = $request->secao_id;
+        $nova_secao->save();
+        $nova_secao = Secao::find($nova_secao->id);
+        $nova_secao->ordem = $nova_secao->ordem + (2 * $nova_secao->id);
         $nova_secao->save();
         return redirect()->back();
     }
@@ -62,7 +66,7 @@ class SecaoController extends Controller
             return redirect()->back()->withErrors($validator)->withInput()->with(["localizacao_erro" => "editar"]);
         }
 
-        $nova_secao = Secao::find($request->secao_id);
+        $nova_secao = Secao::find($request->id_secao);
         $nova_secao->fill($request->all());
         $nova_secao->save();
         return redirect()->back();
