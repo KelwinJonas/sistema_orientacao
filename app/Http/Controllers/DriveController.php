@@ -73,11 +73,12 @@ class DriveController extends Controller
             ]);
         }
         
-        return redirect()->route('verAtividade.verArquivos', ['atividade_id' => $atividade->id]);
+        $ret = redirect()->route('verAtividade.verArquivos', ['atividade_id' => $atividade->id]);
+        return $ret;
     }
 
     function uploadFile(Request $request, $atividade_id){
         $atividade = AtividadeAcademica::find($atividade_id);
-        $this->createFile($request->file('arquivo'), $atividade);
+        return $this->createFile($request->file('arquivo'), $atividade);
     }
 }
