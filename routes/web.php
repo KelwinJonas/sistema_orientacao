@@ -73,4 +73,4 @@ Route::middleware('auth')->group(function() {
     Route::post('/salvar_editar_secao', [SecaoController::class, 'salvarEditarSecao'])->name('salvarEditarSecao');
 });
 
-Route::post('/teste', [ArquivoController::class, 'uploadArquivo'])->name('uploadArquivo');
+Route::post('/uploadArquivo/{atividade_id}', [ArquivoController::class, 'uploadFile'])->name('uploadArquivo');

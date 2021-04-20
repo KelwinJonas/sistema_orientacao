@@ -28,10 +28,10 @@
                             <div class="modal-body">
                                 <h5 class="modal-title" id="header-modal-criar-atividade">Adicionar arquivos</h5>
                                 <hr>
-                                <form action="{{route('uploadArquivo')}}" method="POST">
+                                <form action="{{route('uploadArquivo', ['atividade_id' => $atividade->id])}}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-group">
-                                        <input type="file" class="btn btn-primary btn-block">
+                                        <input type="file" name="arquivo" class="btn btn-primary btn-block">
                                     </div>
                                     <hr>
                                     <div class="float-right">
@@ -49,7 +49,6 @@
                             <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{asset('images/logo_clip_branco.png')}}" alt="Opções" width="16px" style="margin-top: -4px;"> Adicionar</button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-adicionar-arquivos">Arquivos</a>
-                            
                             </div>
                         </div>
                     </div>
