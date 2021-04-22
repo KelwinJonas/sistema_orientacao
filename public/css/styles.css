@@ -625,6 +625,9 @@ input[type="radio"]:checked + label span{
     background-color: black;
 }
 
+.dropdown-toggle::after {
+    content: none;
+}
 
 
 /* X tela - secoes X */

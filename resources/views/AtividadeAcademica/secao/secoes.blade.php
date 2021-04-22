@@ -3,10 +3,140 @@
 
 
 <script src="{{ asset('/js/ckeditor.js') }}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
-    function mostrar_tela_carregamento() {
-        console.log("Carregando...");
+    function enviar_form(form, callback) {
+        var url = $(form).attr("action");
+        var dados = {};
+        $(form).find("input[name]").each(function(index, no) {
+            dados[no.name] = no.value;
+        });
+        $.post(url, dados).done(function(resposta) {
+            callback(resposta);
+        });
     }
+
+    function mostrar_tela_carregamento_arvore_secoes() {
+        document.getElementById('container_secoes').innerHTML = "<div style='margin-left:42%;' class='spinner-border' role='status'><span class='sr-only'>Carregando...</span></div>";
+    }
+
+    function recarregar_arvore_secoes(callback) {
+
+        let uso = (texto) => {
+            document.getElementById('container_secoes').innerHTML = texto;
+        };
+
+        let url = "{{route('arvoreSecoes', [$atividade->id, $secao->id ?? 0])}}";
+        fetch(url)
+            .then(function(response) {
+                return response.text();
+            })
+            .then(function(texto) {
+                uso(texto);
+                callback();
+            })
+            .catch(function(erro) {
+                console.log(erro);
+            });
+    }
+
+    function fazer_arvore_arrastavel() {
+
+        Array.from(document.getElementById('container_secoes').querySelectorAll('.hr_div_secoes')).forEach((el) => {
+            if (el.nextElementSibling) {
+                if (el.nextElementSibling.classList.contains('hr_div_secoes')) {
+                    el.nextElementSibling.remove();
+                }
+            }
+        });
+
+        let irmao_ante = null;
+        let irmao_post = null;
+
+        Array.from(document.getElementById('container_secoes').querySelectorAll('.hr_div_secoes')).forEach((el) => {
+            el.ondragover = function() {
+                $(this).addClass("hr_div_secoes_ativo");
+                irmao_ante = el.previousElementSibling;
+                irmao_post = el.nextElementSibling;
+            };
+
+            el.ondragleave = function() {
+                $(this).removeClass("hr_div_secoes_ativo");
+            };
+
+        });
+
+        let secao_alvo = null;
+        let is_chrome = ((navigator.userAgent.toLowerCase().indexOf('chrome') > -1) && (navigator.vendor.toLowerCase().indexOf("google") > -1));
+
+        Array.from(document.getElementById('container_secoes').querySelectorAll('.link_secao_arrastavel')).forEach((el) => {
+
+
+            el.ondragover = function() {
+                $(this).addClass("link_secao_arrastado_sobre");
+                secao_alvo = this;
+            }
+
+            el.ondragleave = function() {
+                $(this).removeClass("link_secao_arrastado_sobre");
+            }
+
+
+            el.ondrag = function(evt) {
+                if (is_chrome) {
+                    if (evt.screenX == 0 && evt.screenY == 0) {
+                        return;
+                    }
+                }
+
+                irmao_ante = null;
+                irmao_post = null;
+                secao_alvo = null;
+            };
+
+            el.ondragend = function() {
+                let id_secao_arrastada = this.attributes["id_secao"].value;
+                if (irmao_ante || irmao_post) {
+
+                    let id_irmao_ante = 0;
+                    let id_irmao_post = 0;
+
+                    if (irmao_ante) {
+                        id_irmao_ante = irmao_ante.attributes["id_secao"].value;
+                    }
+
+                    if (irmao_post) {
+                        id_irmao_post = irmao_post.attributes["id_secao"].value;
+                    }
+
+                    document.getElementById('id_irmao_ante').value = id_irmao_ante;
+                    document.getElementById('id_irmao_post').value = id_irmao_post;
+                    document.getElementById('id_secao_arrastada').value = id_secao_arrastada;
+                    mostrar_tela_carregamento_arvore_secoes();
+                    enviar_form(document.getElementById('form_ordenar_secao'), function(_resp) {
+                        recarregar_arvore_secoes(fazer_arvore_arrastavel);
+                    });
+                    return;
+                }
+
+                if (secao_alvo) {
+                    let id_secao_alvo = secao_alvo.attributes["id_secao"].value;
+                    document.getElementById("id_secao_arrastada_que_vai_entrar").value = id_secao_arrastada;
+                    document.getElementById("id_secao_alvo").value = id_secao_alvo;
+                    mostrar_tela_carregamento_arvore_secoes();
+                    enviar_form(document.getElementById("form_subsecionar_secao"), function(_resp) {
+                        recarregar_arvore_secoes(fazer_arvore_arrastavel);
+                    });
+                    return;
+                }
+            };
+        });
+    }
+
+    $(document).ready(() => {
+        fazer_arvore_arrastavel();
+    });
+
 
     function abrir_fechar_add_campo(abrir) { // se abrir for true, abre, se não, fecha
         document.getElementById("id_area_secao").style.display = (abrir ? "none" : "block");
@@ -25,8 +155,7 @@
 
 
     function buscar_anotacoes_js(id_campo, callback_uso) {
-        //TODO: mudar isso antes da produção
-        let url = "http://127.0.0.1:8000/anotacoes/" + id_campo;
+        let url = "{{route('anotacoes', '')}}/" + id_campo;
         fetch(url)
             .then(function(response) {
                 return response.text();
@@ -148,22 +277,7 @@
                             </div>
                             <div class="col-md-12" style="color: #909090;">
                                 <div id="container_secoes" class="row">
-
-                                    @if($atividade->secoes->count() == 0)
-
-                                    <p class="col">
-                                        Nenhuma seção criada.
-                                        <br>
-                                        <a id="botao-criar-secao" data-toggle="modal" data-target="#modal-criar-secao" style="text-align:right; font-size: 15px; color: blue;" onclick="add_id_na_subsecao(null)">
-                                            Clique aqui
-                                        </a>
-                                        para criar uma seção.
-                                    </p>
-                                    @endif
-                                    <!-- TODO: se o nome tiver html, ele pode ser injetado... -->
-                                    @foreach($atividade->secoes as $secao_loop)
-                                    @php echo $secao_loop->arvore_secoes($secao); @endphp
-                                    @endforeach
+                                    @include('AtividadeAcademica/secao/arvore_secoes');
                                 </div>
                             </div>
                         </div>
@@ -254,12 +368,6 @@
 
 
                     <!-- iterator de campo -->
-                    <style>
-                        .dropdown-toggle::after {
-                            content: none;
-                        }
-                    </style>
-
                     @foreach($secao->campos as $campo)
                     <div class="col-md-12 style_card_secoes_atividade">
                         <div class="row">
@@ -359,88 +467,6 @@
     <input type="hidden" id="id_secao_alvo" name="id_secao_alvo" value="0">
 </form>
 
-
-
-<script>
-    Array.from(document.getElementById('container_secoes').querySelectorAll('.hr_div_secoes')).forEach((el) => {
-        if (el.nextElementSibling) {
-            if (el.nextElementSibling.classList.contains('hr_div_secoes')) {
-                el.nextElementSibling.remove();
-            }
-        }
-    });
-
-    let irmao_ante = null;
-    let irmao_post = null;
-
-    Array.from(document.getElementById('container_secoes').querySelectorAll('.hr_div_secoes')).forEach((el) => {
-        el.ondragover = function() {
-            $(this).addClass("hr_div_secoes_ativo");
-            irmao_ante = el.previousElementSibling;
-            irmao_post = el.nextElementSibling;
-        };
-
-        el.ondragleave = function() {
-            $(this).removeClass("hr_div_secoes_ativo");
-        };
-
-    });
-
-    let secao_alvo = null;
-
-    Array.from(document.getElementById('container_secoes').querySelectorAll('.link_secao_arrastavel')).forEach((el) => {
-
-
-        el.ondragover = function() {
-            $(this).addClass("link_secao_arrastado_sobre");
-            secao_alvo = this;
-        }
-
-        el.ondragleave = function() {
-            $(this).removeClass("link_secao_arrastado_sobre");
-        }
-
-
-        el.ondrag = function() {
-            irmao_ante = null;
-            irmao_post = null;
-            secao_alvo = null;
-        };
-
-        el.ondragend = function() {
-            let id_secao_arrastada = this.attributes["id_secao"].value;
-            if (irmao_ante || irmao_post) {
-
-                let id_irmao_ante = 0;
-                let id_irmao_post = 0;
-
-                if (irmao_ante) {
-                    id_irmao_ante = irmao_ante.attributes["id_secao"].value;
-                }
-
-                if (irmao_post) {
-                    id_irmao_post = irmao_post.attributes["id_secao"].value;
-                }
-
-                document.getElementById('id_irmao_ante').value = id_irmao_ante;
-                document.getElementById('id_irmao_post').value = id_irmao_post;
-                document.getElementById('id_secao_arrastada').value = id_secao_arrastada;
-                document.getElementById('form_ordenar_secao').submit();
-                mostrar_tela_carregamento();
-                return;
-            }
-
-            if (secao_alvo) {
-                let id_secao_alvo = secao_alvo.attributes["id_secao"].value;
-                document.getElementById("id_secao_arrastada_que_vai_entrar").value = id_secao_arrastada;
-                document.getElementById("id_secao_alvo").value = id_secao_alvo;
-                document.getElementById("form_subsecionar_secao").submit();
-                mostrar_tela_carregamento();
-                return;
-            }
-        };
-    });
-</script>
 
 
 

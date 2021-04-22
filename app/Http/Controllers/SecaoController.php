@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AtividadeAcademica;
 use App\Models\Secao;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -181,6 +182,30 @@ class SecaoController extends Controller
         }
         $secao_movida->save();
         return redirect()->back();
+
+    }
+
+
+    public function arvore_secao_html($id_atividade, $id_secao) {
+        $atividade = AtividadeAcademica::find($id_atividade);
+
+        if(!$atividade) {
+            return redirect()->route('login');
+        }
+
+        
+        $secao = Secao::find($id_secao);
+        if((!$secao) && ($atividade->secoes->count() > 0)) {
+            return redirect()->route("verAtividade.verSecoes", [$id_atividade, $atividade->secoes[0]]);
+        }
+
+
+        if($atividade){
+            return view('AtividadeAcademica.secao.arvore_secoes', [
+                'atividade' => $atividade,
+                'secao' => $secao,
+            ]);
+        }
 
     }
 

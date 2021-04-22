@@ -71,6 +71,7 @@ Route::middleware('auth')->group(function () {
     Route::post("/salvar_campo", [CampoController::class, 'salvarCampo'])->name('salvarCampo');
     Route::post("/deletar_campo", [CampoController::class, 'deletarCampo'])->name('deletarCampo');
 
+    Route::get('/arvore_secao/{id_atividade}/{id_secao}', [SecaoController::class, 'arvore_secao_html'])->name('arvoreSecoes');
     Route::post('/deletar_secao', [SecaoController::class, 'deletarSecao'])->name('deletarSecao');
     Route::post('/salvar_secao', [SecaoController::class, 'salvarAdicionarSecao'])->name('salvarSecao');
     Route::post('/salvar_editar_secao', [SecaoController::class, 'salvarEditarSecao'])->name('salvarEditarSecao');
