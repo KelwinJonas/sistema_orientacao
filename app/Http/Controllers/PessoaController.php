@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 class PessoaController extends Controller
 {
     public function salvarAdicionarPessoa(Request $request, $atividade_id){
-        //Fazer validação!!!
+        //TODO: Fazer validação!!!
         $pessoaAdicionada = User::where('email', '=', $request->input('email'))->get()->first();
         if($pessoaAdicionada){
             $usuarioLogado = User::find(Auth::id());

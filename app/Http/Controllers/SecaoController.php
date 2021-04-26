@@ -155,7 +155,7 @@ class SecaoController extends Controller
         $secao_alvo = Secao::find($id_secao_alvo);
         $secao_movida = Secao::find($id_secao_movida);
 
-        if(!$secao_alvo || !$secao_movida) {
+        if((!$secao_alvo || !$secao_movida) || ($secao_alvo->id == $secao_movida->id)) {
             return redirect()->back();
         }
 
