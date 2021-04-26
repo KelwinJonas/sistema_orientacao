@@ -22,8 +22,14 @@ class AtividadeAcademicaController extends DriveController
     }
 
     public function listarAtividades(){
-        //ENVIAR APENAS AS ATIVIDADES ASSOCIADAS AO USUARIO LOGADO
         $usuarioLogado = User::find(Auth::id());
+        //Criação da pasta da atividade acadêmica no Google Drive do usuário logado
+        if($usuarioLogado->folder_id_minhas_atividades == 'root'){        
+            $folder_id_minhas_atividades = $this->createFolder('Orientação - Minhas atividades', 'root');
+            $usuarioLogado->update([
+                'folder_id_minhas_atividades' => $folder_id_minhas_atividades,
+            ]);
+        }
         return view('AtividadeAcademica.listar_atividades_academicas')->with
         ([
             'atividadesUsuario' => $usuarioLogado->atividadesUsuario,
@@ -114,13 +120,6 @@ class AtividadeAcademicaController extends DriveController
         $papel->atividade_usuario_id = $atividadeUsuario->id;
         $papel->save();
 
-        //Criação da pasta da atividade acadêmica no Google Drive do usuário logado
-        if($usuarioLogado->folder_id_minhas_atividades == 'root'){        
-            $folder_id_minhas_atividades = $this->createFolder('Orientação - Minhas atividades', 'root');
-            $usuarioLogado->update([
-                'folder_id_minhas_atividades' => $folder_id_minhas_atividades,
-            ]);
-        }
         //OBS: Título deve ser único?
         $folder_id = $this->createFolder($atividadeAcademica->titulo, $usuarioLogado->folder_id_minhas_atividades);
 
