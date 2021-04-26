@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class AtividadeAcademica extends Model
 {
@@ -30,4 +31,21 @@ class AtividadeAcademica extends Model
     public function dono(){
         return $this->belongsTo('App\Models\User', 'user_id');
     }
+
+
+    public function user_logado_pode_pessoas() {
+        // Só o proprietario ou qualquer editor pode adicionar pessoas?
+        foreach($this->atividadesUsuario as $usuarios) {
+            if($usuarios->user_id == Auth::id()) {
+                $papel = Papel::where('atividade_usuario_id', $usuarios->id)->first();
+                if($papel && ($papel->nome == Papel::PROPRIETARIO) || ($papel->nome == Papel::EDITOR)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+            
+    }
+    
 }
