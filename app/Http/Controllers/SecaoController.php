@@ -41,6 +41,11 @@ class SecaoController extends Controller
             'secao_id' => 'nullable|exists:secaos,id'
         ]);
 
+        $atividade = AtividadeAcademica::find($request->atividade_academica_id);
+        if(!$atividade->user_logado_editor_propietario()) {
+            return redirect()->back();
+        }
+
         if($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput()->with(["localizacao_erro" => "criar"]);
         }
@@ -63,6 +68,12 @@ class SecaoController extends Controller
             'atividade_academica_id' => 'required|exists:atividade_academicas,id',
         ]);
 
+        $atividade = AtividadeAcademica::find($request->atividade_academica_id);
+        if(!$atividade->user_logado_editor_propietario()) {
+            return redirect()->back();
+        }
+
+
         if($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput()->with(["localizacao_erro" => "editar"]);
         }
@@ -75,10 +86,16 @@ class SecaoController extends Controller
 
     public function deletarSecao(Request $request) {
         $sec = Secao::find($request->secao_id);
+
+        if($sec) {
+            if(!$sec->atividade->user_logado_editor_propietario()) {
+                return redirect()->back();
+            }
+        }
+        
         ($sec ? $sec->delete() : "");
         return redirect()->back();
     }
-
 
     public function salvar_ordenar_secao(Request $request) {
         $id_secao_arrastada = $request->id_secao_arrastada;
@@ -90,6 +107,14 @@ class SecaoController extends Controller
         }
 
         $secao_arrastada = Secao::find($id_secao_arrastada);
+
+        if($secao_arrastada) {
+            if(!$secao_arrastada->atividade->user_logado_editor_propietario()) {
+                return redirect()->back();
+            }
+        }
+        
+        
 
         if($id_secao_arrastada == 0 || !($secao_arrastada)) {
             return redirect()->back();
@@ -159,7 +184,9 @@ class SecaoController extends Controller
             return redirect()->back();
         }
 
-
+        if(!$secao_movida->atividade->user_logado_editor_propietario()) {
+            return redirect()->back();
+        }
 
         if(!($secao_alvo->secao_id == $secao_movida->secao_id)) {
 
@@ -184,7 +211,6 @@ class SecaoController extends Controller
         return redirect()->back();
 
     }
-
 
     public function arvore_secao_html($id_atividade, $id_secao) {
         $atividade = AtividadeAcademica::find($id_atividade);

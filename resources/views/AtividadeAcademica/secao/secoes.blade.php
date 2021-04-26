@@ -272,12 +272,14 @@
                             <div class="col-md-12 style_card_secoes_titulo">
                                 <div class="row">
                                     <div class="col">Seções</div>
+                                    @if($atividade->user_logado_editor_propietario())
                                     <a class="col" id="botao-criar-secao" data-toggle="modal" data-target="#modal-criar-secao" style="text-align:right; font-size: 15px;" onclick="add_id_na_subsecao(null)">Criar</a>
+                                    @endif
                                 </div>
                             </div>
                             <div class="col-md-12" style="color: #909090;">
                                 <div id="container_secoes" class="row">
-                                    @include('AtividadeAcademica/secao/arvore_secoes');
+                                    @include('AtividadeAcademica.secao.arvore_secoes')
                                 </div>
                             </div>
                         </div>
@@ -315,10 +317,9 @@
 
                         <span style="position: relative; top: 10px;">{{$secao->nome}}</span>
 
-                        <button id="btn_dropdown_opcoes_secao" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button" style="float: right;" class="btn dropdown-toggle">
-                            ⠇
-                        </button>
+                        <button id="btn_dropdown_opcoes_secao" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button" @if(!$atividade->user_logado_editor_propietario()) style="visibility: hidden;" @endif class="btn dropdown-toggle">⠇</button>
 
+                        @if($atividade->user_logado_editor_propietario())
                         <div class="dropdown-menu" aria-labelledby="btn_dropdown_opcoes_secao">
                             <button type="button" data-toggle="modal" data-target="#modal-criar-secao" onclick="add_id_na_subsecao({{$secao->id}})" class="dropdown-item">Adicionar Subseção</button>
                             <button type="button" class="dropdown-item" onclick="abrir_fechar_add_campo(true);">Adicionar Campo</button>
@@ -332,6 +333,7 @@
                             </form>
 
                         </div>
+                        @endif
 
 
                         </span>
@@ -375,7 +377,7 @@
                                 {{$campo->titulo}}
                             </div>
                             <div class="col-1" style="text-align: right; right: 24px;">
-                                <button id="btn_dropdown_opcoes_campo_{{$campo->id}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button" class="btn btn-light dropdown-toggle" style="margin-top: -5px;margin-bottom: 7px;" onclick="abrir_fechar_add_campo(false)">
+                                <button id="btn_dropdown_opcoes_campo_{{$campo->id}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button" class="btn btn-light dropdown-toggle" style="margin-top: -5px;margin-bottom: 7px;@if(!$atividade->user_logado_editor_propietario())visibility: hidden;@endif" onclick="abrir_fechar_add_campo(false)">
                                     <div width="4px">⠇</div>
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="btn_dropdown_opcoes_campo_{{$campo->id}}">
@@ -383,25 +385,31 @@
                                     <button type="button" class="dropdown-item btn btn-danger" onclick="document.getElementById('form_deletar_campo_{{$campo->id}}').submit();">Deletar Campo</button>
                                 </div>
 
+
+                                @if($atividade->user_logado_editor_propietario())
                                 <form id="form_deletar_campo_{{$campo->id}}" method="POST" action="{{ route('deletarCampo') }}" class="d-none">
                                     @csrf
                                     <input type="hidden" name="campo_id" value="{{$campo->id}}">
                                 </form>
+                                @endif
 
                             </div>
                         </div>
-                        <!-- TODO: conteudo do campo, que provavelmente vai ser um iframe com o editor, ou seja lá como é -->
                         <div id="conteudo_campo_{{$campo->id}}" class="collapse col-md-12">
                             <hr>
 
+                            @if($atividade->user_logado_editor_propietario())
                             <form action="{{ route('salvarConteudo') }}" method="POST">
                                 @csrf
+                                @endif
                                 <input type="hidden" name="id_campo" value="{{$campo->id}}" />
                                 <textarea id="editor_campo_{{$campo->id}}" name="conteudo">
                                 {{ $campo->conteudo }}
                                 </textarea>
+                                @if($atividade->user_logado_editor_propietario())
                                 <button class="btn btn-success" style="margin-top: 10px; width: 100%;" type="submit">Salvar</button>
                             </form>
+                            @endif
                             <hr>
 
                             <div id="anotacoes_campo_{{$campo->id}}"></div>
@@ -409,6 +417,11 @@
                             <script>
                                 ClassicEditor
                                     .create(document.querySelector("#editor_campo_{{$campo->id}}"))
+                                    .then((editor) => {
+                                        @if(!$atividade->user_logado_editor_propietario())
+                                        editor.isReadOnly = true;
+                                        @endif
+                                    })
                                     .catch(error => {
                                         console.error(error);
                                     });
@@ -419,6 +432,7 @@
                             </script>
 
 
+                            @if($atividade->user_logado_editor_propietario())
                             <form id="form_enviar_anotacao_{{$campo->id}}" method="POST" onsubmit="enviar_anotacao(this, anotacoes_campo_{{$campo->id}}, {{$campo->id}}); return false;" action="{{ route('anotacoes.salvar') }}">
                                 @csrf
                                 <input type="hidden" name="campo_id" value="{{$campo->id}}" />
@@ -427,6 +441,7 @@
                                     <input name="btn_salvar_campo" class="btn btn-success comentario_campo" style="margin-top: -4px" type="submit" value="->" />
                                 </div>
                             </form>
+                            @endif
                             <br>
 
 
@@ -453,6 +468,7 @@
 
 
 
+@if($atividade->user_logado_editor_propietario())
 <form action="{{route('editarOrdemSecao')}}" method="POST" class="d-none" id="form_ordenar_secao">
     @csrf
     <input type="hidden" id="id_irmao_ante" name="id_irmao_ante" value="0">
@@ -466,7 +482,7 @@
     <input type="hidden" id="id_secao_arrastada_que_vai_entrar" name="id_secao_arrastada_que_vai_entrar" value="0">
     <input type="hidden" id="id_secao_alvo" name="id_secao_alvo" value="0">
 </form>
-
+@endif
 
 
 
