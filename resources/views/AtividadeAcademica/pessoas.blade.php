@@ -33,7 +33,7 @@
                             </div>
 
                             @if($atividade->user_logado_pode_pessoas())
-                                @include('AtividadeAcademica.modal_add_pessoas');
+                                @include('AtividadeAcademica.modal_add_pessoas')
                                 <div class="col" style="text-align: right;">
                                     <button type="button" class="btn btn-primary btn-sm" style="margin-top: 5px;" data-toggle="modal" data-target="#modal-adicionar-pessoa">Adicionar</button>
                                 </div>
