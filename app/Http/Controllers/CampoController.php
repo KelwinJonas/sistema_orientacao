@@ -4,33 +4,35 @@ namespace App\Http\Controllers;
 
 use App\Models\Anotacao;
 use App\Models\Campo;
-use App\Models\Secao;
-use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class CampoController extends Controller
 {
 
     public function salvarCampo(Request $request) {
-        $request->validate([
+
+        $validator = Validator::make($request->all(), [
             "secao_id" => "required|exists:secaos,id",
             "campo_id" => "nullable|exists:campos,id",
             "titulo" => "required|min:5",
+            "legenda" => "required|min:5",
         ]);
 
-        $campo = new Campo;
-
-        //EDIÇÂO
-        if($request->campo_id != NULL) $campo = Campo::find($request->campo_id);
-
-        $campo->fill($request->all());
-
-        //TODO: criar o que seria o conteudo, mas ai depende do editor que for usa
+        if($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput()->with([
+                "localizacao_erro" => "salvar_campo",
+                "titulo_old" => $request->titulo,
+                "legenda_old" => $request->legenda,
+            ]);
+        }
         
+        $campo = new Campo;
+        if($request->campo_id != NULL) $campo = Campo::find($request->campo_id); //EDIÇÂO
+        $campo->fill($request->all());
         $campo->save();
-
         return redirect()->back();
     }
 
