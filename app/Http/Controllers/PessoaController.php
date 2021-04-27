@@ -9,7 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class PessoaController extends Controller
+class PessoaController extends DriveController
 {
     public function salvarAdicionarPessoa(Request $request, $atividade_id){
         //TODO: Fazer validação!!!
@@ -28,9 +28,18 @@ class PessoaController extends Controller
                     $papelPessoaAdicionada->nome = $request->input('papel');
                     $papelPessoaAdicionada->atividade_usuario_id = $atividadeUsuario->id;
                     $papelPessoaAdicionada->save();
+
+                    //Concedendo permissão no drive
+                    $role = '';
+                    if($papelPessoaAdicionada->nome == 'editor'){
+                        $role = 'writer';
+                    }
+                    else if($papelPessoaAdicionada->nome == 'leitor'){
+                        $role = 'reader';
+                    }
+                    return $this->grantPermission($role, $pessoaAdicionada, $atividadeAcademica);
                 }
             }
         }
-        return redirect()->route('verAtividade.verPessoas', $atividadeAcademica->id);
     }
 }
