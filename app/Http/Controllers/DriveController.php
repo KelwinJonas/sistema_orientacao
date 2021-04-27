@@ -105,7 +105,7 @@ class DriveController extends Controller
         //     if ($pageToken) {
         //         $parameters['pageToken'] = $pageToken;
         //     }
-        //     $children = $this->drive->list->listChildren($folderId, $parameters);
+        //     $children = $this->drive->children->listChildren($folderId, $parameters);
         //     $pageToken = $children->getNextPageToken();
         // }while($pageToken);
         // return $children->getItems();
