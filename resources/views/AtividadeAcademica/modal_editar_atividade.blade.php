@@ -57,46 +57,12 @@
                         <label for="cor_card">Cor do card <span class="cor-obrigatorio">(opcional)</span></label>
                         <div class="container custom-radios">
                             <div class="row justify-content-center">
+                                @for($i = 1; $i <= sizeof(\App\Models\AtividadeAcademica::CORES); $i++)
                                 <div>
-                                    <input type="radio" id="radio-cor-1" class="" name="cor_card" value="#2ecc71" />
-                                    <label class="label-radio" for="radio-cor-1"><span class="span-radio"></span></label>
+                                    <input type="radio" class="radio-cor-{{$i}}" id="radio-cor-{{$i}}-{{$atividadeUsuario->atividadeAcademica->id}}" name="cor_card" value="{{\App\Models\AtividadeAcademica::CORES[$i-1]}}" />
+                                    <label class="label-radio" for="radio-cor-{{$i}}-{{$atividadeUsuario->atividadeAcademica->id}}"><span class="span-radio" style="background-color: {{\App\Models\AtividadeAcademica::CORES[$i-1]}};"></span></label>
                                 </div>
-                                <div>
-                                    <input type="radio" id="radio-cor-2" name="cor_card" value="#3498db" />
-                                    <label class="label-radio" for="radio-cor-2"><span class="span-radio"></span></label>
-                                </div>
-                                <div>
-                                    <input type="radio" id="radio-cor-3" name="cor_card" value="#f1c40f" />
-                                    <label class="label-radio" for="radio-cor-3"><span class="span-radio"></span></label>
-                                </div>
-                                <div>
-                                    <input type="radio" id="radio-cor-4" name="cor_card" value="#e74c3c" />
-                                    <label class="label-radio" for="radio-cor-4"><span class="span-radio"></span></label>
-                                </div>
-                                <div>
-                                    <input type="radio" id="radio-cor-5" name="cor_card" value="#836FFF" />
-                                    <label class="label-radio" for="radio-cor-5"><span class="span-radio"></span></label>
-                                </div>
-                                <div>
-                                    <input type="radio" id="radio-cor-6" name="cor_card" value="#708090" />
-                                    <label class="label-radio" for="radio-cor-6"><span class="span-radio"></span></label>
-                                </div>
-                                <div>
-                                    <input type="radio" id="radio-cor-7" name="cor_card" value="#808000" />
-                                    <label class="label-radio" for="radio-cor-7"><span class="span-radio"></span></label>
-                                </div>
-                                <div>
-                                    <input type="radio" id="radio-cor-8" name="cor_card" value="#BC8F8F" />
-                                    <label class="label-radio" for="radio-cor-8"><span class="span-radio"></span></label>
-                                </div>
-                                <div>
-                                    <input type="radio" id="radio-cor-9" name="cor_card" value="#FF1493" />
-                                    <label class="label-radio" for="radio-cor-9"><span class="span-radio"></span></label>
-                                </div>
-                                <div>
-                                    <input type="radio" id="radio-cor-10" name="cor_card" value="#7CFC00" />
-                                    <label class="label-radio" for="radio-cor-10"><span class="span-radio"></span></label>
-                                </div>
+                                @endfor
                             </div>
                         </div>
 

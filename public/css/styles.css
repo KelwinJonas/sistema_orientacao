@@ -411,46 +411,6 @@ input[type="radio"] + label span {
     border-radius:  50%;
 }
 
-#radio-cor-1 + label span {
-    background-color:#2ecc71;
-}
-
-#radio-cor-2 + label span {
-    background-color: #3498db;
-}
-
-#radio-cor-3 + label span {
-    background-color: #f1c40f;
-}
-
-#radio-cor-4 + label span {
-    background-color: #e74c3c;
-}
-
-#radio-cor-5 + label span {
-    background-color: #836FFF;
-}
-
-#radio-cor-6 + label span {
-    background-color: #708090;
-}
-
-#radio-cor-7 + label span {
-    background-color: #808000;
-}
-
-#radio-cor-8 + label span {
-    background-color: #BC8F8F;
-}
-
-#radio-cor-9 + label span {
-    background-color: #FF1493;
-}
-
-#radio-cor-10 + label span {
-    background-color: #7CFC00;
-}
-
 input[type="radio"]:checked + label span{
     border: 3px solid black;
 }
