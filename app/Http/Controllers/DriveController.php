@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AtividadeAcademica;
+use Exception;
 use Google_Client;
 use Google_Service_Drive;
 use Google_Service_Drive_DriveFile;
@@ -55,13 +56,14 @@ class DriveController extends Controller
     }
 
     function createFile($files, $atividade){
+
         foreach ($files as $file) {
             $name = gettype($file) === 'object' ? $file->getClientOriginalName() : $file;
             $fileMetadata = new Google_Service_Drive_DriveFile([
                 'name' => $name,
                 'parents' => array($atividade->folder_id),
             ]);
-    
+
             $content = gettype($file) === 'object' ?  File::get($file) : Storage::get($file);
             $mimeType = gettype($file) === 'object' ? File::mimeType($file) : Storage::mimeType($file);
     
@@ -71,13 +73,17 @@ class DriveController extends Controller
                 'uploadType' => 'multipart',
                 'fields' => 'id'
             ]);
+
+
         }
-        
-        return redirect()->route('verAtividade.verArquivos', ['atividade_id' => $atividade->id]);
+
+
+        $ret = redirect()->route('verAtividade.verArquivos', ['atividade_id' => $atividade->id]);
+        return $ret;
     }
 
     function uploadFile(Request $request, $atividade_id){
         $atividade = AtividadeAcademica::find($atividade_id);
-        $this->createFile($request->file('arquivo'), $atividade);
+        return $this->createFile($request->file('arquivo'), $atividade);
     }
 }

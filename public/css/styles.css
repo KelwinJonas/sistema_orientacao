@@ -625,6 +625,28 @@ input[type="radio"]:checked + label span{
     background-color: black;
 }
 
+.dropdown-toggle::after {
+    content: none;
+}
 
+#container_lista_sugestoes {
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 1px 4px 20px 0px rgba(0,0,0,0.19);
+    width: 93.5%;
+    border-radius: 1%;
+    padding-top: 5px;
+    padding-left: 10px;
+    box-shadow: ;
+}
+
+.sugestao_div {
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+
+#btn_dropdown_opcoes_secao {
+    float: right; 
+}
 
 /* X tela - secoes X */

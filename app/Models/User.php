@@ -70,4 +70,8 @@ class User extends Authenticatable
     public function anotacoes(){
         return $this->hasMany('App\Models\Anotacao');
     }
+
+    public static function lista_busca() {
+        return json_encode(User::select('name', 'email')->get());
+    }
 }

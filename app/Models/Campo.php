@@ -21,4 +21,9 @@ class Campo extends Model
     public function titulo_escapado() {
         return json_encode($this->titulo);
     }
+
+    public function secao() {
+        return $this->belongsTo('App\Models\Secao');
+    }
+
 }

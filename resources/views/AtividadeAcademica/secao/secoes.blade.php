@@ -3,10 +3,140 @@
 
 
 <script src="{{ asset('/js/ckeditor.js') }}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
-    function mostrar_tela_carregamento() {
-        console.log("Carregando...");
+    function enviar_form(form, callback) {
+        var url = $(form).attr("action");
+        var dados = {};
+        $(form).find("input[name]").each(function(index, no) {
+            dados[no.name] = no.value;
+        });
+        $.post(url, dados).done(function(resposta) {
+            callback(resposta);
+        });
     }
+
+    function mostrar_tela_carregamento_arvore_secoes() {
+        document.getElementById('container_secoes').innerHTML = "<div style='margin-left:42%;' class='spinner-border' role='status'><span class='sr-only'>Carregando...</span></div>";
+    }
+
+    function recarregar_arvore_secoes(callback) {
+
+        let uso = (texto) => {
+            document.getElementById('container_secoes').innerHTML = texto;
+        };
+
+        let url = "{{route('arvoreSecoes', [$atividade->id, $secao->id ?? 0])}}";
+        fetch(url)
+            .then(function(response) {
+                return response.text();
+            })
+            .then(function(texto) {
+                uso(texto);
+                callback();
+            })
+            .catch(function(erro) {
+                console.log(erro);
+            });
+    }
+
+    function fazer_arvore_arrastavel() {
+
+        Array.from(document.getElementById('container_secoes').querySelectorAll('.hr_div_secoes')).forEach((el) => {
+            if (el.nextElementSibling) {
+                if (el.nextElementSibling.classList.contains('hr_div_secoes')) {
+                    el.nextElementSibling.remove();
+                }
+            }
+        });
+
+        let irmao_ante = null;
+        let irmao_post = null;
+
+        Array.from(document.getElementById('container_secoes').querySelectorAll('.hr_div_secoes')).forEach((el) => {
+            el.ondragover = function() {
+                $(this).addClass("hr_div_secoes_ativo");
+                irmao_ante = el.previousElementSibling;
+                irmao_post = el.nextElementSibling;
+            };
+
+            el.ondragleave = function() {
+                $(this).removeClass("hr_div_secoes_ativo");
+            };
+
+        });
+
+        let secao_alvo = null;
+        let is_chrome = ((navigator.userAgent.toLowerCase().indexOf('chrome') > -1) && (navigator.vendor.toLowerCase().indexOf("google") > -1));
+
+        Array.from(document.getElementById('container_secoes').querySelectorAll('.link_secao_arrastavel')).forEach((el) => {
+
+
+            el.ondragover = function() {
+                $(this).addClass("link_secao_arrastado_sobre");
+                secao_alvo = this;
+            }
+
+            el.ondragleave = function() {
+                $(this).removeClass("link_secao_arrastado_sobre");
+            }
+
+
+            el.ondrag = function(evt) {
+                if (is_chrome) {
+                    if (evt.screenX == 0 && evt.screenY == 0) {
+                        return;
+                    }
+                }
+
+                irmao_ante = null;
+                irmao_post = null;
+                secao_alvo = null;
+            };
+
+            el.ondragend = function() {
+                let id_secao_arrastada = this.attributes["id_secao"].value;
+                if (irmao_ante || irmao_post) {
+
+                    let id_irmao_ante = 0;
+                    let id_irmao_post = 0;
+
+                    if (irmao_ante) {
+                        id_irmao_ante = irmao_ante.attributes["id_secao"].value;
+                    }
+
+                    if (irmao_post) {
+                        id_irmao_post = irmao_post.attributes["id_secao"].value;
+                    }
+
+                    document.getElementById('id_irmao_ante').value = id_irmao_ante;
+                    document.getElementById('id_irmao_post').value = id_irmao_post;
+                    document.getElementById('id_secao_arrastada').value = id_secao_arrastada;
+                    mostrar_tela_carregamento_arvore_secoes();
+                    enviar_form(document.getElementById('form_ordenar_secao'), function(_resp) {
+                        recarregar_arvore_secoes(fazer_arvore_arrastavel);
+                    });
+                    return;
+                }
+
+                if (secao_alvo) {
+                    let id_secao_alvo = secao_alvo.attributes["id_secao"].value;
+                    document.getElementById("id_secao_arrastada_que_vai_entrar").value = id_secao_arrastada;
+                    document.getElementById("id_secao_alvo").value = id_secao_alvo;
+                    mostrar_tela_carregamento_arvore_secoes();
+                    enviar_form(document.getElementById("form_subsecionar_secao"), function(_resp) {
+                        recarregar_arvore_secoes(fazer_arvore_arrastavel);
+                    });
+                    return;
+                }
+            };
+        });
+    }
+
+    $(document).ready(() => {
+        fazer_arvore_arrastavel();
+    });
+
 
     function abrir_fechar_add_campo(abrir) { // se abrir for true, abre, se não, fecha
         document.getElementById("id_area_secao").style.display = (abrir ? "none" : "block");
@@ -25,8 +155,7 @@
 
 
     function buscar_anotacoes_js(id_campo, callback_uso) {
-        //TODO: mudar isso antes da produção
-        let url = "http://127.0.0.1:8000/anotacoes/" + id_campo;
+        let url = "{{route('anotacoes', '')}}/" + id_campo;
         fetch(url)
             .then(function(response) {
                 return response.text();
@@ -143,27 +272,14 @@
                             <div class="col-md-12 style_card_secoes_titulo">
                                 <div class="row">
                                     <div class="col">Seções</div>
+                                    @if($atividade->user_logado_editor_propietario())
                                     <a class="col" id="botao-criar-secao" data-toggle="modal" data-target="#modal-criar-secao" style="text-align:right; font-size: 15px;" onclick="add_id_na_subsecao(null)">Criar</a>
+                                    @endif
                                 </div>
                             </div>
                             <div class="col-md-12" style="color: #909090;">
                                 <div id="container_secoes" class="row">
-
-                                    @if($atividade->secoes->count() == 0)
-
-                                    <p class="col">
-                                        Nenhuma seção criada.
-                                        <br>
-                                        <a id="botao-criar-secao" data-toggle="modal" data-target="#modal-criar-secao" style="text-align:right; font-size: 15px; color: blue;" onclick="add_id_na_subsecao(null)">
-                                            Clique aqui
-                                        </a>
-                                        para criar uma seção.
-                                    </p>
-                                    @endif
-                                    <!-- TODO: se o nome tiver html, ele pode ser injetado... -->
-                                    @foreach($atividade->secoes as $secao_loop)
-                                    @php echo $secao_loop->arvore_secoes($secao); @endphp
-                                    @endforeach
+                                    @include('AtividadeAcademica.secao.arvore_secoes')
                                 </div>
                             </div>
                         </div>
@@ -201,10 +317,9 @@
 
                         <span style="position: relative; top: 10px;">{{$secao->nome}}</span>
 
-                        <button id="btn_dropdown_opcoes_secao" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button" style="float: right;" class="btn dropdown-toggle">
-                            ⠇
-                        </button>
+                        <button id="btn_dropdown_opcoes_secao" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button" @if(!$atividade->user_logado_editor_propietario()) style="visibility: hidden;" @endif class="btn dropdown-toggle">⠇</button>
 
+                        @if($atividade->user_logado_editor_propietario())
                         <div class="dropdown-menu" aria-labelledby="btn_dropdown_opcoes_secao">
                             <button type="button" data-toggle="modal" data-target="#modal-criar-secao" onclick="add_id_na_subsecao({{$secao->id}})" class="dropdown-item">Adicionar Subseção</button>
                             <button type="button" class="dropdown-item" onclick="abrir_fechar_add_campo(true);">Adicionar Campo</button>
@@ -218,6 +333,7 @@
                             </form>
 
                         </div>
+                        @endif
 
 
                         </span>
@@ -254,12 +370,6 @@
 
 
                     <!-- iterator de campo -->
-                    <style>
-                        .dropdown-toggle::after {
-                            content: none;
-                        }
-                    </style>
-
                     @foreach($secao->campos as $campo)
                     <div class="col-md-12 style_card_secoes_atividade">
                         <div class="row">
@@ -267,7 +377,7 @@
                                 {{$campo->titulo}}
                             </div>
                             <div class="col-1" style="text-align: right; right: 24px;">
-                                <button id="btn_dropdown_opcoes_campo_{{$campo->id}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button" class="btn btn-light dropdown-toggle" style="margin-top: -5px;margin-bottom: 7px;" onclick="abrir_fechar_add_campo(false)">
+                                <button id="btn_dropdown_opcoes_campo_{{$campo->id}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button" class="btn btn-light dropdown-toggle" style="margin-top: -5px;margin-bottom: 7px;@if(!$atividade->user_logado_editor_propietario())visibility: hidden;@endif" onclick="abrir_fechar_add_campo(false)">
                                     <div width="4px">⠇</div>
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="btn_dropdown_opcoes_campo_{{$campo->id}}">
@@ -275,25 +385,31 @@
                                     <button type="button" class="dropdown-item btn btn-danger" onclick="document.getElementById('form_deletar_campo_{{$campo->id}}').submit();">Deletar Campo</button>
                                 </div>
 
+
+                                @if($atividade->user_logado_editor_propietario())
                                 <form id="form_deletar_campo_{{$campo->id}}" method="POST" action="{{ route('deletarCampo') }}" class="d-none">
                                     @csrf
                                     <input type="hidden" name="campo_id" value="{{$campo->id}}">
                                 </form>
+                                @endif
 
                             </div>
                         </div>
-                        <!-- TODO: conteudo do campo, que provavelmente vai ser um iframe com o editor, ou seja lá como é -->
                         <div id="conteudo_campo_{{$campo->id}}" class="collapse col-md-12">
                             <hr>
 
+                            @if($atividade->user_logado_editor_propietario())
                             <form action="{{ route('salvarConteudo') }}" method="POST">
                                 @csrf
+                                @endif
                                 <input type="hidden" name="id_campo" value="{{$campo->id}}" />
                                 <textarea id="editor_campo_{{$campo->id}}" name="conteudo">
                                 {{ $campo->conteudo }}
                                 </textarea>
+                                @if($atividade->user_logado_editor_propietario())
                                 <button class="btn btn-success" style="margin-top: 10px; width: 100%;" type="submit">Salvar</button>
                             </form>
+                            @endif
                             <hr>
 
                             <div id="anotacoes_campo_{{$campo->id}}"></div>
@@ -301,6 +417,11 @@
                             <script>
                                 ClassicEditor
                                     .create(document.querySelector("#editor_campo_{{$campo->id}}"))
+                                    .then((editor) => {
+                                        @if(!$atividade->user_logado_editor_propietario())
+                                        editor.isReadOnly = true;
+                                        @endif
+                                    })
                                     .catch(error => {
                                         console.error(error);
                                     });
@@ -311,6 +432,7 @@
                             </script>
 
 
+                            @if($atividade->user_logado_editor_propietario())
                             <form id="form_enviar_anotacao_{{$campo->id}}" method="POST" onsubmit="enviar_anotacao(this, anotacoes_campo_{{$campo->id}}, {{$campo->id}}); return false;" action="{{ route('anotacoes.salvar') }}">
                                 @csrf
                                 <input type="hidden" name="campo_id" value="{{$campo->id}}" />
@@ -319,6 +441,7 @@
                                     <input name="btn_salvar_campo" class="btn btn-success comentario_campo" style="margin-top: -4px" type="submit" value="->" />
                                 </div>
                             </form>
+                            @endif
                             <br>
 
 
@@ -345,6 +468,7 @@
 
 
 
+@if($atividade->user_logado_editor_propietario())
 <form action="{{route('editarOrdemSecao')}}" method="POST" class="d-none" id="form_ordenar_secao">
     @csrf
     <input type="hidden" id="id_irmao_ante" name="id_irmao_ante" value="0">
@@ -358,89 +482,7 @@
     <input type="hidden" id="id_secao_arrastada_que_vai_entrar" name="id_secao_arrastada_que_vai_entrar" value="0">
     <input type="hidden" id="id_secao_alvo" name="id_secao_alvo" value="0">
 </form>
-
-
-
-<script>
-    Array.from(document.getElementById('container_secoes').querySelectorAll('.hr_div_secoes')).forEach((el) => {
-        if (el.nextElementSibling) {
-            if (el.nextElementSibling.classList.contains('hr_div_secoes')) {
-                el.nextElementSibling.remove();
-            }
-        }
-    });
-
-    let irmao_ante = null;
-    let irmao_post = null;
-
-    Array.from(document.getElementById('container_secoes').querySelectorAll('.hr_div_secoes')).forEach((el) => {
-        el.ondragover = function() {
-            $(this).addClass("hr_div_secoes_ativo");
-            irmao_ante = el.previousElementSibling;
-            irmao_post = el.nextElementSibling;
-        };
-
-        el.ondragleave = function() {
-            $(this).removeClass("hr_div_secoes_ativo");
-        };
-
-    });
-
-    let secao_alvo = null;
-
-    Array.from(document.getElementById('container_secoes').querySelectorAll('.link_secao_arrastavel')).forEach((el) => {
-
-
-        el.ondragover = function() {
-            $(this).addClass("link_secao_arrastado_sobre");
-            secao_alvo = this;
-        }
-
-        el.ondragleave = function() {
-            $(this).removeClass("link_secao_arrastado_sobre");
-        }
-
-
-        el.ondrag = function() {
-            irmao_ante = null;
-            irmao_post = null;
-            secao_alvo = null;
-        };
-
-        el.ondragend = function() {
-            let id_secao_arrastada = this.attributes["id_secao"].value;
-            if (irmao_ante || irmao_post) {
-
-                let id_irmao_ante = 0;
-                let id_irmao_post = 0;
-
-                if (irmao_ante) {
-                    id_irmao_ante = irmao_ante.attributes["id_secao"].value;
-                }
-
-                if (irmao_post) {
-                    id_irmao_post = irmao_post.attributes["id_secao"].value;
-                }
-
-                document.getElementById('id_irmao_ante').value = id_irmao_ante;
-                document.getElementById('id_irmao_post').value = id_irmao_post;
-                document.getElementById('id_secao_arrastada').value = id_secao_arrastada;
-                document.getElementById('form_ordenar_secao').submit();
-                mostrar_tela_carregamento();
-                return;
-            }
-
-            if (secao_alvo) {
-                let id_secao_alvo = secao_alvo.attributes["id_secao"].value;
-                document.getElementById("id_secao_arrastada_que_vai_entrar").value = id_secao_arrastada;
-                document.getElementById("id_secao_alvo").value = id_secao_alvo;
-                document.getElementById("form_subsecionar_secao").submit();
-                mostrar_tela_carregamento();
-                return;
-            }
-        };
-    });
-</script>
+@endif
 
 
 

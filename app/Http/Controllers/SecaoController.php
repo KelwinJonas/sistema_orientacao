@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AtividadeAcademica;
 use App\Models\Secao;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -40,12 +41,21 @@ class SecaoController extends Controller
             'secao_id' => 'nullable|exists:secaos,id'
         ]);
 
+        $atividade = AtividadeAcademica::find($request->atividade_academica_id);
+        if(!$atividade->user_logado_editor_propietario()) {
+            return redirect()->back();
+        }
+
         if($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput()->with(["localizacao_erro" => "criar"]);
         }
 
         $nova_secao = new Secao;
         $nova_secao->fill($request->all());
+        $nova_secao->secao_id = $request->secao_id;
+        $nova_secao->save();
+        $nova_secao = Secao::find($nova_secao->id);
+        $nova_secao->ordem = $nova_secao->ordem + (2 * $nova_secao->id);
         $nova_secao->save();
         return redirect()->back();
     }
@@ -58,11 +68,17 @@ class SecaoController extends Controller
             'atividade_academica_id' => 'required|exists:atividade_academicas,id',
         ]);
 
+        $atividade = AtividadeAcademica::find($request->atividade_academica_id);
+        if(!$atividade->user_logado_editor_propietario()) {
+            return redirect()->back();
+        }
+
+
         if($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput()->with(["localizacao_erro" => "editar"]);
         }
 
-        $nova_secao = Secao::find($request->secao_id);
+        $nova_secao = Secao::find($request->id_secao);
         $nova_secao->fill($request->all());
         $nova_secao->save();
         return redirect()->back();
@@ -70,10 +86,16 @@ class SecaoController extends Controller
 
     public function deletarSecao(Request $request) {
         $sec = Secao::find($request->secao_id);
+
+        if($sec) {
+            if(!$sec->atividade->user_logado_editor_propietario()) {
+                return redirect()->back();
+            }
+        }
+        
         ($sec ? $sec->delete() : "");
         return redirect()->back();
     }
-
 
     public function salvar_ordenar_secao(Request $request) {
         $id_secao_arrastada = $request->id_secao_arrastada;
@@ -85,6 +107,14 @@ class SecaoController extends Controller
         }
 
         $secao_arrastada = Secao::find($id_secao_arrastada);
+
+        if($secao_arrastada) {
+            if(!$secao_arrastada->atividade->user_logado_editor_propietario()) {
+                return redirect()->back();
+            }
+        }
+        
+        
 
         if($id_secao_arrastada == 0 || !($secao_arrastada)) {
             return redirect()->back();
@@ -150,11 +180,13 @@ class SecaoController extends Controller
         $secao_alvo = Secao::find($id_secao_alvo);
         $secao_movida = Secao::find($id_secao_movida);
 
-        if(!$secao_alvo || !$secao_movida) {
+        if((!$secao_alvo || !$secao_movida) || ($secao_alvo->id == $secao_movida->id)) {
             return redirect()->back();
         }
 
-
+        if(!$secao_movida->atividade->user_logado_editor_propietario()) {
+            return redirect()->back();
+        }
 
         if(!($secao_alvo->secao_id == $secao_movida->secao_id)) {
 
@@ -177,6 +209,29 @@ class SecaoController extends Controller
         }
         $secao_movida->save();
         return redirect()->back();
+
+    }
+
+    public function arvore_secao_html($id_atividade, $id_secao) {
+        $atividade = AtividadeAcademica::find($id_atividade);
+
+        if(!$atividade) {
+            return redirect()->route('login');
+        }
+
+        
+        $secao = Secao::find($id_secao);
+        if((!$secao) && ($atividade->secoes->count() > 0)) {
+            return redirect()->route("verAtividade.verSecoes", [$id_atividade, $atividade->secoes[0]]);
+        }
+
+
+        if($atividade){
+            return view('AtividadeAcademica.secao.arvore_secoes', [
+                'atividade' => $atividade,
+                'secao' => $secao,
+            ]);
+        }
 
     }
 

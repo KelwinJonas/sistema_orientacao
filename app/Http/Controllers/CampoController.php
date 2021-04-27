@@ -51,7 +51,6 @@ class CampoController extends Controller
 
 
     public function salvar_anotacao(Request $request) {
-
         $anotacao = new Anotacao;
         $anotacao->fill($request->all());
         $anotacao->user_id = Auth::id();
