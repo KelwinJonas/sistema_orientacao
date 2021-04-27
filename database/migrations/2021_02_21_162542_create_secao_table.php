@@ -24,7 +24,7 @@ class CreateSecaoTable extends Migration
             $table->foreign('atividade_academica_id')->references('id')->on('atividade_academicas')->onDelete('cascade');
 
             $table->unsignedBigInteger('secao_id')->nullable(true);
-            $table->foreign('secao_id')->references('id')->on('secaos');
+            $table->foreign('secao_id')->references('id')->on('secaos')->onDelete('cascade');
 
             $table->timestamps();
         });

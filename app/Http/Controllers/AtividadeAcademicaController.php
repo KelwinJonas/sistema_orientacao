@@ -117,7 +117,7 @@ class AtividadeAcademicaController extends DriveController
         $atividadeUsuario->save();
 
         $papel = new Papel();
-        $papel->nome = "proprietario";
+        $papel->nome = Papel::PROPRIETARIO;
         $papel->atividade_usuario_id = $atividadeUsuario->id;
         $papel->save();
 

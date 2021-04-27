@@ -8,7 +8,7 @@
                     @csrf
 
                     <input type='hidden' name='atividade_academica_id' value="{{$atividade->id}}"/>
-                    <input type='hidden' name='secao_id' value="{{$secao->id}}"/>
+                    <input type='hidden' name='id_secao' value="{{$secao->id}}"/>
 
                     <div class="form-group">
                         <label for="tipo">Tipo <span class="cor-obrigatorio">(obrigatório)</span></label>

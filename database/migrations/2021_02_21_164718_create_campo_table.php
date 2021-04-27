@@ -18,7 +18,7 @@ class CreateCampoTable extends Migration
             $table->string('titulo');
             $table->longText('conteudo')->nullable(true);
             $table->unsignedBigInteger('secao_id');
-            $table->foreign('secao_id')->references('id')->on('secaos');
+            $table->foreign('secao_id')->references('id')->on('secaos')->onDelete('cascade');
             $table->timestamps();
         });
     }

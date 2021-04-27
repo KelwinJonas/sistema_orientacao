@@ -14,9 +14,11 @@ class Secao extends Model
         'nome',
         'legenda',
         'atividade_academica_id',
-        'secao_id'
     ];
 
+    public function atividade() {
+        return $this->belongsTo('App\Models\AtividadeAcademica', 'atividade_academica_id');
+    }
 
     public function secao_pai() {
         return Secao::find($this->secao_id);
