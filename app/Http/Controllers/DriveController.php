@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\AtividadeAcademica;
+use App\Models\User;
 use Exception;
 use Google_Client;
 use Google_Service_Drive;
 use Google_Service_Drive_DriveFile;
+use Google_Service_Drive_Permission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -77,7 +79,6 @@ class DriveController extends Controller
 
         }
 
-
         $ret = redirect()->route('verAtividade.verArquivos', ['atividade_id' => $atividade->id]);
         return $ret;
     }
@@ -85,5 +86,33 @@ class DriveController extends Controller
     function uploadFile(Request $request, $atividade_id){
         $atividade = AtividadeAcademica::find($atividade_id);
         return $this->createFile($request->file('arquivo'), $atividade);
+
+    }
+
+    function grantPermission($role, $user, $atividade){
+        $userPermission = new Google_Service_Drive_Permission(array(
+            'type' => 'user',
+            'role' => $role,
+            'emailAddress' => $user->email,
+            //'parents' => array($user->folder_id_minhas_atividades),
+        ));
+
+        $request = $this->drive->permissions->create($atividade->folder_id, $userPermission, array('fields' => 'id'));
+        
+        $ret = redirect()->route('verAtividade.verPessoas', ['atividade_id' => $atividade->id]);
+        return $ret;
+    }
+
+    function listarArquivosPasta($folderId){
+        // $pageToken = NULL;
+        // do{
+        //     $parameters = array();
+        //     if ($pageToken) {
+        //         $parameters['pageToken'] = $pageToken;
+        //     }
+        //     $children = $this->drive->children->listChildren($folderId, $parameters);
+        //     $pageToken = $children->getNextPageToken();
+        // }while($pageToken);
+        // return $children->getItems();
     }
 }
