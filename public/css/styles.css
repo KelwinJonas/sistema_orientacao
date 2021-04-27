@@ -297,6 +297,13 @@
     -moz-box-shadow: 2px 2px 29px -2px rgba(0,0,0,0.15);
 }
 
+.style_card_tema:hover{
+    cursor: pointer;
+    box-shadow: 2px 2px 29px -2px rgba(0,0,0,0.5);
+    -webkit-box-shadow: 2px 2px 29px -2px rgba(0,0,0,0.5);
+    -moz-box-shadow: 2px 2px 29px -2px rgba(0,0,0,0.5);
+}
+
 @media screen and (max-width: 596px) and (min-width: 0px){
     .style_card_tema{
         margin:0.5rem; border-radius: 8px; width: 100%; height: 100%; background-color: #F0D882; box-shadow: 2px 2px 29px -2px rgba(0,0,0,0.15);
@@ -333,8 +340,17 @@
 
 .link-imagem-editar-card{
     display: block;
+    height: 100%;
     width: 100%;
-    height: 100%;  
+}
+
+.botao_more {
+    float: right;
+    width: 125%;
+    height: 10%;
+    padding: 0 0 0 0;
+    position: relative;
+    top: 10px;
 }
 
 .div-descricao-card{
@@ -393,46 +409,6 @@ input[type="radio"] + label span {
     cursor:pointer;
     -moz-border-radius:  50%;
     border-radius:  50%;
-}
-
-#radio-cor-1 + label span {
-    background-color:#2ecc71;
-}
-
-#radio-cor-2 + label span {
-    background-color: #3498db;
-}
-
-#radio-cor-3 + label span {
-    background-color: #f1c40f;
-}
-
-#radio-cor-4 + label span {
-    background-color: #e74c3c;
-}
-
-#radio-cor-5 + label span {
-    background-color: #836FFF;
-}
-
-#radio-cor-6 + label span {
-    background-color: #708090;
-}
-
-#radio-cor-7 + label span {
-    background-color: #808000;
-}
-
-#radio-cor-8 + label span {
-    background-color: #BC8F8F;
-}
-
-#radio-cor-9 + label span {
-    background-color: #FF1493;
-}
-
-#radio-cor-10 + label span {
-    background-color: #7CFC00;
 }
 
 input[type="radio"]:checked + label span{

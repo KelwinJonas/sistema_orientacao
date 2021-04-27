@@ -12,6 +12,7 @@ class Campo extends Model
     protected $fillable = [
         'titulo',
         'secao_id',
+        'legenda',
     ];
 
     public function anotacoes(){
@@ -20,6 +21,10 @@ class Campo extends Model
 
     public function titulo_escapado() {
         return json_encode($this->titulo);
+    }
+
+    public function legenda_escapada() {
+        return json_encode($this->legenda);
     }
 
     public function secao() {

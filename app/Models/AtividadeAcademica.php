@@ -10,6 +10,20 @@ class AtividadeAcademica extends Model
 {
     use HasFactory;
 
+    public const CORES = [
+        "#2ecc71",
+        "#3498db",
+        "#f1c40f",
+        "#e74c3c",
+        "#836FFF",
+        "#708090",
+        "#808000",
+        "#BC8F8F",
+        "#FF1493",
+        "#7CFC00", 
+       
+    ];
+
     protected $fillable = ['tipo', 'titulo', 'descricao', 'data_inicio', 'data_fim', 'cor_card', 'folder_id'];
 
     public static $rules = [
