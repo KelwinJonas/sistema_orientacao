@@ -72,4 +72,8 @@ class AtividadeAcademica extends Model
     public function user_logado_editor_propietario() {
         return (($this->permissao_user_logado() == \App\Models\Papel::EDITOR) || ($this->permissao_user_logado() == \App\Models\Papel::PROPRIETARIO)); 
     }
+
+    public function arquivos(){
+        return $this->hasMany('App\Models\Arquivo');
+    }
 }
