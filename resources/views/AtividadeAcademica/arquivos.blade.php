@@ -52,6 +52,25 @@
                             </div>
                         </div>
                     </div>
+                    {{-- Pegar arquivos do drive e mandar pra cá
+                    @foreach ($arquivos as $arquivo)
+                        <div class="col-md-12 style_card_arquivo_atividade">
+                            <div iclass="row align-items-start">
+                                <div id="div-logo-arquivo">
+                                    <img src="{{asset('images/logo_arquivo.png')}}" alt="Orientação" width="40px"> 
+                                </div>
+                                <div class="col" style="width: 100%;"> 
+                                    <div class="form-group">
+                                        <div style="margin-bottom:3px;">Ana Clara   <span style="color: #909090; font-size: 13px;"> - 20/02/2021 as 10h00</span></div>
+                                        <a href="" style="font-size: 15px;">A origem da Segunda Guerra Mundial.pdf</a>
+                                    </div>
+                                </div>
+                                <div class="col-1" style="text-align: right;">
+                                    <img src="{{asset('images/logo_more.png')}}" alt="Opções" width="4px"> 
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach --}}
                 </div>
             </div>
         </div>

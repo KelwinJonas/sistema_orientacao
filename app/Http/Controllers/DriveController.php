@@ -97,4 +97,17 @@ class DriveController extends Controller
         $ret = redirect()->route('verAtividade.verPessoas', ['atividade_id' => $atividade->id]);
         return $ret;
     }
+
+    function listarArquivosPasta($folderId){
+        // $pageToken = NULL;
+        // do{
+        //     $parameters = array();
+        //     if ($pageToken) {
+        //         $parameters['pageToken'] = $pageToken;
+        //     }
+        //     $children = $this->drive->list->listChildren($folderId, $parameters);
+        //     $pageToken = $children->getNextPageToken();
+        // }while($pageToken);
+        // return $children->getItems();
+    }
 }

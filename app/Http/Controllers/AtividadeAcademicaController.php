@@ -69,8 +69,9 @@ class AtividadeAcademicaController extends DriveController
 
     public function verArquivos($atividade_id){
         $atividade = AtividadeAcademica::find($atividade_id);
+        $arquivos = $this->listarArquivosPasta($atividade->folder_id);
         if($atividade){
-            return view('AtividadeAcademica.arquivos', ['atividade' => $atividade]);
+            return view('AtividadeAcademica.arquivos', ['atividade' => $atividade, 'arquivos' => $arquivos]);
         }
     }
 

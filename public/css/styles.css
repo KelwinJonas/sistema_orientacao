@@ -527,6 +527,24 @@ input[type="radio"]:checked + label span{
     z-index: -1;
  }
 
+ .style_card_arquivo_atividade{
+    padding-top:15px;
+    margin-bottom:5px;
+    padding-bottom:0px;
+    border-color:black; 
+    border-radius: 8px; 
+    line-height:17px; 
+    border-radius: 10px;
+    border: 1px solid #DEDEDE; 
+    font-size: 15px;
+}
+
+#div-logo-arquivo{
+    width: 40px;
+    margin-left:15px; 
+    margin-bottom:15px;
+}
+
 
 
 /* tela - secoes */
