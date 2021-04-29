@@ -12,7 +12,6 @@ class Secao extends Model
     protected $fillable = [
         'tipo',
         'nome',
-        'legenda',
         'atividade_academica_id',
     ];
 

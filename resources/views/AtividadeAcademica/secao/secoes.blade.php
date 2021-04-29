@@ -164,27 +164,27 @@
                                         <div width="16px" style="margin-top: -4px;">✖</div>
                                     </button>
                                 </div>
-                                <input type="text" class="form-control" id="titulo" placeholder="Escreva o titulo do campo." name="titulo"/>
+                                <input type="text" class="form-control" id="titulo" placeholder="Escreva o titulo do campo." name="titulo" />
                                 <br>
-                                <input type="text" class="form-control" id="legenda_campo" placeholder="Escreva uma legenda para o campo." name="legenda"/>
+                                <input type="text" class="form-control" id="legenda_campo" placeholder="Escreva uma legenda para o campo." name="legenda" />
                                 @if(session("localizacao_erro") == "salvar_campo")
-                                    @if ($errors->any())
-                                        <script>
-                                         $(document).ready(function() {
-                                             abrir_fechar_add_campo(true);
-                                             document.getElementById('titulo').value = "{{session('titulo_old')}}";
-                                             document.getElementById('legenda_campo').value = "{{session('legenda_old')}}";
-                                         });
-                                        </script>
-                                        <br>
-                                        <div id="erro_campo" class="alert alert-danger">
-                                            <ul>
-                                                @foreach ($errors->all() as $error)
-                                                    <li>{{ $error }}</li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
-                                    @endif
+                                @if ($errors->any())
+                                <script>
+                                    $(document).ready(function() {
+                                        abrir_fechar_add_campo(true);
+                                        document.getElementById('titulo').value = "{{session('titulo_old')}}";
+                                        document.getElementById('legenda_campo').value = "{{session('legenda_old')}}";
+                                    });
+                                </script>
+                                <br>
+                                <div id="erro_campo" class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                @endif
                                 @endif
                             </div>
                             <div style="float: right;">
@@ -209,7 +209,7 @@
                                     <div width="4px">⠇</div>
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="btn_dropdown_opcoes_campo_{{$campo->id}}">
-                                    <button type="button" class="dropdown-item" onclick="editar_campo('{{$campo->id}}', '{{$campo->titulo_escapado()}}', '{{$campo->legenda_escapada()}}')">Editar Titulo do Campo</button>
+                                    <button type="button" class="dropdown-item" onclick="editar_campo('{{$campo->id}}', '{{$campo->titulo_escapado()}}', '{{$campo->legenda_escapada()}}')">Editar informações do Campo</button>
                                     <button type="button" class="dropdown-item btn btn-danger" onclick="document.getElementById('form_deletar_campo_{{$campo->id}}').submit();">Deletar Campo</button>
                                 </div>
 
@@ -223,7 +223,14 @@
 
                             </div>
                         </div>
+
                         <div id="conteudo_campo_{{$campo->id}}" class="collapse col-md-12">
+                            <hr>
+                            <div class="row">
+                                <div class="col text-center">
+                                     {{$campo->legenda}}
+                                </div>
+                            </div>
                             <hr>
 
                             @if($atividade->user_logado_editor_propietario())

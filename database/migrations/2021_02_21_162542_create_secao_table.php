@@ -17,7 +17,6 @@ class CreateSecaoTable extends Migration
             $table->id();
             $table->string('tipo');
             $table->string('nome');
-            $table->string('legenda');
             $table->double('ordem')->default(10000.0); // TEM que ser diferente de 0, e quanto maior, melhor
 
             $table->unsignedBigInteger('atividade_academica_id');

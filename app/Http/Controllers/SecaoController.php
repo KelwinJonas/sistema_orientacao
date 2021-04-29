@@ -36,7 +36,6 @@ class SecaoController extends Controller
         $validator = Validator::make($request->all(), [
             'tipo' => 'required',
             'nome' => 'required',
-            'legenda' => 'required',
             'atividade_academica_id' => 'required|exists:atividade_academicas,id',
             'secao_id' => 'nullable|exists:secaos,id'
         ]);
@@ -64,7 +63,6 @@ class SecaoController extends Controller
         $validator = Validator::make($request->all(), [
             'tipo' => 'required',
             'nome' => 'required',
-            'legenda' => 'required',
             'atividade_academica_id' => 'required|exists:atividade_academicas,id',
         ]);
 
