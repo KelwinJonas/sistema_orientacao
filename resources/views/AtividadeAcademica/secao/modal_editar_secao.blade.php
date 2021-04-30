@@ -33,22 +33,28 @@
                         @enderror
                     </div>
                     <hr>
-                    <div class="float-left">
-                        <a href="{{route('deletarSecao')}}"
-                           onclick="event.preventDefault(); document.getElementById('deletar_secao_form').submit();">
-                            <button type="button" class="btn btn-danger">Deletar seção e todas as subseções</button></a>
-                    </div>
+
+                    @if($atividade->user_logado_proprietario())
+                        <form id="deletar_secao_form" action="{{ route('deletarSecao') }}" method="POST" class="d-none">
+                            @csrf
+                            <input type="hidden" name="secao_id" value="{{$secao->id}}" />
+                        </form>
+                        
+                        <div class="float-left">
+                            <a href="{{route('deletarSecao')}}"
+                               onclick="event.preventDefault(); document.getElementById('deletar_secao_form').submit();">
+                                <button type="button" class="btn btn-danger">Deletar seção e todas as subseções</button>
+                            </a>
+                        </div>
+                    @endif
+
                     <div class="float-right">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-success">Salvar</button>
                     </div>
                 </form>
 
-                <form id="deletar_secao_form" action="{{ route('deletarSecao') }}" method="POST" class="d-none">
-                    @csrf
-                    <input type="hidden" name="secao_id" value="{{$secao->id}}" />
-                </form>
-                
+               
             </div>
         </div>
     </div>

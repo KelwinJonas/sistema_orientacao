@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Papel;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,7 +16,7 @@ class CreatePapelTable extends Migration
     {
         Schema::create('papels', function (Blueprint $table) {
             $table->id();
-            $table->string('nome');
+            $table->enum('nome', Papel::PAPEIS);
             $table->unsignedBigInteger('atividade_usuario_id');
             $table->foreign('atividade_usuario_id')->references('id')->on('atividade_usuarios');
             $table->timestamps();
