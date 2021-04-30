@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Auth;
 class PessoaController extends DriveController
 {
     public function salvarAdicionarPessoa(Request $request, $atividade_id){
-        //TODO: Fazer validação!!!
         $pessoaAdicionada = User::where('email', '=', $request->input('email'))->get()->first();
         if($pessoaAdicionada){
             $usuarioLogado = User::find(Auth::id());
@@ -41,5 +40,7 @@ class PessoaController extends DriveController
                 }
             }
         }
+
+        return redirect()->back();
     }
 }

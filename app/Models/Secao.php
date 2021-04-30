@@ -45,7 +45,7 @@ class Secao extends Model
     public function arvore_secoes($secao) {
         $str_r ="";
         $str_r .= "<hr class='hr_div_secoes'><div id_secao=\"". $this->id ."\" class=\"col-md-12 link_secao" . (($this->id == $secao->id) ? " link_secao_ativa " : "") . "\" style=\"margin-top: 2.5px; margin-bottom:2.5px;\">";
-        $str_r .= "<a id_secao=\"". $this->id ."\" class='link_secao_arrastavel' href=" .  route('verAtividade.verSecoes', $this->atividade_academica_id) . "/" . $this->id . ">" . $this->nome . "</a>";
+        $str_r .= "<a id_secao=\"". $this->id ."\" class='link_secao_arrastavel' href=" .  route('verAtividade.verSecoes', $this->atividade_academica_id) . "/" . $this->id . ">" . htmlspecialchars($this->nome) . "</a>";
 
         if($this->contem_subsecao_com_id($secao->id) || $this->id == $secao->id) {
             $str_r .= "<br />";

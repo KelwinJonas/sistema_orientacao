@@ -8,7 +8,6 @@
     para criar uma seção.
 </p>
 @endif
-<!-- TODO: se o nome tiver html, ele pode ser injetado... -->
 @foreach($atividade->secoes as $secao_loop)
     @php echo $secao_loop->arvore_secoes($secao); @endphp
 @endforeach
