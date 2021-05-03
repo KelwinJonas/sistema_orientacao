@@ -68,6 +68,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/salvarAdicionarPessoa', [PessoaController::class, 'salvarAdicionarPessoa'])->name('.salvarAdicionarPessoa');
     });
 
+    Route::post("/salvar_editar_arquivo", [ArquivoController::class, 'salvarEditarArquivo'])->name('salvarEditarArquivo');
+
     Route::post("/salvar_campo", [CampoController::class, 'salvarCampo'])->name('salvarCampo');
     Route::post("/deletar_campo", [CampoController::class, 'deletarCampo'])->name('deletarCampo');
 

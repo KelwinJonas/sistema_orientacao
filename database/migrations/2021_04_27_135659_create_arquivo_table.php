@@ -21,7 +21,7 @@ class CreateArquivoTable extends Migration
             //Informações para o usuário preencher após upar o arquivo
             $table->string('marcador')->nullable();
             $table->string('palavra_chave')->nullable();
-            $table->string('anotacoes')->nullable();
+            $table->text('anotacoes')->nullable();
             //end
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');

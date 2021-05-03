@@ -11,6 +11,12 @@ class Arquivo extends Model
 
     protected $fillable = ['nome', 'file_id', 'parent_id', 'marcador', 'palavra_chave', 'anotacoes', 'atividade_academica_id'];
 
+    public static $rules = [
+        'marcador' => 'nullable|min:3',
+        'palavra_chave' => 'nullable|min:3',
+        'anotacoes' => 'nullable|min:3'
+    ];
+
     public function user(){
         return $this->belongsTo('App\Models\User');   
     }
