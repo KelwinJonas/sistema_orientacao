@@ -77,6 +77,11 @@ class DriveController extends Controller
                 'fields' => 'id'
             ]);
 
+            $arq = $this->drive->files->get($file->id, array('fields' => 'webViewLink'));
+            $link_arq = $arq->getWebViewLink();
+
+            //dd($link_arq);
+
             $usuarioLogado = User::find(Auth::id());
 
             $arquivo = new Arquivo();
@@ -87,6 +92,7 @@ class DriveController extends Controller
             $arquivo->atividade_academica_id = $atividade->id;
             $arquivo->data = date('d/m/Y');
             $arquivo->hora = date('H:i');
+            $arquivo->link_arquivo = $link_arq;
             $arquivo->save();
         }
 

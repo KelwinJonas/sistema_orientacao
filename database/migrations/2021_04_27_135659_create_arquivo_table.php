@@ -29,6 +29,7 @@ class CreateArquivoTable extends Migration
             $table->foreign('atividade_academica_id')->references('id')->on('atividade_academicas');
             $table->string('data');
             $table->string('hora');
+            $table->string('link_arquivo');
             $table->timestamps();
         });
     }
