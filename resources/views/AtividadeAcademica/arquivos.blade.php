@@ -60,7 +60,7 @@
                                     <div class="col" style="width: 100%;"> 
                                         <div class="form-group">
                                             <div style="margin-bottom:3px;">{{$arquivo->user->name}}   <span style="color: #909090; font-size: 13px;"> - {{$arquivo->data}} às {{$arquivo->hora}}</span></div>
-                                            <a href="{{$arquivo->link_arquivo}}" style="font-size: 15px;">{{$arquivo->nome}}</a>
+                                            <a href="{{$arquivo->link_arquivo}}" style="font-size: 15px;" target="_blank">{{$arquivo->nome}}</a>
                                         </div>
                                     </div>
                                     <div class="col-1" style="text-align: right;">
