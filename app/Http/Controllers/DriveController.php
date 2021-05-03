@@ -2,6 +2,7 @@
  
 namespace App\Http\Controllers;
 
+use App\Models\Arquivo;
 use App\Models\AtividadeAcademica;
 use App\Models\User;
 use Exception;
@@ -76,7 +77,17 @@ class DriveController extends Controller
                 'fields' => 'id'
             ]);
 
+            $usuarioLogado = User::find(Auth::id());
 
+            $arquivo = new Arquivo();
+            $arquivo->nome = $name;
+            $arquivo->file_id = $file->id; 
+            $arquivo->parent_id = $atividade->folder_id;
+            $arquivo->user_id = $usuarioLogado->id;
+            $arquivo->atividade_academica_id = $atividade->id;
+            $arquivo->data = date('d/m/Y');
+            $arquivo->hora = date('H:i');
+            $arquivo->save();
         }
 
         $ret = redirect()->route('verAtividade.verArquivos', ['atividade_id' => $atividade->id]);
@@ -103,16 +114,8 @@ class DriveController extends Controller
         return $ret;
     }
 
-    function listarArquivosPasta($folderId){
-        // $pageToken = NULL;
-        // do{
-        //     $parameters = array();
-        //     if ($pageToken) {
-        //         $parameters['pageToken'] = $pageToken;
-        //     }
-        //     $children = $this->drive->children->listChildren($folderId, $parameters);
-        //     $pageToken = $children->getNextPageToken();
-        // }while($pageToken);
-        // return $children->getItems();
+    function listarArquivosPasta($atividade){
+        $arquivos = Arquivo::where('atividade_academica_id', '=', $atividade->id)->get();
+        return $arquivos;
     }
 }

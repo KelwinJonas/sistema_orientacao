@@ -17,10 +17,18 @@ class CreateArquivoTable extends Migration
             $table->id();
             $table->string('nome');
             $table->string('file_id');//Google drive file_id
-            $table->string('parent_id');//Google drive parant_id
-            //Acrescentar os outros campos
+            $table->string('parent_id');//Google drive parent_id
+            //Informações para o usuário preencher após upar o arquivo
+            $table->string('marcador')->nullable();
+            $table->string('palavra_chave')->nullable();
+            $table->string('anotacoes')->nullable();
+            //end
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('atividade_academica_id');
             $table->foreign('atividade_academica_id')->references('id')->on('atividade_academicas');
+            $table->string('data');
+            $table->string('hora');
             $table->timestamps();
         });
     }

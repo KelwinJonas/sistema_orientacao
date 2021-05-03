@@ -9,5 +9,9 @@ class Arquivo extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nome', 'file_id', 'parent_id', 'atividade_academica_id'];
+    protected $fillable = ['nome', 'file_id', 'parent_id', 'marcador', 'palavra_chave', 'anotacoes', 'atividade_academica_id'];
+
+    public function user(){
+        return $this->belongsTo('App\Models\User');   
+    }
 }

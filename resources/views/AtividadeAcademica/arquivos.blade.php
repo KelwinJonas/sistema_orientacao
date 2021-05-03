@@ -51,26 +51,25 @@
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-adicionar-arquivos">Arquivos</a>
                             </div>
                         </div>
-                    </div>
-                    {{-- Pegar arquivos do drive e mandar pra cá
-                    @foreach ($arquivos as $arquivo)
-                        <div class="col-md-12 style_card_arquivo_atividade">
-                            <div iclass="row align-items-start">
-                                <div id="div-logo-arquivo">
-                                    <img src="{{asset('images/logo_arquivo.png')}}" alt="Orientação" width="40px"> 
-                                </div>
-                                <div class="col" style="width: 100%;"> 
-                                    <div class="form-group">
-                                        <div style="margin-bottom:3px;">Ana Clara   <span style="color: #909090; font-size: 13px;"> - 20/02/2021 as 10h00</span></div>
-                                        <a href="" style="font-size: 15px;">A origem da Segunda Guerra Mundial.pdf</a>
+                        @foreach ($arquivos as $arquivo)
+                            <div class="col-md-12 style_card_arquivo_atividade">
+                                <div class="row align-items-start">
+                                    <div class="div-logo-arquivo">
+                                        <img src="{{asset('images/logo_arquivo.png')}}" alt="Orientação" width="40px"> 
+                                    </div>
+                                    <div class="col" style="width: 100%;"> 
+                                        <div class="form-group">
+                                            <div style="margin-bottom:3px;">{{$arquivo->user->name}}   <span style="color: #909090; font-size: 13px;"> - {{$arquivo->data}} às {{$arquivo->hora}}</span></div>
+                                            <a href="" style="font-size: 15px;">{{$arquivo->nome}}</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-1" style="text-align: right;">
+                                        <img src="{{asset('images/logo_more.png')}}" alt="Opções" width="4px"> 
                                     </div>
                                 </div>
-                                <div class="col-1" style="text-align: right;">
-                                    <img src="{{asset('images/logo_more.png')}}" alt="Opções" width="4px"> 
-                                </div>
                             </div>
-                        </div>
-                    @endforeach --}}
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>
