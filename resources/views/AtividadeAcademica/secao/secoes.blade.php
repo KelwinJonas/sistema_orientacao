@@ -143,15 +143,8 @@
                                     <input type="hidden" name="secao_id" value="{{$secao->id}}" />
                                 </form>
                             @endif
-
                         </div>
                         @endif
-
-
-                        </span>
-
-
-
                     </div>
 
 

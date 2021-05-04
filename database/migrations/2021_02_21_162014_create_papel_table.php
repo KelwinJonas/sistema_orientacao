@@ -18,7 +18,7 @@ class CreatePapelTable extends Migration
             $table->id();
             $table->enum('nome', Papel::PAPEIS);
             $table->unsignedBigInteger('atividade_usuario_id');
-            $table->foreign('atividade_usuario_id')->references('id')->on('atividade_usuarios');
+            $table->foreign('atividade_usuario_id')->references('id')->on('atividade_usuarios')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -1,6 +1,4 @@
 {{-- Modal adicionar pessoas --}}
-
-
 <script>
     function fuzzy_search(orig, escrito) {
         orig = orig.toLowerCase();
@@ -76,8 +74,9 @@
                         <label for="papel">Papel <span class="cor-obrigatorio">(obrigatório)</span></label>
                         <select class="form-control campos-cadastro @error('papel') is-invalid @enderror" name='papel' id='papel' value="{{old('papel')}}">
                             <option disabled selected>Selecione o papel</option>
-                            <option value="{{App\Models\Papel::EDITOR}}">Editor</option>
-                            <option value="{{App\Models\Papel::LEITOR}}">Leitor</option>
+                            @foreach(App\Models\Papel::PAPEIS as $nome_bonito => $papel)
+                            <option value="{{$papel}}">{{$nome_bonito}}</option>
+                            @endforeach
                         </select>
                         @error('papel')
                         <span class="invalid-feedback" role="alert">

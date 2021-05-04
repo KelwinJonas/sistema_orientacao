@@ -43,4 +43,29 @@ class PessoaController extends DriveController
 
         return redirect()->back();
     }
+
+    public function editarPessoa(Request $request, $atividade_id) {
+        $atividade = AtividadeAcademica::find($atividade_id);
+        if($atividade
+           && $atividade->user_logado_proprietario()
+           && in_array($request->papel, Papel::PAPEIS)) {
+                $atividade_usuario = AtividadeUsuario::find($request->atividade_usuario_id);
+                $atividade_usuario->papel->nome = $request->papel;
+                $atividade_usuario->papel->save();
+        }
+
+        return redirect()->back();
+    }
+
+    public function removerPessoa(Request $request, $atividade_id) {
+         $atividade = AtividadeAcademica::find($atividade_id);
+        if($atividade
+           && $atividade->user_logado_proprietario()) {
+            $atividade_usuario = AtividadeUsuario::find($request->id_membro);
+            $atividade_usuario->papel->delete();
+            $atividade_usuario->delete();
+        }
+
+        return redirect()->back();       
+    }
 }
