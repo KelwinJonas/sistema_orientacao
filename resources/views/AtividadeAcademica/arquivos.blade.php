@@ -51,6 +51,13 @@
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-adicionar-arquivos">Arquivos</a>
                             </div>
                         </div>
+
+                        @if (count($arquivos) == 0)
+                            <div class="col-md-12" id="div-nenhuma-atividade">
+                                Nenhum arquivo cadastrado
+                            </div>
+                        @endif
+
                         @foreach ($arquivos as $arquivo)
                             {{-- Modal editar arquivos --}}
                             <div id="modal-editar-arquivo-{{$arquivo->id}}" class="modal fade" tabindex="-1" role="dialog">
@@ -106,6 +113,11 @@
                                 </div>
                             </div>
 
+                            {{-- Deletar um arquivo --}}
+                            <form id="deletar_arquivo_form_{{$arquivo->id}}" action="{{ route('deletarArquivo') }}" method="POST" class="d-none">
+                                @csrf
+                                <input type="hidden" name="arquivo_id" value="{{$arquivo->id}}" />
+                            </form>
 
                             <div class="col-md-12 style_card_arquivo_atividade">
                                 <div class="row align-items-start">
@@ -128,6 +140,7 @@
                                     {{-- Adicionar tipos de permissões existentes no sistema--}}
                                     <div class="dropdown-menu card-drop" aria-labelledby="navbarDropdown">
                                         <button class="dropdown-item" data-toggle="modal" data-target="#modal-editar-arquivo-{{$arquivo->id}}">Editar</button>
+                                        <button class="dropdown-item" data-toggle="modal" onclick="event.preventDefault(); document.getElementById('deletar_arquivo_form_{{$arquivo->id}}').submit();">Deletar</button>
                                     </div>
                                 </div>
                             </div>

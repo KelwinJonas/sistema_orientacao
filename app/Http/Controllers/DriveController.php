@@ -124,4 +124,17 @@ class DriveController extends Controller
         $arquivos = Arquivo::where('atividade_academica_id', '=', $atividade->id)->get();
         return $arquivos;
     }
+
+    public function deletarArquivo(Request $request){
+        $arquivo = Arquivo::find($request->input('arquivo_id'));
+        if($arquivo){
+            //Deletando da base de dados
+            $arquivo->delete();
+
+            //Deletando do Google Drive
+            $this->drive->files->delete($arquivo->file_id, array('supportsTeamDrives' => true));
+            
+            return redirect()->back();
+        } 
+    }
 }
