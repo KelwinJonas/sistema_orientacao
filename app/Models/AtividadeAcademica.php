@@ -84,5 +84,9 @@ class AtividadeAcademica extends Model
         return (($papel == Papel::LEITOR) || $this->user_logado_editor_ou_acima($papel));
     }
 
-    
+
+    public function arquivos(){
+        return $this->hasMany('App\Models\Arquivo');
+    }
+
 }

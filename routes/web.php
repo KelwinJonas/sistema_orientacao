@@ -74,6 +74,9 @@ Route::middleware('auth')->group(function () {
         });
     });
 
+    Route::post("/salvar_editar_arquivo", [ArquivoController::class, 'salvarEditarArquivo'])->name('salvarEditarArquivo');
+    Route::post("/deletar_arquivo", [ArquivoController::class, 'deletarArquivo'])->name('deletarArquivo');
+
     Route::post("/salvar_campo", [CampoController::class, 'salvarCampo'])->name('salvarCampo');
     Route::post("/deletar_campo", [CampoController::class, 'deletarCampo'])->name('deletarCampo');
 

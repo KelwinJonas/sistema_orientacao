@@ -51,26 +51,102 @@
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-adicionar-arquivos">Arquivos</a>
                             </div>
                         </div>
-                    </div>
-                    {{-- Pegar arquivos do drive e mandar pra cá
-                    @foreach ($arquivos as $arquivo)
-                        <div class="col-md-12 style_card_arquivo_atividade">
-                            <div iclass="row align-items-start">
-                                <div id="div-logo-arquivo">
-                                    <img src="{{asset('images/logo_arquivo.png')}}" alt="Orientação" width="40px"> 
-                                </div>
-                                <div class="col" style="width: 100%;"> 
-                                    <div class="form-group">
-                                        <div style="margin-bottom:3px;">Ana Clara   <span style="color: #909090; font-size: 13px;"> - 20/02/2021 as 10h00</span></div>
-                                        <a href="" style="font-size: 15px;">A origem da Segunda Guerra Mundial.pdf</a>
+
+                        @if (count($arquivos) == 0)
+                            <div class="col-md-12" id="div-nenhuma-atividade">
+                                Nenhum arquivo cadastrado
+                            </div>
+                        @endif
+
+                        @foreach ($arquivos as $arquivo)
+                            {{-- Modal editar arquivos --}}
+                            <div id="modal-editar-arquivo-{{$arquivo->id}}" class="modal fade" tabindex="-1" role="dialog">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <h5 class="modal-title" id="header-modal-criar-atividade">Editar arquivo</h5>
+                                            <hr>
+                                            <form action="{{route('salvarEditarArquivo')}}" method="POST">
+                                                @csrf
+                                                <input type='hidden' name='atividade_academica_id' value="{{$atividade->id}}"/>
+                                                <input type='hidden' name='arquivo_id' value="{{$arquivo->id}}"/>
+
+                                                <div class="form-group">
+                                                    <label for="nome">Nome do arquivo </label>
+                                                    <input type='text' class="form-control campos-cadastro" name='nome' id='nome' value="{{$arquivo->nome}}" disabled/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="marcador">Marcador <span class="cor-obrigatorio">(opcional)</span></label>
+                                                    <input type='text' class="form-control campos-cadastro @error('marcador') is-invalid @enderror" placeholder="Digite o marcador" name='marcador' id='marcador' value="{{$arquivo->marcador}}" />
+                                                    @error('marcador')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{$message}}</strong>
+                                                    </span>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="palavra_chave">Palavras chaves <span class="cor-obrigatorio">(opcional)</span></label>
+                                                    <input type='text' class="form-control campos-cadastro @error('palavra_chave') is-invalid @enderror" placeholder="Digite as palavras-chaves" name='palavra_chave' id='palavra_chave' value="{{$arquivo->palavra_chave}}" />
+                                                    @error('palavra_chave')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{$message}}</strong>
+                                                    </span>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="anotacoes">Anotações <span class="cor-obrigatorio">(opcional)</span></label>
+                                                    <textarea class="form-control campos-cadastro @error('anotacoes') is-invalid @enderror" name="anotacoes" id="anotacoes" cols="20" rows="5" placeholder="Digite uma anotação">{{$arquivo->anotacoes}}</textarea>
+                                                    @error('anotacoes')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{$message}}</strong>
+                                                    </span>
+                                                    @enderror
+                                                </div>
+                                                <hr>
+                                                <div class="float-right">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                    <button type="submit" class="btn btn-success">Editar</button>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-1" style="text-align: right;">
-                                    <img src="{{asset('images/logo_more.png')}}" alt="Opções" width="4px"> 
+                            </div>
+
+                            {{-- Deletar um arquivo --}}
+                            <form id="deletar_arquivo_form_{{$arquivo->id}}" action="{{ route('deletarArquivo') }}" method="POST" class="d-none">
+                                @csrf
+                                <input type="hidden" name="arquivo_id" value="{{$arquivo->id}}" />
+                            </form>
+
+                            <div class="col-md-12 style_card_arquivo_atividade">
+                                <div class="row align-items-start">
+                                    
+                                        <div class="div-logo-arquivo">
+                                            <img src="{{asset('images/logo_arquivo.png')}}" alt="Orientação" width="40px"> 
+                                        </div>
+                                                                        
+                                    <div class="col" style="width: 100%;"> 
+                                        <div class="form-group">
+                                            <div style="margin-bottom:3px;">{{$arquivo->user->name}}   <span style="color: #909090; font-size: 13px;"> - {{$arquivo->data}} às {{$arquivo->hora}}</span></div>
+                                            <a href="{{$arquivo->link_arquivo}}" style="font-size: 15px;" target="_blank">{{$arquivo->nome}}</a>
+                                        </div>
+                                    </div>
+                                    <a href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <div class="col-1" style="text-align: right;">
+                                            <img src="{{asset('images/logo_more.png')}}" alt="Opções" width="4px"> 
+                                        </div>
+                                    </a>
+                                    {{-- Adicionar tipos de permissões existentes no sistema--}}
+                                    <div class="dropdown-menu card-drop" aria-labelledby="navbarDropdown">
+                                        <button class="dropdown-item" data-toggle="modal" data-target="#modal-editar-arquivo-{{$arquivo->id}}">Editar</button>
+                                        <button class="dropdown-item btn btn-danger"  style="color: red;" data-toggle="modal" onclick="event.preventDefault(); document.getElementById('deletar_arquivo_form_{{$arquivo->id}}').submit();">Deletar</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @endforeach --}}
+
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>

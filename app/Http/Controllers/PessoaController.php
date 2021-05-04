@@ -17,26 +17,29 @@ class PessoaController extends DriveController
             $usuarioLogado = User::find(Auth::id());
             if($pessoaAdicionada->email != $usuarioLogado->email){
                 $atividadeAcademica = AtividadeAcademica::find($atividade_id);
-                if($atividadeAcademica){
-                    $atividadeUsuario = new AtividadeUsuario();
-                    $atividadeUsuario->user_id = $pessoaAdicionada->id;
-                    $atividadeUsuario->atividade_academica_id = $atividadeAcademica->id;
-                    $atividadeUsuario->save();
-
-                    $papelPessoaAdicionada = new Papel();
-                    $papelPessoaAdicionada->nome = $request->input('papel');
-                    $papelPessoaAdicionada->atividade_usuario_id = $atividadeUsuario->id;
-                    $papelPessoaAdicionada->save();
-
-                    //Concedendo permissão no drive
-                    $role = '';
-                    if($papelPessoaAdicionada->nome == 'editor'){
-                        $role = 'writer';
+                $atividadeUsuarioExiste = AtividadeUsuario::where('user_id', '=', $pessoaAdicionada->id)->where('atividade_academica_id', '=', $atividadeAcademica->id)->get()->first();
+                if(!$atividadeUsuarioExiste){
+                    if($atividadeAcademica){
+                        $atividadeUsuario = new AtividadeUsuario();
+                        $atividadeUsuario->user_id = $pessoaAdicionada->id;
+                        $atividadeUsuario->atividade_academica_id = $atividadeAcademica->id;
+                        $atividadeUsuario->save();
+    
+                        $papelPessoaAdicionada = new Papel();
+                        $papelPessoaAdicionada->nome = $request->input('papel');
+                        $papelPessoaAdicionada->atividade_usuario_id = $atividadeUsuario->id;
+                        $papelPessoaAdicionada->save();
+    
+                        //Concedendo permissão no drive
+                        $role = '';
+                        if($papelPessoaAdicionada->nome == 'editor'){
+                            $role = 'writer';
+                        }
+                        else if($papelPessoaAdicionada->nome == 'leitor'){
+                            $role = 'reader';
+                        }
+                        return $this->grantPermission($role, $pessoaAdicionada, $atividadeAcademica);
                     }
-                    else if($papelPessoaAdicionada->nome == 'leitor'){
-                        $role = 'reader';
-                    }
-                    return $this->grantPermission($role, $pessoaAdicionada, $atividadeAcademica);
                 }
             }
         }
