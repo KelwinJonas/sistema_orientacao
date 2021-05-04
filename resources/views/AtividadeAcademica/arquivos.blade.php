@@ -140,7 +140,7 @@
                                     {{-- Adicionar tipos de permissões existentes no sistema--}}
                                     <div class="dropdown-menu card-drop" aria-labelledby="navbarDropdown">
                                         <button class="dropdown-item" data-toggle="modal" data-target="#modal-editar-arquivo-{{$arquivo->id}}">Editar</button>
-                                        <button class="dropdown-item" data-toggle="modal" onclick="event.preventDefault(); document.getElementById('deletar_arquivo_form_{{$arquivo->id}}').submit();">Deletar</button>
+                                        <button class="dropdown-item btn btn-danger"  style="color: red;" data-toggle="modal" onclick="event.preventDefault(); document.getElementById('deletar_arquivo_form_{{$arquivo->id}}').submit();">Deletar</button>
                                     </div>
                                 </div>
                             </div>
