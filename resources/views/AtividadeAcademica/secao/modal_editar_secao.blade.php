@@ -32,34 +32,29 @@
                         @endif
                         @enderror
                     </div>
-                    <div class="form-group">
-                        <label for="titulo">Legenda <span class="cor-obrigatorio">(obrigatório)</span></label>
-                        <input type='text' class="form-control campos-cadastro @error('legenda') @if(session("localizacao_erro") == "editar") is-invalid @endif @enderror" placeholder = "Digite a legenda" name='legenda' id='legenda' value="{{old('legenda', $secao->legenda)}}"/>
-                        @error('legenda')
-                        @if(session("localizacao_erro") == "editar")
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{$message}}</strong>
-                            </span>
-                        @endif
-                        @enderror
-                    </div>
                     <hr>
-                    <div class="float-left">
-                        <a href="{{route('deletarSecao')}}"
-                           onclick="event.preventDefault(); document.getElementById('deletar_secao_form').submit();">
-                            <button type="button" class="btn btn-danger">Deletar seção e todas as subseções</button></a>
-                    </div>
+
+                    @if($atividade->user_logado_proprietario())
+                        <form id="deletar_secao_form" action="{{ route('deletarSecao') }}" method="POST" class="d-none">
+                            @csrf
+                            <input type="hidden" name="secao_id" value="{{$secao->id}}" />
+                        </form>
+                        
+                        <div class="float-left">
+                            <a href="{{route('deletarSecao')}}"
+                               onclick="event.preventDefault(); document.getElementById('deletar_secao_form').submit();">
+                                <button type="button" class="btn btn-danger">Deletar seção e todas as subseções</button>
+                            </a>
+                        </div>
+                    @endif
+
                     <div class="float-right">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-success">Salvar</button>
                     </div>
                 </form>
 
-                <form id="deletar_secao_form" action="{{ route('deletarSecao') }}" method="POST" class="d-none">
-                    @csrf
-                    <input type="hidden" name="secao_id" value="{{$secao->id}}" />
-                </form>
-                
+               
             </div>
         </div>
     </div>

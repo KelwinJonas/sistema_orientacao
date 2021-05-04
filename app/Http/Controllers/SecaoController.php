@@ -9,40 +9,16 @@ use Illuminate\Support\Facades\Validator;
 
 class SecaoController extends Controller
 {
-
-    private function ordenar_secoes($secoes) {
-        for($i = 0; $i < $secoes->count(); $i++) {
-            for($j = 0; $j < $secoes->count(); $j++) {
-                if($i != $j && $secoes[$i]->ordem == $secoes[$j]->ordem) {
-                    $mais_antigo = $secoes[$i];
-                    $mais_novo = $secoes[$j];
-                    if($mais_novo->updated_at < $mais_antigo->updated_at) {
-                        $mais_antigo = $secoes[$j];
-                        $mais_novo = $secoes[$i];
-                    }
-
-                    $mais_antigo->ordem++;
-                    $mais_antigo->save();
-                    return $this->ordenar_secoes($secoes);
-
-                }
-            }
-
-            $this->ordenar_secoes($secoes[$i]->secoes);
-        }
-    }
-
     public function salvarAdicionarSecao(Request $request){
         $validator = Validator::make($request->all(), [
             'tipo' => 'required',
             'nome' => 'required',
-            'legenda' => 'required',
             'atividade_academica_id' => 'required|exists:atividade_academicas,id',
             'secao_id' => 'nullable|exists:secaos,id'
         ]);
 
         $atividade = AtividadeAcademica::find($request->atividade_academica_id);
-        if(!$atividade->user_logado_editor_propietario()) {
+        if(!$atividade->user_logado_gerente_ou_acima()) {
             return redirect()->back();
         }
 
@@ -64,15 +40,13 @@ class SecaoController extends Controller
         $validator = Validator::make($request->all(), [
             'tipo' => 'required',
             'nome' => 'required',
-            'legenda' => 'required',
             'atividade_academica_id' => 'required|exists:atividade_academicas,id',
         ]);
 
         $atividade = AtividadeAcademica::find($request->atividade_academica_id);
-        if(!$atividade->user_logado_editor_propietario()) {
+        if(!$atividade->user_logado_gerente_ou_acima()) {
             return redirect()->back();
         }
-
 
         if($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput()->with(["localizacao_erro" => "editar"]);
@@ -88,7 +62,7 @@ class SecaoController extends Controller
         $sec = Secao::find($request->secao_id);
 
         if($sec) {
-            if(!$sec->atividade->user_logado_editor_propietario()) {
+            if(!$sec->atividade->user_logado_proprietario()) {
                 return redirect()->back();
             }
         }
@@ -109,7 +83,7 @@ class SecaoController extends Controller
         $secao_arrastada = Secao::find($id_secao_arrastada);
 
         if($secao_arrastada) {
-            if(!$secao_arrastada->atividade->user_logado_editor_propietario()) {
+            if(!$secao_arrastada->atividade->user_logado_gerente_ou_acima()) {
                 return redirect()->back();
             }
         }
@@ -184,7 +158,7 @@ class SecaoController extends Controller
             return redirect()->back();
         }
 
-        if(!$secao_movida->atividade->user_logado_editor_propietario()) {
+        if(!$secao_movida->atividade->user_logado_gerente_ou_acima()) {
             return redirect()->back();
         }
 

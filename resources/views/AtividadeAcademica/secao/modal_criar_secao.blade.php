@@ -31,17 +31,6 @@
                         @endif
                         @enderror
                     </div>
-                    <div class="form-group">
-                        <label for="titulo">Legenda <span class="cor-obrigatorio">(obrigatório)</span></label>
-                        <input type='text' class="form-control campos-cadastro @error('legenda') @if(session("localizacao_erro") == "criar") is-invalid @endif @enderror" placeholder = "Digite a legenda" name='legenda' id='legenda' value="{{old('legenda')}}"/>
-                        @error('legenda')
-                        @if(session("localizacao_erro") == "criar")
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{$message}}</strong>
-                            </span>
-                        @endif
-                        @enderror
-                    </div>
                     <hr>
                     <div class="float-right">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

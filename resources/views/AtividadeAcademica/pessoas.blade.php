@@ -32,11 +32,12 @@
                                 <p class="style_pessoas_titulo">Membros</p>
                             </div>
 
-                            @if($atividade->user_logado_pode_pessoas())
-                                @include('AtividadeAcademica.modal_add_pessoas');
-                                <div class="col" style="text-align: right;">
-                                    <button type="button" class="btn btn-primary btn-sm" style="margin-top: 5px;" data-toggle="modal" data-target="#modal-adicionar-pessoa">Adicionar</button>
-                                </div>
+                            <!-- Só o proprietario pode add pessoas -->
+                            @if($atividade->user_logado_proprietario())
+                            @include('AtividadeAcademica.modal_add_pessoas')
+                            <div class="col" style="text-align: right;">
+                                <button type="button" class="btn btn-primary btn-sm" style="margin-top: 5px;" data-toggle="modal" data-target="#modal-adicionar-pessoa">Adicionar</button>
+                            </div>
                             @endif
                         </div>
                     </div>
@@ -52,9 +53,70 @@
                             <div class="col" style=" width: 100%; margin-top: 10px;">
                                 <div>{{$atividadeUsuario->dono->name}} <span style="color: #909090; font-size: 13px;"> - 20/02/2021 as 10h00</span></div>
                             </div>
-                            <div class="col-1" style="text-align: right; margin-top: 10px;">
+                            @if($atividade->user_logado_proprietario())
+                            <div id="btn_opcoes_pessoas_{{$atividadeUsuario->id}}" class="col-1" style="text-align: right; margin-top: 10px; cursor: pointer;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img src="{{asset('images/logo_more.png')}}" alt="Opções" width="4px">
                             </div>
+                            <div class="dropdown-menu" aria-labelledby="btn_opcoes_pessoas_{{$atividadeUsuario->id}}">
+                                <button type="button" class="dropdown-item btn" onclick="$('#modal_editar_pessoa_{{$atividadeUsuario->id}}').modal('show')">Editar papel</button>
+                                <button type="button" class="dropdown-item btn btn-danger" style="color: red;" onclick="if(confirm('Tem certza?')) {document.getElementById('remover_membro_{{$atividadeUsuario->id}}').submit();}">
+                                    Remover membro</button>
+                            </div>
+
+
+
+
+                            <div id="modal_editar_pessoa_{{$atividadeUsuario->id}}" class="modal fade" tabindex="-1" role="dialog">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <h5 class="modal-title" id="header-modal-criar-atividade">Editar pessoa</h5>
+                                            <hr>
+                                            <form action="{{route('verAtividade.salvarEditarPessoa', $atividade->id)}}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="atividade_usuario_id" value="{{$atividadeUsuario->id}}" />
+                                                <div class="form-group">
+                                                    <label>{{$atividadeUsuario->dono->name}}</label>
+                                                    <br>
+                                                    <label>{{$atividadeUsuario->dono->email}}</label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="papel">Papel</label>
+                                                    <select class="form-control campos-cadastro @error('papel') is-invalid @enderror" name='papel' id='papel' value="{{old('papel')}}">
+                                                        @foreach(App\Models\Papel::PAPEIS as $nome_bonito => $papel)
+                                                        <option value="{{$papel}}" @if($papel==$atividadeUsuario->papel->nome) selected @endif>{{$nome_bonito}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('papel')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{$message}}</strong>
+                                                    </span>
+                                                    @enderror
+                                                </div>
+                                                <hr>
+                                                <div class="float-right">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                    <button type="submit" class="btn btn-success">Salvar</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+
+
+
+                            <form id="remover_membro_{{$atividadeUsuario->id}}" method="POST" action="{{route('verAtividade.removerPessoa', $atividade->id)}}">
+                                @csrf
+                                <input type="hidden" name="id_membro" value="{{$atividadeUsuario->id}}" />
+                            </form>
+
+                            @endif
 
                         </div>
                     </div>

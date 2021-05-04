@@ -20,8 +20,8 @@ class AtividadeAcademica extends Model
         "#808000",
         "#BC8F8F",
         "#FF1493",
-        "#7CFC00", 
-       
+        "#7CFC00",
+
     ];
 
     protected $fillable = ['tipo', 'titulo', 'descricao', 'data_inicio', 'data_fim', 'cor_card', 'folder_id'];
@@ -34,32 +34,23 @@ class AtividadeAcademica extends Model
         'data_fim' => 'required|date',
     ];
 
-    public function atividadesUsuario() {
+    public function atividadesUsuario()
+    {
         return $this->hasMany('App\Models\AtividadeUsuario');
     }
 
-    public function secoes() {
+    public function secoes()
+    {
         return $this->hasMany('App\Models\Secao')->where('secao_id', NULL)->orderBy('ordem', 'asc');
     }
 
-    public function dono() {
+    public function dono()
+    {
         return $this->belongsTo('App\Models\User', 'user_id');
     }
 
-    public function user_logado_pode_pessoas() {
-        // Só o proprietario ou qualquer editor pode adicionar pessoas?
-        foreach ($this->atividadesUsuario as $usuarios) {
-            if ($usuarios->user_id == Auth::id()) {
-                $papel = Papel::where('atividade_usuario_id', $usuarios->id)->first();
-                if ($papel && ($papel->nome == Papel::PROPRIETARIO) || ($papel->nome == Papel::EDITOR)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public function permissao_user_logado() {
+    public function permissao_user_logado()
+    {
         foreach ($this->atividadesUsuario as $usuarios) {
             if ($usuarios->user_id == Auth::id()) {
                 return Papel::where('atividade_usuario_id', $usuarios->id)->first()->nome;
@@ -69,7 +60,33 @@ class AtividadeAcademica extends Model
         return NULL;
     }
 
-    public function user_logado_editor_propietario() {
-        return (($this->permissao_user_logado() == \App\Models\Papel::EDITOR) || ($this->permissao_user_logado() == \App\Models\Papel::PROPRIETARIO)); 
+    public function user_logado_proprietario($papel = NULL)
+    {
+        $papel = ($papel != NULL ? $papel : $this->permissao_user_logado());
+        return ($papel == Papel::PROPRIETARIO);
     }
+
+    public function user_logado_gerente_ou_acima($papel = NULL)
+    {
+        $papel = ($papel != NULL ? $papel : $this->permissao_user_logado());
+        return (($papel == Papel::GERENTE_DE_CONTEUDO) || $this->user_logado_proprietario($papel));
+    }
+
+    public function user_logado_editor_ou_acima($papel = NULL)
+    {
+        $papel = ($papel != NULL ? $papel : $this->permissao_user_logado());
+        return (($papel == Papel::EDITOR) || $this->user_logado_gerente_ou_acima($papel));
+    }
+
+    public function user_logado_leitor_ou_acima($papel = NULL)
+    {
+        $papel = ($papel != NULL ? $papel : $this->permissao_user_logado());
+        return (($papel == Papel::LEITOR) || $this->user_logado_editor_ou_acima($papel));
+    }
+
+
+    public function arquivos(){
+        return $this->hasMany('App\Models\Arquivo');
+    }
+
 }

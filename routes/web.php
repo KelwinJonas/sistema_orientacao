@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CampoController;
 use App\Http\Controllers\DriveController;
 use App\Http\Controllers\PessoaController;
+use App\Http\Middleware\MembroAtividade;
 use App\Models\Campo;
 use Illuminate\Support\Facades\Auth;
 
@@ -60,13 +61,21 @@ Route::get('/listar_atividades', [AtividadeAcademicaController::class, 'listarAt
 
 
 Route::middleware('auth')->group(function () {
-    Route::prefix('ver_atividade/{atividade_id}')->name('verAtividade')->group(function () {
-        Route::get('/mural', [AtividadeAcademicaController::class, 'verAtividade'])->name('.verMural');
-        Route::get('/secoes/{secao_atual?}', [AtividadeAcademicaController::class, 'verSecoes'])->name('.verSecoes');
-        Route::get('/arquivos', [AtividadeAcademicaController::class, 'verArquivos'])->name('.verArquivos');
-        Route::get('/pessoas', [AtividadeAcademicaController::class, 'verPessoas'])->name('.verPessoas');
-        Route::post('/salvarAdicionarPessoa', [PessoaController::class, 'salvarAdicionarPessoa'])->name('.salvarAdicionarPessoa');
+
+    Route::middleware(MembroAtividade::class)->group(function () {
+        Route::prefix('ver_atividade/{atividade_id}')->name('verAtividade')->group(function () {
+            Route::get('/mural', [AtividadeAcademicaController::class, 'verAtividade'])->name('.verMural');
+            Route::get('/secoes/{secao_atual?}', [AtividadeAcademicaController::class, 'verSecoes'])->name('.verSecoes');
+            Route::get('/arquivos', [AtividadeAcademicaController::class, 'verArquivos'])->name('.verArquivos');
+            Route::get('/pessoas', [AtividadeAcademicaController::class, 'verPessoas'])->name('.verPessoas');
+            Route::post('/salvarAdicionarPessoa', [PessoaController::class, 'salvarAdicionarPessoa'])->name('.salvarAdicionarPessoa');
+            Route::post('/removerPessoa', [PessoaController::class, 'removerPessoa'])->name('.removerPessoa');
+            Route::post('/editarPessoa', [PessoaController::class, 'editarPessoa'])->name('.salvarEditarPessoa');
+        });
     });
+
+    Route::post("/salvar_editar_arquivo", [ArquivoController::class, 'salvarEditarArquivo'])->name('salvarEditarArquivo');
+    Route::post("/deletar_arquivo", [ArquivoController::class, 'deletarArquivo'])->name('deletarArquivo');
 
     Route::post("/salvar_campo", [CampoController::class, 'salvarCampo'])->name('salvarCampo');
     Route::post("/deletar_campo", [CampoController::class, 'deletarCampo'])->name('deletarCampo');
