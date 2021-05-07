@@ -193,6 +193,10 @@ class SecaoController extends Controller
             return redirect()->route('login');
         }
 
+        if(!$atividade->user_logado_leitor_ou_acima()) {
+            return abort(403);
+        }           
+
         
         $secao = Secao::find($id_secao);
         if((!$secao) && ($atividade->secoes->count() > 0)) {

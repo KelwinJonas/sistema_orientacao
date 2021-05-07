@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Anotacao;
+use App\Models\AtividadeAcademica;
 use App\Models\Campo;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 
 class CampoController extends Controller
@@ -30,6 +32,12 @@ class CampoController extends Controller
             ]);
         }
 
+
+        $secao = AtividadeAcademica::find($request->secao_id);
+        if (!$secao->atividade->user_logado_gerente_ou_acima()) {
+            return redirect()->back(); //Só gerente ou proprietario pode
+        }
+
         $campo = new Campo;
         if ($request->campo_id != NULL) $campo = Campo::find($request->campo_id); //EDIÇÂO
         $campo->fill($request->all());
@@ -41,7 +49,11 @@ class CampoController extends Controller
     public function deletarCampo(Request $request)
     {
         try {
-            Campo::find($request->campo_id)->delete();
+            $campo = Campo::find($request->campo_id);
+            if (!$campo->secao->atividade->user_logado_gerente_ou_acima()) {
+                return redirect()->back();
+            }
+            $campo->delete();
         } catch (Exception $ex) {
         }
         return redirect()->back();
@@ -51,19 +63,23 @@ class CampoController extends Controller
     public function anotacoes_html($id_campo)
     {
         $campo = Campo::find($id_campo);
+        if (!$campo || !$campo->secao->atividade->user_logado_leitor_ou_acima()) {
+            return abort(403);
+        }
         if ($campo) return view('AtividadeAcademica.secao.listagem_anotacoes', ["campo" => $campo]);
     }
 
 
     public function salvar_anotacao(Request $request)
     {
-        $anotacao = new Anotacao;
-        $anotacao->fill($request->all());
-        $anotacao->user_id = Auth::id();
-        $anotacao->status = 1;
-        $anotacao->save();
-
-        return "";
+        try{
+        if (Campo::find($request->campo_id)->secao->atividade->user_logado_leitor_ou_acima()) {
+            $anotacao = new Anotacao;
+            $anotacao->fill($request->all());
+            $anotacao->user_id = Auth::id();
+            $anotacao->status = 1;
+            $anotacao->save();
+        }} catch(Exception $ex) {}
     }
 
     public function deletar_anotacao(Request $request)
@@ -81,8 +97,10 @@ class CampoController extends Controller
     public function salvar_conteudo(Request $request)
     {
         $campo = Campo::find($request->id_campo);
-        $campo->conteudo = $request->conteudo;
-        $campo->save();
+        if ($campo && $campo->secao->atividade->user_logado_editor_ou_acima()) {
+            $campo->conteudo = $request->conteudo;
+            $campo->save();
+        }
         return redirect()->back();
     }
 }
