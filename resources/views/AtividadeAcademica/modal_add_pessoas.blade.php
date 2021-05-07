@@ -12,8 +12,8 @@
     }
 
 
-    let lista_users_orig = <?php echo \App\Models\User::lista_busca(); ?>;
-    var lista_users_exibida = <?php echo \App\Models\User::lista_busca(); ?>;
+    let lista_users_orig = <?php echo \App\Models\User::lista_busca($atividade->id); ?>;
+    let lista_users_exibida = lista_users_orig;
 
     function preencher_nome_email_automatico(obj) {
         let dados = obj.innerHTML.split(' - ');

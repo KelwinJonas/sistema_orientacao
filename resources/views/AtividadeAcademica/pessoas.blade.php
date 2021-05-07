@@ -51,7 +51,7 @@
                                 <img src="{{asset('images/logo_novo_user.png')}}" alt="Orientação" width="40px">
                             </div>
                             <div class="col" style=" width: 100%; margin-top: 10px;">
-                                <div>{{$atividadeUsuario->dono->name}} <span style="color: #909090; font-size: 13px;"> - 20/02/2021 as 10h00</span></div>
+                                <div>{{$atividadeUsuario->dono->name}} <span style="color: #909090; font-size: 13px;"> - {{$atividadeUsuario->data_hora_adicionado()}}</span></div>
                             </div>
                             @if($atividade->user_logado_proprietario())
                             <div id="btn_opcoes_pessoas_{{$atividadeUsuario->id}}" class="col-1" style="text-align: right; margin-top: 10px; cursor: pointer;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -71,7 +71,9 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Anotacao');
     }
 
-    public static function lista_busca() {
-        return json_encode(User::select('name', 'email')->get());
+    public static function lista_busca($id_atividade) {
+        $users_atividades = AtividadeUsuario::select('user_id')->where('atividade_academica_id', $id_atividade)->get();
+        $users =  User::select('name', 'email')->whereNotIn('id', $users_atividades)->get();
+        return json_encode($users);
     }
 }
