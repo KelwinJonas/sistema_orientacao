@@ -18,7 +18,7 @@ class Instituicao extends Model
         'nome' => 'required|min:3|max:255',
     ];
 
-    public function templateAtividade(){
+    public function templatesAtividade(){
         return $this->hasMany('App\Models\TemplateAtividade');
     }
 

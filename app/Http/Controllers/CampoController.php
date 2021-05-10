@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Anotacao;
 use App\Models\AtividadeAcademica;
 use App\Models\Campo;
+use App\Models\Secao;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,7 +34,7 @@ class CampoController extends Controller
         }
 
 
-        $secao = AtividadeAcademica::find($request->secao_id);
+        $secao = Secao::find($request->secao_id);
         if (!$secao->atividade->user_logado_gerente_ou_acima()) {
             return redirect()->back(); //Só gerente ou proprietario pode
         }

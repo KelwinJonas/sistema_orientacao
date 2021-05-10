@@ -191,4 +191,6 @@ function add_id_na_subsecao(id) {
 }
 
 
-/* ClassicEditor.builtinPlugins.map( plugin => console.log(plugin.pluginName) ); */
+
+
+
