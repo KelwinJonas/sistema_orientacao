@@ -9,7 +9,9 @@ class TemplateAtividade extends Model
 {
     use HasFactory;
 
-    public function secoes(){
-        return $this->hasMany('App\Models\Secao');
-    }
+    protected $fillable = [
+        "instituicao_id",
+        "tipo",
+        "titulo",
+    ];
 }

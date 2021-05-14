@@ -644,3 +644,49 @@ input[type="radio"]:checked + label span{
 }
 
 /* X tela - secoes X */
+
+.arvore_secao {
+    padding-left: 5%;
+}
+
+.arvore_secao[tipo="secao"]:before {
+    content: '▼';
+    color: red;
+}
+
+.arvore_secao[tipo="campo"]:before {
+    content: '◆ ';
+    color: blue;
+}
+
+#menu_contexto_edit_secao_campo {
+    background-color: white;
+    border: 1px solid black;
+    display: none;
+    position: absolute;
+    z-index: 1050;
+    width: 13%;
+}
+
+#menu_contexto_edit_secao_campo ul {
+    padding: 0px;
+    margin: 0px;
+    min-width: 150px;
+    list-style: none;
+}
+
+#menu_contexto_edit_secao_campo ul li {
+    padding-bottom: 7px;
+    padding-top: 7px;
+    cursor: pointer;
+}
+
+#menu_contexto_edit_secao_campo ul li a {
+    text-decoration: none;
+    color: black;
+    padding-left: 10%;
+}
+
+#menu_contexto_edit_secao_campo ul li:hover {
+    background: darkgray;
+}

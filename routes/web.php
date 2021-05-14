@@ -8,10 +8,8 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CampoController;
-use App\Http\Controllers\DriveController;
 use App\Http\Controllers\PessoaController;
 use App\Http\Middleware\MembroAtividade;
-use App\Models\Campo;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -38,10 +36,18 @@ Route::get('/login/google/callback', [LoginController::class, 'handleProviderGoo
 
 Route::get('redefinir_senha', [UserController::class, 'redefinirSenha'])->name('redefinirSenha');
 
-Route::prefix('/cadastrar_instituicao')->name('cadastrarInstituicao')->group(function () {
-    Route::get('/', [InstituicaoController::class, 'cadastroInstituicao'])->middleware('auth');
-    Route::post('/salvar', [InstituicaoController::class, 'salvarCadastrarInstituicao'])->name('.salvar')->middleware('auth');
+
+
+Route::prefix('/instituicoes')->name('instituicao')->group(function () {
+    Route::get('/', [InstituicaoController::class, 'listarInstituicoes'])->name('.listar');
+    Route::get('/ver/{id}', [InstituicaoController::class, 'verInstituicao'])->name('.ver');
+    Route::get('/nova', [InstituicaoController::class, 'cadastroInstituicao'])->name('.nova');
+    Route::post('/salvar', [InstituicaoController::class, 'salvarCadastrarInstituicao'])->name('.salvar');
+    Route::post('/template/salvar', [InstituicaoController::class, 'salvarTemplate'])->name('.template.salvar');
+    Route::post('/template/editar/salvar', [InstituicaoController::class, 'salvarEditarTemplate'])->name('.template.editar.salvar');
 });
+
+
 
 Route::prefix('cadastrar_usuario')->name('cadastrarUsuario')->group(function () {
     Route::get('/', [UserController::class, 'cadastroUsuario']);
@@ -84,6 +90,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/deletar_secao', [SecaoController::class, 'deletarSecao'])->name('deletarSecao');
     Route::post('/salvar_secao', [SecaoController::class, 'salvarAdicionarSecao'])->name('salvarSecao');
     Route::post('/salvar_editar_secao', [SecaoController::class, 'salvarEditarSecao'])->name('salvarEditarSecao');
+    Route::post('/gerar_secao_template', [SecaoController::class, 'salvarSecaoTemplate'])->name('salvarSecaoTemplate');
 
     Route::get('/anotacoes/{id_campo}', [CampoController::class, 'anotacoes_html'])->name('anotacoes');
     Route::post('/anotacoes/salvar', [CampoController::class, 'salvar_anotacao'])->name('anotacoes.salvar');

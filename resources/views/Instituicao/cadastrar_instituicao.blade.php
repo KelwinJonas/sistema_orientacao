@@ -18,7 +18,7 @@
                             <div class="col-md-6" id="div-coluna2">
                                 <div class="col-md-12" id="cabecalho-cadastro-usuario">Cadastro da instituição</div>
 
-                                <form action="{{route('cadastrarInstituicao.salvar')}}" method="POST">
+                                <form action="{{route('instituicao.salvar')}}" method="POST">
                                     @csrf
                                     <div class="form-group" id="div-email-esqueceu-senha">
                                         <label for="nome">Nome <span class="cor-obrigatorio">(obrigatório)</span></label>
@@ -31,7 +31,7 @@
                                     </div>
                                         <button type="submit" class="btn btn-success botoes-cadastro">Cadastrar</button>
                                         <hr>
-                                        <a href="{{route('home')}}" class="btn btn-primary botoes-cadastro" >Voltar para a tela de login</a>
+                                        <a href="{{route('instituicao.listar')}}" class="btn btn-primary botoes-cadastro" >Voltar</a>
                                 </form>
                             </div>
                         </div>
@@ -40,25 +40,4 @@
             </div>
         </div>
     </div>
-    {{-- <form action="{{route('cadastrarInstituicao.salvar')}}" method="POST"> 
-        @csrf
-        <br>
-        <h1 class="col-md-1">Cadastro</h1>
-        <h2 class="col-md-6">Informações da Instituição</h2>
-
-        <div class="form-group">
-            <label for='nome' class="col-md-1 col-form-label">Nome</label>
-            <div class="col-md-6">
-                <input type='text' class="form-control @error('nome') is-invalid @enderror" placeholder = "Digite o nome da instituição" name='nome' id='nome' value="{{old('nome')}}"/>    
-                @error('nome')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{$message}}</strong>
-                </span>
-                @enderror
-            </div>
-        </div>
-        <div class="col-md-1">
-            <button id="botao-cadastrar" type='submit' class="btn btn-primary cor-botao" >Cadastrar</button>
-        </div>
-    </form> --}}
 @endsection

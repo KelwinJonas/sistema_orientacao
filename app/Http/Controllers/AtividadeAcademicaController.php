@@ -17,49 +17,55 @@ use Google_Service_Drive_DriveFile;
 class AtividadeAcademicaController extends DriveController
 {
 
-    public function cadastroAtividade(){
+    public function cadastroAtividade()
+    {
         return view('AtividadeAcademica.cadastrar_atividade_academica');
     }
 
-    public function listarAtividades(){
+    public function listarAtividades()
+    {
         $usuarioLogado = User::find(Auth::id());
         //Criação da pasta da atividade acadêmica no Google Drive do usuário logado
-        if($usuarioLogado->folder_id_minhas_atividades == 'root'){        
+        if ($usuarioLogado->folder_id_minhas_atividades == 'root') {
             $folder_id_minhas_atividades = $this->createFolder('Orientação - Minhas atividades', 'root');
             $usuarioLogado->update([
                 'folder_id_minhas_atividades' => $folder_id_minhas_atividades,
             ]);
         }
-        return view('AtividadeAcademica.listar_atividades_academicas')->with
-        ([
+        return view('AtividadeAcademica.listar_atividades_academicas')->with([
             'atividadesUsuario' => $usuarioLogado->atividadesUsuario,
             'usuarioLogado' => $usuarioLogado,
         ]);
     }
 
-    public function verAtividade($atividade_id){
+    public function verAtividade($atividade_id)
+    {
         $atividade = AtividadeAcademica::find($atividade_id);
-        if($atividade){
+        if ($atividade && $atividade->user_logado_leitor_ou_acima()) {
             return view('AtividadeAcademica.ver_atividade_academica', ['atividade' => $atividade]);
         }
     }
 
-    public function verSecoes($atividade_id, $secao_atual = 0){
+    public function verSecoes($atividade_id, $secao_atual = 0)
+    {
 
         $atividade = AtividadeAcademica::find($atividade_id);
 
-        if(!$atividade) {
+        if (!$atividade) {
             return redirect()->route('login');
         }
 
-        
+        if (!$atividade->user_logado_leitor_ou_acima()) {
+            return redirect()->back();
+        }
+
         $secao = Secao::find($secao_atual);
-        if((!$secao) && ($atividade->secoes->count() > 0)) {
+        if ((!$secao) && ($atividade->secoes->count() > 0)) {
             return redirect()->route("verAtividade.verSecoes", [$atividade_id, $atividade->secoes[0]]);
         }
 
 
-        if($atividade){
+        if ($atividade) {
             return view('AtividadeAcademica.secao.secoes', [
                 'atividade' => $atividade,
                 'secao' => $secao,
@@ -67,24 +73,36 @@ class AtividadeAcademicaController extends DriveController
         }
     }
 
-    public function verArquivos($atividade_id){
+    public function verArquivos($atividade_id)
+    {
         $atividade = AtividadeAcademica::find($atividade_id);
+
+        if (!$atividade || !$atividade->user_logado_leitor_ou_acima()) {
+            return redirect()->back();
+        }
+
         $arquivos = $this->listarArquivosPasta($atividade);
-        if($atividade){
-            return view('AtividadeAcademica.arquivos', ['atividade' => $atividade, 'arquivos' => $arquivos->reverse()]);
-        }
+
+        return view('AtividadeAcademica.arquivos', ['atividade' => $atividade, 'arquivos' => $arquivos->reverse()]);
+
     }
 
-    public function verPessoas($atividade_id){
+    public function verPessoas($atividade_id)
+    {
         $atividade = AtividadeAcademica::find($atividade_id);
-        if($atividade){
-            return view('AtividadeAcademica.pessoas', ['atividade' => $atividade]);
+
+        if (!$atividade || !$atividade->user_logado_leitor_ou_acima()) {
+            return redirect()->back();
         }
+
+        return view('AtividadeAcademica.pessoas', ['atividade' => $atividade]);
+
     }
 
-    public function salvarCadastrarAtividade(Request $request){
+    public function salvarCadastrarAtividade(Request $request)
+    {
         $entrada = $request->all();
-        
+
         $messages = [
             'required' => 'O campo :attribute é obrigatório.',
             'min' => 'O campo :attribute deve ter no mínimo :min caracteres.',
@@ -93,7 +111,7 @@ class AtividadeAcademicaController extends DriveController
         ];
 
         $validator = Validator::make($entrada, AtividadeAcademica::$rules, $messages);
-        if($validator->fails()){
+        if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
@@ -129,10 +147,16 @@ class AtividadeAcademicaController extends DriveController
         return redirect()->route('listarAtividades');
     }
 
-    public function salvarEditarAtividade(Request $request, $atividade_id){
+    public function salvarEditarAtividade(Request $request, $atividade_id)
+    {
         $entrada = $request->all();
-        
+
         $atividadeAcademica = AtividadeAcademica::find($atividade_id);
+
+        if (!$atividadeAcademica || !$atividadeAcademica->user_logado_proprietario()) {
+            return redirect()->back();
+        }
+
         //dd($atividadeAcademica);
         //dd($entrada);
         $messages = [
@@ -143,7 +167,7 @@ class AtividadeAcademicaController extends DriveController
         ];
 
         $validator = Validator::make($entrada, AtividadeAcademica::$rules, $messages);
-        if($validator->fails()){
+        if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
@@ -154,10 +178,10 @@ class AtividadeAcademicaController extends DriveController
             'data_inicio' => $request->input('data_inicio'),
             'data_fim' => $request->input('data_fim'),
         ]);
-        
+
         // dd($entrada['cor_card']);
 
-        if($request->input('cor_card')){
+        if ($request->input('cor_card')) {
             $atividadeAcademica->update([
                 'cor_card' => $request->input('cor_card')
             ]);

@@ -17,6 +17,7 @@ class CreateTemplateAtividadeTable extends Migration
             $table->id();
             $table->string('tipo');
             $table->string('titulo');
+            $table->json("arr_template")->nullable(true);
             $table->unsignedBigInteger('instituicao_id');
             $table->foreign('instituicao_id')->references('id')->on('instituicaos');
             $table->timestamps();

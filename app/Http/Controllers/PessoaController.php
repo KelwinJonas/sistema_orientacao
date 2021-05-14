@@ -18,6 +18,11 @@ class PessoaController extends DriveController
             if($pessoaAdicionada->email != $usuarioLogado->email){
                 $atividadeAcademica = AtividadeAcademica::find($atividade_id);
                 $atividadeUsuarioExiste = AtividadeUsuario::where('user_id', '=', $pessoaAdicionada->id)->where('atividade_academica_id', '=', $atividadeAcademica->id)->get()->first();
+
+                if(!$atividadeAcademica->user_logado_proprietario()) {
+                    return redirect()->back(); // Só o proprietario pode adicionar pessoas
+                }
+                
                 if(!$atividadeUsuarioExiste){
                     if($atividadeAcademica){
                         $atividadeUsuario = new AtividadeUsuario();
