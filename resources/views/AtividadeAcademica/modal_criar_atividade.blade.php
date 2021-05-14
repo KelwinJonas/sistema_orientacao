@@ -54,15 +54,19 @@
                             </span>
                             @enderror
                         </div>
-                        {{-- <div class="form-group">
-                                            <label for="cor_card">Cor do card <span class="cor-obrigatorio">(obrigatório)</span></label>
-                                            <input type='color' class="form-control campos-cadastro @error('cor_card') is-invalid @enderror" name='cor_card' id='cor_card' value="{{old('cor_card')}}"/>
-                        @error('cor_card')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{$message}}</strong>
-                        </span>
-                        @enderror
-                </div> --}}
+                        <div class="form-group">
+                            <label for="cor_card">Cor do card <span class="cor-obrigatorio">(opcional)</span></label>
+                            <div class="container custom-radios">
+                                <div class="row justify-content-center">
+                                    @for($i = 1; $i <= sizeof(\App\Models\AtividadeAcademica::CORES); $i++)
+                                    <div>
+                                        <input type="radio" class="radio-cor-{{$i}}" id="radio-cor-{{$i}}" name="cor_card" value="{{\App\Models\AtividadeAcademica::CORES[$i-1]}}" />
+                                        <label class="label-radio" for="radio-cor-{{$i}}"><span class="span-radio" style="background-color: {{\App\Models\AtividadeAcademica::CORES[$i-1]}};"></span></label>
+                                    </div>
+                                    @endfor
+                                </div>
+                            </div>
+                        </div>
                 <hr>
                 <div class="float-right">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
