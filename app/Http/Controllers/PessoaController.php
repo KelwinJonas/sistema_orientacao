@@ -32,12 +32,16 @@ class PessoaController extends DriveController
     
                         //Concedendo permissão no drive
                         $role = '';
-                        if($papelPessoaAdicionada->nome == 'editor'){
+                        if($papelPessoaAdicionada->nome == Papel::EDITOR){
                             $role = 'writer';
                         }
-                        else if($papelPessoaAdicionada->nome == 'leitor'){
-                            $role = 'reader';
+                        else if($papelPessoaAdicionada->nome == Papel::LEITOR){
+                            $role = 'commenter';
                         }
+                        else if($papelPessoaAdicionada->nome == Papel::GERENTE_DE_CONTEUDO){
+                            //$role = 'fileOrganizer';
+                        }
+
                         return $this->grantPermission($role, $pessoaAdicionada, $atividadeAcademica);
                     }
                 }
