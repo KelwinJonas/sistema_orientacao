@@ -43,8 +43,10 @@ Route::prefix('/instituicoes')->name('instituicao')->group(function () {
     Route::get('/ver/{id}', [InstituicaoController::class, 'verInstituicao'])->name('.ver');
     Route::get('/nova', [InstituicaoController::class, 'cadastroInstituicao'])->name('.nova');
     Route::post('/salvar', [InstituicaoController::class, 'salvarCadastrarInstituicao'])->name('.salvar');
+    Route::post('/deletar', [InstituicaoController::class, 'deletarInstituicao'])->name('.deletar');
     Route::post('/template/salvar', [InstituicaoController::class, 'salvarTemplate'])->name('.template.salvar');
     Route::post('/template/editar/salvar', [InstituicaoController::class, 'salvarEditarTemplate'])->name('.template.editar.salvar');
+    Route::post('/template/deletar', [InstituicaoController::class, 'deletarTemplate'])->name('.template.deletar');
 });
 
 

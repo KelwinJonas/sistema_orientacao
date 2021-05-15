@@ -75,21 +75,26 @@
     </div>
 </div>
 
+<form method="POST" action="{{route('instituicao.deletar')}}" id="form_deletar_instituicao" class="d-none">
+    @csrf
+    <input type="hidden" name="instituicao_id" value="{{$instituicao->id}}" />
+</form>
+
 <div class="container-main">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <br>
                 <div class="card">
-                    <h5 class="card-header">{{$instituicao->nome}}</h5>
+                    <h5 class="card-header">{{$instituicao->nome}}<button type="button" class="btn btn-danger float-right" onclick="confirm('Tem certeza que quer apagar essa instituição?') && document.getElementById('form_deletar_instituicao').submit()"> Deletar Instituição</button></h5>
                     <div class="card-body">
-                        <a id="btn_abrir_modal_add_template" href="#" class="btn btn-primary" data-toggle="modal" data-target="#modal_add_template">Adicionar template</a>
+                        <a id="btn_abrir_modal_add_template" href="#" class="btn btn-primary" data-toggle="modal" data-target="#modal_add_template">Adicionar modelo</a>
                         @foreach($instituicao->templatesAtividade as $template)
                         <div class="modal fade modal_edit_template_c" id="modal_edit_template_{{$template->id}}" tabindex="-1" role="dialog" aria-labelledby="edit_template_label" aria-hidden="true">
                             <div class="modal-dialog" role="document" style="max-width: 70%;">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="edit_template_label">Editar template</h5>
+                                        <h5 class="modal-title" id="edit_template_label">Editar modelo</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -149,10 +154,17 @@
                                             @endif
 
                                             <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger" onclick="confirm('Tem certeza que quer apagar esse modelo?') && document.getElementById('form_deletar_template_{{$template->id}}').submit()">Deletar</button>
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                                                 <button type="submit" class="btn btn-success">Salvar</button>
                                             </div>
                                         </form>
+
+                                        <form id="form_deletar_template_{{$template->id}}" class="d-none" method="POST" action="{{route('instituicao.template.deletar')}}">
+                                            @csrf
+                                            <input type="hidden" name="template_id" value="{{$template->id}}" />
+                                        </form>
+
                                     </div>
 
                                 </div>
