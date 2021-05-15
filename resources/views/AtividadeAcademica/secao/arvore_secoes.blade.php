@@ -4,7 +4,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="escolher_template_label">Escolher template</h5>
+                <h5 class="modal-title" id="escolher_template_label">Escolher modelo</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -25,9 +25,9 @@
 
                     @foreach(\App\Models\Instituicao::all() as $instituicao)
                     <div class="form-group templates_instituicoes" id="instituicao_{{$instituicao->id}}" style="display: none;">
-                        <label for="template_{{$instituicao->id}}">Template</label>
+                        <label for="template_{{$instituicao->id}}">Modelo</label>
                         <select class="form-control selects-template" id="template_{{$instituicao->id}}">
-                            <option selected disabled>-- Selecione uma template --</option>
+                            <option selected disabled>-- Selecione um modelo --</option>
 
                             @foreach($instituicao->templatesAtividade as $template)
                             <option dados_arvore="{{$template->arr_template}}" value="{{$template->id}}">{{$template->titulo}}</option>
@@ -60,7 +60,7 @@
     </a>
     para criar uma seção.
     <br>
-    Ou <a href="#" id="botao-escolher-template" data-toggle="modal" data-target="#modal_escolher_template" style="text-align:right; font-size: 15px; color: blue;">Clique aqui</a> para escolher a partir de um template.
+    Ou <a href="#" id="botao-escolher-template" data-toggle="modal" data-target="#modal_escolher_template" style="text-align:right; font-size: 15px; color: blue;">Clique aqui</a> para escolher a partir de um modelo.
 </p>
 @endif
 @foreach($atividade->secoes as $secao_loop)
