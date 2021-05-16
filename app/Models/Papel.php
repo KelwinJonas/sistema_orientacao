@@ -13,11 +13,19 @@ class Papel extends Model
     public const LEITOR = "leitor"; // Pode só fazer anotações/comentarios
 
     public const PAPEIS = [
+        "Gerente de Conteúdo" => Papel::GERENTE_DE_CONTEUDO,
+        "Editor" => Papel::EDITOR,
+        "Leitor" => Papel::LEITOR,
+    ];
+
+
+    public const PAPEIS_COMPLETO = [
         "Proprietário" => Papel::PROPRIETARIO,
         "Gerente de Conteúdo" => Papel::GERENTE_DE_CONTEUDO,
         "Editor" => Papel::EDITOR,
         "Leitor" => Papel::LEITOR,
     ];
-    
+
+
     use HasFactory;
 }
