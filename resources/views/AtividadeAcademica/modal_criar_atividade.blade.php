@@ -10,7 +10,31 @@
                         @csrf
                         <div class="form-group">
                             <label for="tipo">Tipo <span class="cor-obrigatorio">(obrigatório)</span></label>
-                            <input type='text' class="form-control campos-cadastro @error('tipo') is-invalid @enderror" placeholder="Digite o tipo" name='tipo' id='tipo' value="{{old('tipo')}}" />
+
+                            <select class="form-control" name="tipo" id="tipo_select">
+                                <option disabled selected>-- Selecione um tipo --</option>
+                                @foreach(\App\Models\AtividadeAcademica::TIPOS_SUGERIDOS as $tipo_sugerido)
+                                <option value="{{$tipo_sugerido}}">{{$tipo_sugerido}}</option>
+                                @endforeach
+                                <option value="outros">Outro...</option>
+                            </select>
+
+                            <input type='text' class="d-none form-control campos-cadastro @error('tipo') is-invalid @enderror" placeholder="Digite o tipo" name='' id='tipo_txt' value="{{old('tipo')}}" style="margin-top: 15px;" />
+
+                            <script>
+                                document.getElementById('tipo_select').onchange = function() {
+                                    if (this.value == "outros") {
+                                        $('#tipo_txt').removeClass('d-none');
+                                        document.getElementById('tipo_txt').name = "tipo";
+                                        this.name = "";
+                                    } else {
+                                        $('#tipo_txt').addClass('d-none');
+                                        document.getElementById('tipo_txt').name = "";
+                                        this.name = "tipo";
+                                    }
+                                }
+                            </script>
+
                             @error('tipo')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{$message}}</strong>

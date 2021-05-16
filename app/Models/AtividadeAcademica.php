@@ -24,6 +24,12 @@ class AtividadeAcademica extends Model
 
     ];
 
+    public const TIPOS_SUGERIDOS = [
+        "Projeto de extensão",
+        "Projeto de pesquisa",
+        "TCC",
+    ];
+
     protected $fillable = ['tipo', 'titulo', 'descricao', 'data_inicio', 'data_fim', 'cor_card', 'folder_id'];
 
     public static $rules = [
