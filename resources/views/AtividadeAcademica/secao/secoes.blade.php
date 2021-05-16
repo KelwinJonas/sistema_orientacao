@@ -137,7 +137,7 @@
                             <hr style="width: 85%;">
                             <button type="button" data-toggle="modal" data-target="#modal-editar-secao" onclick="add_id_na_subsecao(null)" class="dropdown-item">Editar Seção</button>
                             @if($atividade->user_logado_proprietario())
-                            <button type="button" class="dropdown-item btn btn-danger" style="color: red;" onclick="event.preventDefault(); document.getElementById('deletar_secao_form').submit();">Deletar Seção</button>
+                            <button type="button" class="dropdown-item btn btn-danger" style="color: red;" onclick="event.preventDefault(); (confirm('Tem certeza que quer apagar esta seção e tudo referente a ela?') && document.getElementById('deletar_secao_form').submit());">Deletar Seção</button>
 
                             <form id="deletar_secao_form" action="{{ route('deletarSecao') }}" method="POST" class="d-none">
                                 @csrf
@@ -210,7 +210,7 @@
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="btn_dropdown_opcoes_campo_{{$campo->id}}">
                                     <button type="button" class="dropdown-item" onclick="editar_campo('{{$campo->id}}', '{{$campo->titulo_escapado()}}', '{{$campo->legenda_escapada()}}')">Editar informações do Campo</button>
-                                    <button type="button" class="dropdown-item btn btn-danger" onclick="document.getElementById('form_deletar_campo_{{$campo->id}}').submit();">Deletar Campo</button>
+                                    <button type="button" class="dropdown-item btn btn-danger" onclick="confirm('Tem certeza que quer apagar este campo e todo seu conteúdo?') && document.getElementById('form_deletar_campo_{{$campo->id}}').submit()">Deletar Campo</button>
                                 </div>
 
 

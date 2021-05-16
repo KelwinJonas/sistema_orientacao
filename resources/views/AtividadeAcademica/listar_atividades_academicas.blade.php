@@ -29,20 +29,18 @@
 
                     @include('AtividadeAcademica.modal_editar_atividade')
 
-                    {{-- Modal deletar atividade --}}
-                    <div id="modal-deletar-atividade-{{$atividadeUsuario->atividadeAcademica->id}}" class="modal fade" tabindex="-1" role="dialog">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-body">
-                                    deletar
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @if($atividadeUsuario->atividadeAcademica->user_logado_proprietario())
+                    <!-- TODO: rota de deletar, deletar mesmo? -->
+                    <form action="{{route('deletarAtividade')}}" class="d-none" method="POST" id="form_deletar_atividade_{{$atividadeUsuario->atividadeAcademica->id}}">
+                        @csrf
+                        <input type="hidden" name="atividade_id" value="{{$atividadeUsuario->atividadeAcademica->id}}">
+                    </form>
+                    @endif
+
                     <div class="dropdown-menu card-drop" aria-labelledby="navbarDropdown">
                         @if((($usuarioLogado->id == $atividadeUsuario->user_id) && ($atividadeUsuario->papel->nome == "proprietario")))
                         <button class="dropdown-item botao-more-card" data-toggle="modal" data-target="#modal-editar-atividade-{{$atividadeUsuario->atividadeAcademica->id}}">Editar</button>
-                        <button class="dropdown-item botao-more-card" data-toggle="modal" data-target="#modal-deletar-atividade">Deletar</button>
+                        <button class="dropdown-item botao-more-card btn-danger" onclick="confirm('Tem certeza que quer apagar esta atividade e tudo referente a ela?') && document.getElementById('form_deletar_atividade_{{$atividadeUsuario->atividadeAcademica->id}}').submit()">Deletar</button>
                         @elseif((($usuarioLogado->id == $atividadeUsuario->user_id) && ($atividadeUsuario->papel->nome == "editor")))
                         <button class="dropdown-item botao-more-card" data-toggle="modal" data-target="#modal-editar-atividade-{{$atividadeUsuario->atividadeAcademica->id}}">Editar</button>
                         @endif

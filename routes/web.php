@@ -63,6 +63,7 @@ Route::prefix('cadastrar_atividade')->name('cadastrarAtividade')->group(function
 });
 
 Route::post('/salvarEditarAtividade/{atividade_id}', [AtividadeAcademicaController::class, 'salvarEditarAtividade'])->name('salvarEditarAtividade')->middleware('auth');
+Route::post('/deletarAtividade', [AtividadeAcademicaController::class, 'deletarAtividade'])->name('deletarAtividade')->middleware('auth');
 
 Route::get('/listar_atividades', [AtividadeAcademicaController::class, 'listarAtividades'])->name('listarAtividades')->middleware('auth');
 //Route::get('/ver_atividade/{atividade_id}', [AtividadeAcademicaController::class, 'verAtividade'])->name('verAtividade');
