@@ -1,4 +1,4 @@
-@if($atividade->secoes->count() == 0)
+@if($atividade->secoes->count() == 0 && $atividade->user_logado_gerente_ou_acima())
 
 <div class="modal fade" id="modal_escolher_template" tabindex="-1" role="dialog" aria-labelledby="escolher_template_label" aria-hidden="true">
     <div class="modal-dialog" role="document">
