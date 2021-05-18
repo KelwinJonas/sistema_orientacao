@@ -123,7 +123,11 @@ class AtividadeAcademicaController extends DriveController
         $atividadeAcademica->descricao = $entrada['descricao'];
         $atividadeAcademica->data_inicio = $entrada['data_inicio'];
         $atividadeAcademica->data_fim = $entrada['data_fim'];
-        $atividadeAcademica->cor_card = "#F0D882";
+        if(in_array('cor_card', $entrada)){
+            $atividadeAcademica->cor_card = $entrada['cor_card'];
+        }else{
+            $atividadeAcademica->cor_card = "#F0D882";
+        }
         $atividadeAcademica->folder_id = "none";
         $atividadeAcademica->user_id = $usuarioLogado->id;
         $atividadeAcademica->save();

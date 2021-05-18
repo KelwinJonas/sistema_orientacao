@@ -29,7 +29,7 @@
                     <div class="col-md-12">
                         <div class="row align-items-start">
                             <div class="col" style=" width: 100%;">
-                                <p class="style_pessoas_titulo">Membros</p>
+                                <p class="style_pessoas_titulo">Pessoas</p>
                             </div>
 
                             <!-- Só o proprietario pode add pessoas -->
