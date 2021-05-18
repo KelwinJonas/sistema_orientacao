@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AtividadeAcademica;
 use App\Models\Instituicao;
 use App\Models\Telefone;
+use App\Models\TemplatePessoal;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use stdClass;
 
 class UserController extends Controller
 {
@@ -65,4 +69,91 @@ class UserController extends Controller
 
         return redirect()->route('listarAtividades');
     }
+
+    public function modelos_pessoais() {
+        return view('User.templates_pessoais');
+    }
+
+
+    public function gerar_arvore($secao_raiz) {
+
+        $secao = new stdClass;
+        $secao->tipo = "secao";
+        $secao->titulo = $secao_raiz->nome;
+        $secao->filhos = [];
+
+        foreach($secao_raiz->campos as $campo) {
+            $campo_std = new stdClass;
+            $campo_std->tipo = "campo";
+            $campo_std->titulo = $campo->titulo;
+            $campo_std->filhos = [];
+            array_push($secao->filhos, $campo_std);
+        }
+
+        foreach($secao_raiz->secoes as $secao_filho) {
+            array_push($secao->filhos, $this->gerar_arvore($secao_filho));
+        }
+        
+        return $secao;
+
+    }
+    
+    public function salvar_modelos_pessoais(Request $request) {
+        $val = Validator::make($request->all(), [
+            'titulo_template' => 'required',
+            'tipo_template' => 'required',
+            'atividade_id' => 'required|exists:atividade_academicas,id',
+        ]);
+
+
+        $atividade = AtividadeAcademica::find($request->atividade_id);
+        $template = new TemplatePessoal;
+        $template->tipo = $request->tipo_template;
+        $template->titulo = $request->titulo_template;
+
+
+        $template_arr = [];
+        foreach($atividade->secoes as $secao) {
+            $raiz = $this->gerar_arvore($secao);
+            array_push($template_arr, $raiz);
+        }
+
+        $template->arr_template = json_encode($template_arr);
+        $template->user_id = Auth::id();
+        $template->save();
+        return redirect()->route('templates.pessoais');
+    }
+
+    public function salvar_novo_modelo(Request $request) {
+        $request->validate([
+            "tipo" => "required",
+            "titulo" => "required",
+        ]);
+
+        $template = new TemplatePessoal;
+        $template->tipo = $request->tipo;
+        $template->titulo = $request->titulo;
+        $template->user_id = Auth::id();
+        $template->save();
+        return redirect()->back();
+    }
+
+    public function salvar_editar_modelo(Request $request) {
+        $request->validate([
+            "template_id" => 'required|exists:template_pessoals,id',
+            "tipo" => "required",
+            "titulo" => "required",
+            "arr_template" => "required",
+        ]);
+
+        if ($template = TemplatePessoal::find($request->template_id)) {
+            $template->tipo = $request->tipo;
+            $template->titulo = $request->titulo;            
+            $template->arr_template = json_decode($request->arr_template);
+            $template->save();
+        }
+
+        return redirect()->back();
+    }
+    
 }

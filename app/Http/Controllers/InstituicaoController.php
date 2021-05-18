@@ -58,6 +58,17 @@ class InstituicaoController extends Controller
         return redirect()->back();
     }
 
+    public function deletarTemplate(Request $request)
+    {
+        //TODO: verificar permissões
+
+        $template = TemplateAtividade::find($request->template_id);
+        if($template) {
+            $template->delete();
+        }
+        return redirect()->back();
+    }
+
 
     public function cadastroInstituicao()
     {
@@ -83,6 +94,14 @@ class InstituicaoController extends Controller
         $instituicao->nome = $entrada['nome'];
         $instituicao->save();
 
+        return redirect()->route('instituicao.listar');
+    }
+
+    public function deletarInstituicao(Request $request) {
+        $instituicao = Instituicao::find($request->instituicao_id);
+        if($instituicao) {
+            $instituicao->delete();
+        }
         return redirect()->route('instituicao.listar');
     }
 }

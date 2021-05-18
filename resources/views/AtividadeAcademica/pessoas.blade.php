@@ -53,14 +53,14 @@
                             <div class="col" style=" width: 100%; margin-top: 10px;">
                                 <div>{{$atividadeUsuario->dono->name}} <span style="color: #909090; font-size: 13px;"> - {{$atividadeUsuario->data_hora_adicionado()}}</span></div>
                             </div>
-                            @if($atividade->user_logado_proprietario())
+                            @if($atividade->user_logado_proprietario() && $atividadeUsuario->user_id != Auth::id())
                             <div id="btn_opcoes_pessoas_{{$atividadeUsuario->id}}" class="col-1" style="text-align: right; margin-top: 10px; cursor: pointer;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img src="{{asset('images/logo_more.png')}}" alt="Opções" width="4px">
                             </div>
+
                             <div class="dropdown-menu" aria-labelledby="btn_opcoes_pessoas_{{$atividadeUsuario->id}}">
                                 <button type="button" class="dropdown-item btn" onclick="$('#modal_editar_pessoa_{{$atividadeUsuario->id}}').modal('show')">Editar papel</button>
-                                <button type="button" class="dropdown-item btn btn-danger" style="color: red;" onclick="if(confirm('Tem certza?')) {document.getElementById('remover_membro_{{$atividadeUsuario->id}}').submit();}">
-                                    Remover membro</button>
+                                <button type="button" class="dropdown-item btn btn-danger" style="color: red;" onclick="if(confirm('Tem certza?')) {document.getElementById('remover_membro_{{$atividadeUsuario->id}}').submit();}">Remover pessoa</button>
                             </div>
 
 

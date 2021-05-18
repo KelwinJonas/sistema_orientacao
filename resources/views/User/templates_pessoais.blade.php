@@ -24,7 +24,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{route('instituicao.template.salvar')}}" method="POST">
+                <form action="{{route('user.template.salvar')}}" method="POST">
 
                     @if(old('modal_ref') != "modal_add_template")
                     <?php
@@ -36,7 +36,6 @@
                     @endif
 
                     @csrf
-                    <input type="hidden" value="{{$instituicao->id}}" name="instituicao_id" />
                     <input type="hidden" name="modal_ref" value="modal_add_template" />
                     <div class="form-group">
                         <label for="tipo">Tipo <span class="cor-obrigatorio">(obrigatório)</span></label>
@@ -75,21 +74,16 @@
     </div>
 </div>
 
-<form method="POST" action="{{route('instituicao.deletar')}}" id="form_deletar_instituicao" class="d-none">
-    @csrf
-    <input type="hidden" name="instituicao_id" value="{{$instituicao->id}}" />
-</form>
-
 <div class="container-main">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <br>
                 <div class="card">
-                    <h5 class="card-header">{{$instituicao->nome}}<button type="button" class="btn btn-danger float-right" onclick="confirm('Tem certeza que quer apagar essa instituição?') && document.getElementById('form_deletar_instituicao').submit()"> Deletar Instituição</button></h5>
+                    <h5 class="card-header">Templates pessoais</h5>
                     <div class="card-body">
                         <a id="btn_abrir_modal_add_template" href="#" class="btn btn-primary" data-toggle="modal" data-target="#modal_add_template">Adicionar modelo</a>
-                        @foreach($instituicao->templatesAtividade as $template)
+                        @foreach(Auth::user()->templates_pessoais as $template)
                         <div class="modal fade modal_edit_template_c" id="modal_edit_template_{{$template->id}}" tabindex="-1" role="dialog" aria-labelledby="edit_template_label" aria-hidden="true">
                             <div class="modal-dialog" role="document" style="max-width: 70%;">
                                 <div class="modal-content">
@@ -100,7 +94,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="{{route('instituicao.template.editar.salvar')}}" method="POST" onsubmit="return preparar_template_form(event, this)">
+                                        <form action="{{route('user.template.editar.salvar')}}" method="POST" onsubmit="return preparar_template_form(event, this)">
 
                                             @if(old('modal_ref') != "modal_edit_template_$template->id")
                                             <?php
@@ -199,9 +193,10 @@
 </div>
 
 @if ($errors->any())
-<script>
-    $("#{{old('modal_ref')}}").modal("show");
-</script>
+    <script>
+     $("#{{old('modal_ref')}}").modal("show");
+    </script>
 @endif
 
 @endsection
+

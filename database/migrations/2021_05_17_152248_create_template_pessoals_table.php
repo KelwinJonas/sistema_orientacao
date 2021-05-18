@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTemplateAtividadeTable extends Migration
+class CreateTemplatePessoalsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,16 @@ class CreateTemplateAtividadeTable extends Migration
      */
     public function up()
     {
-        Schema::create('template_atividades', function (Blueprint $table) {
+        Schema::create('template_pessoals', function (Blueprint $table) {
             $table->id();
+            $table->timestamps();
+            
             $table->string('tipo');
             $table->string('titulo');
             $table->json("arr_template")->nullable(true);
-            $table->unsignedBigInteger('instituicao_id');
-            $table->foreign('instituicao_id')->references('id')->on('instituicaos')->onDelete('cascade');
-            $table->timestamps();
+            
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -31,6 +33,6 @@ class CreateTemplateAtividadeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('template_atividade');
+        Schema::dropIfExists('template_pessoals');
     }
 }

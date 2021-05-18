@@ -160,29 +160,75 @@ function montar_arvores() {
 
 
 function preparar_exibicao_escolha_templates() {
-                        document.getElementById('instituicao').onchange = function() {
-                            document.getElementById("arvore_secao_template").innerHTML = "";
-                            document.querySelectorAll(".templates_instituicoes").forEach((el) => {
-                                el.style.display = "none";
-                                el.querySelector("select").name = "";
-                                el.querySelector("select").options.selectedIndex = 0;
-                            });
-                            let div_selecionado = document.getElementById(this.value);
-                            div_selecionado.style.display = "block";
-                            div_selecionado.querySelector("select").name = "template_id";
-                        }
+    document.getElementById('instituicao').onchange = function() {
+        document.getElementById("arvore_secao_template").innerHTML = "";
+        document.querySelectorAll(".templates_instituicoes").forEach((el) => {
+            el.style.display = "none";
+            el.querySelector("select").name = "";
+            el.querySelector("select").options.selectedIndex = 0;
+        });
+        let div_selecionado = document.getElementById(this.value);
+        div_selecionado.style.display = "block";
+        div_selecionado.querySelector("select").name = "template_id";
+    }
 
-                        document.querySelectorAll(".selects-template").forEach((el) => {
-                            el.onchange = function() {
-                                let json_arvore_txt = el.options[el.options.selectedIndex].getAttribute("dados_arvore");
-                                document.querySelector(".no_raiz").setAttribute("dados_arvore", json_arvore_txt);
-                                document.getElementById("arvore_secao_template").innerHTML = "";
-                                try {
-                                    montar_arvores();
-                                    document.getElementById("arvore_secao_template").innerHTML += "<br>";
-                                } catch (ex) {
-                                    document.getElementById("arvore_secao_template").innerHTML = "Template em branco";
-                                }
-                            };
-                        });
+    document.querySelectorAll(".selects-template").forEach((el) => {
+        el.onchange = function() {
+            document.getElementById('tipo_pessoal_instituicao_template').value = "instituicao";
+            let json_arvore_txt = el.options[el.options.selectedIndex].getAttribute("dados_arvore");
+            document.querySelector(".no_raiz").setAttribute("dados_arvore", json_arvore_txt);
+            document.getElementById("arvore_secao_template").innerHTML = "";
+            try {
+                montar_arvores();
+                document.getElementById("arvore_secao_template").innerHTML += "<br>";
+            } catch (ex) {
+                document.getElementById("arvore_secao_template").innerHTML = "Template em branco";
+            }
+        };
+    });
+
+    document.getElementById("template_pessoal_select").addEventListener("change", function(){
+        this.name = "template_id";
+        document.getElementById('tipo_pessoal_instituicao_template').value = "pessoal";
+        document.querySelectorAll(".templates_instituicoes").forEach((el) => {
+            el.style.display = "none";
+            el.querySelector("select").name = "";
+            el.querySelector("select").options.selectedIndex = 0;
+        });
+        document.querySelectorAll('.templates_instituicoes').forEach((el) => {
+            el.style.display = 'none';
+        });
+    });
+
+    document.getElementById('txt_escolha_pessoal').onclick = function() {
+        this.style.textDecoration = "";
+        document.getElementById('txt_escolha_instituicao').style.textDecoration = "underline";
+        document.querySelectorAll('.input_pessoal').forEach((el) =>{
+            el.style.display = "block";
+        });
+        document.querySelectorAll('.input_instituicoes').forEach((el) => {
+            el.style.display = "none";
+        });
+    };
+
+    document.getElementById('txt_escolha_instituicao').onclick = function() {
+        this.style.textDecoration = "";
+        document.getElementById('txt_escolha_pessoal').style.textDecoration = "underline";
+        document.querySelectorAll('.input_pessoal').forEach((el) =>{
+            el.style.display = "none";
+        });
+        document.querySelectorAll('.input_instituicoes').forEach((el) => {
+            el.style.display = "block";
+        });
+        document.getElementById("template_pessoal_select").name = "";
+    };
+
+    document.querySelectorAll('.btn_txt_escolha_template').forEach((el) => {
+        el.addEventListener('click', function() {
+            document.getElementById('form_criar_de_modelo').querySelectorAll("select").forEach((select) => {
+                select.options.selectedIndex = 0;
+            });
+        });
+    });
+
 }

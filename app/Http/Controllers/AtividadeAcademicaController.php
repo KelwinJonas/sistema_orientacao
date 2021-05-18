@@ -193,4 +193,9 @@ class AtividadeAcademicaController extends DriveController
 
         return redirect()->route('listarAtividades');
     }
+
+    public function deletarAtividade(Request $request) {
+        //TODO: deletar mesmo?
+        return redirect()->back();
+    }
 }

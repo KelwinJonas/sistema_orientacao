@@ -61,12 +61,13 @@
                     </div>
                     <hr>
                     <div class="col-md-12 style_card_menu">
-                        <div id="menu-ver-atividade">
+                        <div id="menu-ver-atividade" style="margin-left: 0%;">
                             <a class="link-menu-ver-atividade" href="{{route('verAtividade.verMural', ['atividade_id' => $atividade->id])}}">Mural</a>
                             <a class="link-menu-ver-atividade link-menu-selecionado" href="{{route('verAtividade.verSecoes', ['atividade_id' => $atividade->id])}}">Seções</a>
                             <a class="link-menu-ver-atividade" href="{{route('verAtividade.verArquivos', ['atividade_id' => $atividade->id])}}">Arquivos</a>
                             <a class="link-menu-ver-atividade" href="{{route('verAtividade.verPessoas', ['atividade_id' => $atividade->id])}}">Pessoas</a>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -80,7 +81,7 @@
                                 <div class="row">
                                     <div class="col">Seções</div>
                                     @if($atividade->user_logado_gerente_ou_acima())
-                                    <a class="col" id="botao-criar-secao" data-toggle="modal" data-target="#modal-criar-secao" style="text-align:right; font-size: 15px;" onclick="add_id_na_subsecao(null)">Criar</a>
+                                    <a id="botao-criar-secao" data-toggle="modal" data-target="#modal-criar-secao" style="text-align:right; font-size: 15px; margin-right: 4%;" onclick="add_id_na_subsecao(null)">Criar</a>
                                     @endif
                                 </div>
                             </div>
@@ -88,6 +89,7 @@
                                 <div id="container_secoes" class="row">
                                     @include('AtividadeAcademica.secao.arvore_secoes')
                                 </div>
+                                @include('AtividadeAcademica.secao.modal_salvar_como_modelo')
                             </div>
                         </div>
                     </div>
@@ -137,7 +139,7 @@
                             <hr style="width: 85%;">
                             <button type="button" data-toggle="modal" data-target="#modal-editar-secao" onclick="add_id_na_subsecao(null)" class="dropdown-item">Editar Seção</button>
                             @if($atividade->user_logado_proprietario())
-                            <button type="button" class="dropdown-item btn btn-danger" style="color: red;" onclick="event.preventDefault(); document.getElementById('deletar_secao_form').submit();">Deletar Seção</button>
+                            <button type="button" class="dropdown-item btn btn-danger" style="color: red;" onclick="event.preventDefault(); (confirm('Tem certeza que quer apagar esta seção e tudo referente a ela?') && document.getElementById('deletar_secao_form').submit());">Deletar Seção</button>
 
                             <form id="deletar_secao_form" action="{{ route('deletarSecao') }}" method="POST" class="d-none">
                                 @csrf
@@ -210,7 +212,7 @@
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="btn_dropdown_opcoes_campo_{{$campo->id}}">
                                     <button type="button" class="dropdown-item" onclick="editar_campo('{{$campo->id}}', '{{$campo->titulo_escapado()}}', '{{$campo->legenda_escapada()}}')">Editar informações do Campo</button>
-                                    <button type="button" class="dropdown-item btn btn-danger" onclick="document.getElementById('form_deletar_campo_{{$campo->id}}').submit();">Deletar Campo</button>
+                                    <button type="button" class="dropdown-item btn btn-danger" onclick="confirm('Tem certeza que quer apagar este campo e todo seu conteúdo?') && document.getElementById('form_deletar_campo_{{$campo->id}}').submit()">Deletar Campo</button>
                                 </div>
 
 

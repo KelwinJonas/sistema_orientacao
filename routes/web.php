@@ -13,15 +13,15 @@ use App\Http\Middleware\MembroAtividade;
 use Illuminate\Support\Facades\Auth;
 
 /*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+   |--------------------------------------------------------------------------
+   | Web Routes
+   |--------------------------------------------------------------------------
+   |
+   | Here is where you can register web routes for your application. These
+   | routes are loaded by the RouteServiceProvider within a group which
+   | contains the "web" middleware group. Now create something great!
+   |
+ */
 
 Auth::routes();
 
@@ -43,8 +43,10 @@ Route::prefix('/instituicoes')->name('instituicao')->group(function () {
     Route::get('/ver/{id}', [InstituicaoController::class, 'verInstituicao'])->name('.ver');
     Route::get('/nova', [InstituicaoController::class, 'cadastroInstituicao'])->name('.nova');
     Route::post('/salvar', [InstituicaoController::class, 'salvarCadastrarInstituicao'])->name('.salvar');
+    Route::post('/deletar', [InstituicaoController::class, 'deletarInstituicao'])->name('.deletar');
     Route::post('/template/salvar', [InstituicaoController::class, 'salvarTemplate'])->name('.template.salvar');
     Route::post('/template/editar/salvar', [InstituicaoController::class, 'salvarEditarTemplate'])->name('.template.editar.salvar');
+    Route::post('/template/deletar', [InstituicaoController::class, 'deletarTemplate'])->name('.template.deletar');
 });
 
 
@@ -61,6 +63,7 @@ Route::prefix('cadastrar_atividade')->name('cadastrarAtividade')->group(function
 });
 
 Route::post('/salvarEditarAtividade/{atividade_id}', [AtividadeAcademicaController::class, 'salvarEditarAtividade'])->name('salvarEditarAtividade')->middleware('auth');
+Route::post('/deletarAtividade', [AtividadeAcademicaController::class, 'deletarAtividade'])->name('deletarAtividade')->middleware('auth');
 
 Route::get('/listar_atividades', [AtividadeAcademicaController::class, 'listarAtividades'])->name('listarAtividades')->middleware('auth');
 //Route::get('/ver_atividade/{atividade_id}', [AtividadeAcademicaController::class, 'verAtividade'])->name('verAtividade');
@@ -103,3 +106,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::post('/uploadArquivo/{atividade_id}', [ArquivoController::class, 'uploadFile'])->name('uploadArquivo');
+
+Route::post('/salvar_novo_modelo', [UserController::class, 'salvar_novo_modelo'])->name('user.template.salvar');
+Route::post('/salvar_editar_modelo', [UserController::class, 'salvar_editar_modelo'])->name('user.template.editar.salvar');
+
+Route::get('/meus_modelos', [UserController::class, 'modelos_pessoais'])->name('templates.pessoais');
+Route::post('/salvar_modelo_pessoal', [UserController::class, 'salvar_modelos_pessoais'])->name('templates.pessoais.salvar');
