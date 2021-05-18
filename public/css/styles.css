@@ -690,3 +690,7 @@ input[type="radio"]:checked + label span{
 #menu_contexto_edit_secao_campo ul li:hover {
     background: darkgray;
 }
+
+.btn_txt_escolha_template {
+    cursor: pointer;
+}

@@ -61,12 +61,13 @@
                     </div>
                     <hr>
                     <div class="col-md-12 style_card_menu">
-                        <div id="menu-ver-atividade">
+                        <div id="menu-ver-atividade" style="margin-left: 0%;">
                             <a class="link-menu-ver-atividade" href="{{route('verAtividade.verMural', ['atividade_id' => $atividade->id])}}">Mural</a>
                             <a class="link-menu-ver-atividade link-menu-selecionado" href="{{route('verAtividade.verSecoes', ['atividade_id' => $atividade->id])}}">Seções</a>
                             <a class="link-menu-ver-atividade" href="{{route('verAtividade.verArquivos', ['atividade_id' => $atividade->id])}}">Arquivos</a>
                             <a class="link-menu-ver-atividade" href="{{route('verAtividade.verPessoas', ['atividade_id' => $atividade->id])}}">Pessoas</a>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -80,7 +81,7 @@
                                 <div class="row">
                                     <div class="col">Seções</div>
                                     @if($atividade->user_logado_gerente_ou_acima())
-                                    <a class="col" id="botao-criar-secao" data-toggle="modal" data-target="#modal-criar-secao" style="text-align:right; font-size: 15px;" onclick="add_id_na_subsecao(null)">Criar</a>
+                                    <a id="botao-criar-secao" data-toggle="modal" data-target="#modal-criar-secao" style="text-align:right; font-size: 15px; margin-right: 4%;" onclick="add_id_na_subsecao(null)">Criar</a>
                                     @endif
                                 </div>
                             </div>
@@ -88,6 +89,7 @@
                                 <div id="container_secoes" class="row">
                                     @include('AtividadeAcademica.secao.arvore_secoes')
                                 </div>
+                                @include('AtividadeAcademica.secao.modal_salvar_como_modelo')
                             </div>
                         </div>
                     </div>

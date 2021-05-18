@@ -13,15 +13,15 @@ use App\Http\Middleware\MembroAtividade;
 use Illuminate\Support\Facades\Auth;
 
 /*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+   |--------------------------------------------------------------------------
+   | Web Routes
+   |--------------------------------------------------------------------------
+   |
+   | Here is where you can register web routes for your application. These
+   | routes are loaded by the RouteServiceProvider within a group which
+   | contains the "web" middleware group. Now create something great!
+   |
+ */
 
 Auth::routes();
 
@@ -106,3 +106,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::post('/uploadArquivo/{atividade_id}', [ArquivoController::class, 'uploadFile'])->name('uploadArquivo');
+
+Route::post('/salvar_novo_modelo', [UserController::class, 'salvar_novo_modelo'])->name('user.template.salvar');
+Route::post('/salvar_editar_modelo', [UserController::class, 'salvar_editar_modelo'])->name('user.template.editar.salvar');
+
+Route::get('/meus_modelos', [UserController::class, 'modelos_pessoais'])->name('templates.pessoais');
+Route::post('/salvar_modelo_pessoal', [UserController::class, 'salvar_modelos_pessoais'])->name('templates.pessoais.salvar');

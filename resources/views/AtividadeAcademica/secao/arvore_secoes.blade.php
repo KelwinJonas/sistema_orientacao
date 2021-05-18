@@ -10,10 +10,13 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{route('salvarSecaoTemplate')}}" method="POST">
+                <form id="form_criar_de_modelo" action="{{route('salvarSecaoTemplate')}}" method="POST">
                     @csrf
                     <input type="hidden" value="{{$atividade->id}}" name="atividade_id" />
-                    <div class="form-group">
+                    <input type="hidden" value="" name="tipo_template" id="tipo_pessoal_instituicao_template" />
+
+                    <h5 id="txt_escolha_instituicao" class="btn_txt_escolha_template" >Escolha a partir de algum modelo de alguma instituição</h5>
+                    <div class="form-group input_instituicoes">
                         <label for="instituicao">Instituição</label>
                         <select class="form-control" id="instituicao">
                             <option selected disabled>-- Selecione uma Instituição --</option>
@@ -24,17 +27,30 @@
                     </div>
 
                     @foreach(\App\Models\Instituicao::all() as $instituicao)
-                    <div class="form-group templates_instituicoes" id="instituicao_{{$instituicao->id}}" style="display: none;">
-                        <label for="template_{{$instituicao->id}}">Modelo</label>
-                        <select class="form-control selects-template" id="template_{{$instituicao->id}}">
-                            <option selected disabled>-- Selecione um modelo --</option>
-
-                            @foreach($instituicao->templatesAtividade as $template)
-                            <option dados_arvore="{{$template->arr_template}}" value="{{$template->id}}">{{$template->titulo}}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                        <div class="form-group templates_instituicoes input_instituicoes" id="instituicao_{{$instituicao->id}}" style="display: none;">
+                            <label for="template_{{$instituicao->id}}">Modelo</label>
+                            <select class="form-control selects-template" id="template_{{$instituicao->id}}">
+                                <option selected disabled>-- Selecione um modelo --</option>
+                                
+                                @foreach($instituicao->templatesAtividade as $template)
+                                    <option dados_arvore="{{$template->arr_template}}" value="{{$template->id}}">{{$template->titulo}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     @endforeach
+
+                    @if(Auth::user()->templates_pessoais->count() > 0)
+                        <h5 id="txt_escolha_pessoal" class="btn_txt_escolha_template" style="text-decoration: underline;">Ou escolha a partir de algum modelo pessoal seu</h5>
+                        <div class="form-group templates_pessoais input_pessoal" style="display: none;">
+                            <label for="template_pessoal_select">Modelo pessoal</label>
+                            <select class="form-control selects-template" id="template_pessoal_select">
+                                <option selected disabled>-- Selecione um modelo --</option>
+                                @foreach(Auth::user()->templates_pessoais as $template)
+                                    <option dados_arvore="{{$template->arr_template}}" value="{{$template->id}}">{{$template->titulo}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    @endif
 
                     <div id="arvore_secao_template" class="no_raiz" dados_arvore=""></div>
 

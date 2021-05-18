@@ -6,6 +6,7 @@ use App\Models\AtividadeAcademica;
 use App\Models\Campo;
 use App\Models\Secao;
 use App\Models\TemplateAtividade;
+use App\Models\TemplatePessoal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -250,19 +251,25 @@ class SecaoController extends Controller
     {
         $request->validate([
             'atividade_id' => 'required|exists:atividade_academicas,id',
-            'template_id' => 'required|exists:template_atividades,id'
-
+            'template_id' => 'required',
+            'tipo_template' => 'required',
         ]);
 
-        $template = TemplateAtividade::find($request->template_id);
-        $atividade = AtividadeAcademica::find($request->atividade_id);
-
-        $arvore_json = json_decode($template->arr_template);
-        foreach ($arvore_json as $raiz) {
-            $this->gerar_no_arvore_secoes($raiz, $atividade, null);
+        if($request->tipo_template == "pessoal") {
+            $template = TemplatePessoal::find($request->template_id);
         }
 
+        if($request->tipo_template == "instituicao") {
+            $template = TemplateAtividade::find($request->template_id);
+        }
 
+        if($template) {
+            $atividade = AtividadeAcademica::find($request->atividade_id);
+            $arvore_json = json_decode($template->arr_template);
+            foreach ($arvore_json as $raiz) {
+                $this->gerar_no_arvore_secoes($raiz, $atividade, null);
+            }
+        }
         return redirect()->back();
     }
 }

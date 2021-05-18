@@ -71,6 +71,10 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Anotacao');
     }
 
+    public function templates_pessoais() {
+        return $this->hasMany('App\Models\TemplatePessoal');
+    }
+
     public static function lista_busca($id_atividade) {
         $users_atividades = AtividadeUsuario::select('user_id')->where('atividade_academica_id', $id_atividade)->get();
         $users =  User::select('name', 'email')->whereNotIn('id', $users_atividades)->get();
