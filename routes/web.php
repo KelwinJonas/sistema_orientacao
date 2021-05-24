@@ -117,3 +117,5 @@ Route::post('/salvar_editar_modelo', [UserController::class, 'salvar_editar_mode
 Route::get('/meus_modelos', [UserController::class, 'modelos_pessoais'])->name('templates.pessoais');
 Route::post('/salvar_modelo_pessoal', [UserController::class, 'salvar_modelos_pessoais'])->name('templates.pessoais.salvar');
 Route::post('/deletar_modelo_pessoal', [UserController::class, 'deletar_modelo_pessoais'])->name('templates.pessoais.deletar');
+Route::get('/modelo_pessoal/novo', [UserController::class, 'novo_modelo'])->name('templates.pessoais.novo');
+Route::get('/modelo_pessoal/{id}', [UserController::class, 'ver_modelo'])->name('templates.pessoais.ver');

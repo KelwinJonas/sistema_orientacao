@@ -105,6 +105,7 @@ class UserController extends Controller
             'atividade_id' => 'required|exists:atividade_academicas,id',
         ]);
 
+        //TODO
 
         $atividade = AtividadeAcademica::find($request->atividade_id);
         $template = new TemplatePessoal;
@@ -135,7 +136,7 @@ class UserController extends Controller
         $template->titulo = $request->titulo;
         $template->user_id = Auth::id();
         $template->save();
-        return redirect()->back();
+        return redirect()->route('templates.pessoais');
     }
 
     public function salvar_editar_modelo(Request $request) {
@@ -162,6 +163,19 @@ class UserController extends Controller
             $template->delete();
         }
         return redirect()->back();        
+    }
+
+    public function ver_modelo($id) {
+        $template  = TemplatePessoal::find($id);
+        if($template) {
+            return view('User.ver_template_pessoal', ["template" => $template]);
+        }
+        return redirect()->route('templates.pessoais');
+    }
+
+
+    public function novo_modelo() {
+        return view('User.novo_template_pessoal');
     }
     
 }

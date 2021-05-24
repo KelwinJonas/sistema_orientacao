@@ -23,7 +23,6 @@
                             <h3>{{$template->titulo}}</h3>
                         </div>
                     </div>
-
                     
                     <div class="row" style="padding: 5px;">
                         <div class="col-md-12" style="margin-top: 20px;">
@@ -41,14 +40,10 @@
                         </div>
                     </div>
 
-
-
-                    <form action="{{route('instituicao.template.editar.salvar')}}" method="POST" onsubmit="return preparar_template_form(event, this)" id="form_template_editar">
-
+                    <form action="{{route('user.template.editar.salvar')}}" method="POST" onsubmit="return preparar_template_form(event, this)" id="form_template_editar">
                         @csrf
                         <input type="hidden" name="template_id" value="{{$template->id}}">
                         <input type="hidden" value="" name="arr_template" id="arr_template" />
-                        <input type="hidden" name="modal_ref" value="modal_edit_template_{{$template->id}}" />
                         <div class="form-group">
                             <label for="tipo">Tipo <span class="cor-obrigatorio">(obrigatório)</span></label>
                             <input type='text' class="form-control campos-cadastro @error('tipo') is-invalid @enderror" placeholder="Digite o tipo" name='tipo' id='tipo' value="{{old('tipo', $template->tipo)}}" />
@@ -83,7 +78,7 @@
                         </div>
                     </form>
 
-                    <form id="form_deletar_template_{{$template->id}}" class="d-none" method="POST" action="{{route('instituicao.template.deletar')}}">
+                    <form id="form_deletar_template_{{$template->id}}" class="d-none" method="POST" action="{{route('templates.pessoais.deletar')}}">
                         @csrf
                         <input type="hidden" name="template_id" value="{{$template->id}}" />
                     </form>
@@ -108,4 +103,5 @@
     </div>
 
 @endsection
+
 

@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('content')
-
     <div class="container-main">
         <div class="container">
             <div class="row justify-content-center">
@@ -8,10 +7,9 @@
                     
                     <div class="row" style="padding: 5px;">
                         <div class="col-md-12" style="margin-top: 20px;">
-                            <h3>Novo modelo</h3>
+                            <h3>Novo modelo pessoal</h3>
                         </div>
                     </div>
-
                     
                     <div class="row" style="padding: 5px;">
                         <div class="col-md-12" style="margin-top: 20px;">
@@ -26,11 +24,8 @@
                         </div>
                     </div>
 
-                    <form action="{{route('instituicao.template.salvar')}}" method="POST" id="form_template_editar">
-
+                    <form action="{{route('user.template.salvar')}}" method="POST" id="form_template_editar">
                         @csrf
-                        <input type="hidden" value="{{$instituicao->id}}" name="instituicao_id"/>
-                        
                         <div class="form-group">
                             <label for="tipo">Tipo <span class="cor-obrigatorio">(obrigatório)</span></label>
                             <input type='text' class="form-control campos-cadastro @error('tipo') is-invalid @enderror" placeholder="Digite o tipo" name='tipo' id='tipo' value="{{old('tipo')}}" />
@@ -50,7 +45,6 @@
                             @enderror
                         </div>
 
-
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-success">Adicionar</button>
                         </div>
@@ -60,7 +54,4 @@
             </div>
         </div>
     </div>
-
 @endsection
-
-
