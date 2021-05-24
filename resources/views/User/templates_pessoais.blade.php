@@ -154,7 +154,7 @@
                                             </div>
                                         </form>
 
-                                        <form id="form_deletar_template_{{$template->id}}" class="d-none" method="POST" action="{{route('instituicao.template.deletar')}}">
+                                        <form id="form_deletar_template_{{$template->id}}" class="d-none" method="POST" action="{{route('templates.pessoais.deletar')}}">
                                             @csrf
                                             <input type="hidden" name="template_id" value="{{$template->id}}" />
                                         </form>

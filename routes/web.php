@@ -109,6 +109,6 @@ Route::post('/uploadArquivo/{atividade_id}', [ArquivoController::class, 'uploadF
 
 Route::post('/salvar_novo_modelo', [UserController::class, 'salvar_novo_modelo'])->name('user.template.salvar');
 Route::post('/salvar_editar_modelo', [UserController::class, 'salvar_editar_modelo'])->name('user.template.editar.salvar');
-
 Route::get('/meus_modelos', [UserController::class, 'modelos_pessoais'])->name('templates.pessoais');
 Route::post('/salvar_modelo_pessoal', [UserController::class, 'salvar_modelos_pessoais'])->name('templates.pessoais.salvar');
+Route::post('/deletar_modelo_pessoal', [UserController::class, 'deletar_modelo_pessoais'])->name('templates.pessoais.deletar');

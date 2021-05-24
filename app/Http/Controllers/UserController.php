@@ -155,5 +155,13 @@ class UserController extends Controller
 
         return redirect()->back();
     }
+
+    public function deletar_modelo_pessoais(Request $request) {
+        $template = TemplatePessoal::find($request->template_id);
+        if($template) {
+            $template->delete();
+        }
+        return redirect()->back();        
+    }
     
 }
