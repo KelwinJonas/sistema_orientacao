@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CampoController;
 use App\Http\Controllers\PessoaController;
 use App\Http\Middleware\MembroAtividade;
+use App\Models\Instituicao;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -43,11 +44,15 @@ Route::prefix('/instituicoes')->name('instituicao')->group(function () {
     Route::get('/ver/{id}', [InstituicaoController::class, 'verInstituicao'])->name('.ver');
     Route::get('/nova', [InstituicaoController::class, 'cadastroInstituicao'])->name('.nova');
     Route::post('/salvar', [InstituicaoController::class, 'salvarCadastrarInstituicao'])->name('.salvar');
+    Route::post('/instituicoes/salvar/editar', [InstituicaoController::class, 'salvarEditarInstituicao'])->name('.editar.salvar');    
     Route::post('/deletar', [InstituicaoController::class, 'deletarInstituicao'])->name('.deletar');
+    Route::get('/template/ver/{id}', [InstituicaoController::class, 'verTemplate'])->name('.template.ver');
+    Route::get('/template/novo/{id}', [InstituicaoController::class, 'novoTemplate'])->name('.template.novo');
     Route::post('/template/salvar', [InstituicaoController::class, 'salvarTemplate'])->name('.template.salvar');
     Route::post('/template/editar/salvar', [InstituicaoController::class, 'salvarEditarTemplate'])->name('.template.editar.salvar');
     Route::post('/template/deletar', [InstituicaoController::class, 'deletarTemplate'])->name('.template.deletar');
 });
+
 
 
 

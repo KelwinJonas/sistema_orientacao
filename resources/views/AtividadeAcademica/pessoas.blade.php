@@ -111,7 +111,7 @@
 
 
 
-                            <form id="remover_membro_{{$atividadeUsuario->id}}" method="POST" action="{{route('verAtividade.removerPessoa', $atividade->id)}}">
+                            <form class="d-none" id="remover_membro_{{$atividadeUsuario->id}}" method="POST" action="{{route('verAtividade.removerPessoa', $atividade->id)}}">
                                 @csrf
                                 <input type="hidden" name="id_membro" value="{{$atividadeUsuario->id}}" />
                             </form>

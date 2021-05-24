@@ -37,7 +37,7 @@ class InstituicaoController extends Controller
         $template = new TemplateAtividade;
         $template->fill($request->all());
         $template->save();
-        return redirect()->back();
+        return redirect()->route('instituicao.ver', $template->instituicao_id);
     }
 
 
@@ -66,7 +66,7 @@ class InstituicaoController extends Controller
         if($template) {
             $template->delete();
         }
-        return redirect()->back();
+        return redirect()->route('instituicao.ver', $template->instituicao_id);
     }
 
 
@@ -104,4 +104,31 @@ class InstituicaoController extends Controller
         }
         return redirect()->route('instituicao.listar');
     }
+
+
+    public function salvarEditarInstituicao(Request $request) {
+        $instituicao = Instituicao::find($request->instituicao_id);
+        if($instituicao) {
+            $instituicao->nome = $request->nome;
+            $instituicao->save();
+        }
+        return redirect()->back();        
+    }
+
+    public function verTemplate($id) {
+        $template = TemplateAtividade::find($id);
+        if($template) {
+            return view('Instituicao.template.ver', ["template" => $template]);
+        }
+        return redirect()->back();
+    }
+
+    public function novoTemplate($id_instituicao) {
+        $instituicao = Instituicao::find($id_instituicao);
+        if($instituicao) {
+            return view('Instituicao.template.novo', ["instituicao" => $instituicao]);
+        }
+        return redirect()->back();
+    }
+    
 }
