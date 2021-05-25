@@ -694,3 +694,13 @@ input[type="radio"]:checked + label span{
 .btn_txt_escolha_template {
     cursor: pointer;
 }
+
+
+.style_card_pessoas_atividade:hover {
+    cursor: pointer;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.link_instituicao:hover {
+    text-decoration: underline;
+}
