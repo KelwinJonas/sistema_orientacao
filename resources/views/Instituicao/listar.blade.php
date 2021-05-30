@@ -10,8 +10,9 @@
                                 <div class="col" style=" width: 100%;">
                                     <p class="style_pessoas_titulo">Instituições</p>
                                 </div>
+                                @include('Instituicao.modal_nova_instituicao')
                                 <div class="col" style="text-align: right;">
-                                    <a href="{{route('instituicao.nova')}}" class="btn btn-primary btn-sm" style="margin-top: 5px;">Adicionar</a>
+                                    <a href="#" data-toggle="modal" data-target="#modal-criar-instituicao" class="btn btn-primary btn-sm" style="margin-top: 5px;">Adicionar</a>
                                 </div>
                             </div>
                         </div>
