@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('password')->nullable();
             $table->string('refresh_token')->nullable();
             $table->string('folder_id_minhas_atividades')->default('root');
+            $table->boolean('gerente_instituicoes')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

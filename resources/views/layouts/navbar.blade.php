@@ -18,6 +18,11 @@
 
                     <a class="dropdown-item" href="{{route('templates.pessoais')}}">Meus modelos</a>
 
+                    @if(Auth::user()->gerente_instituicoes)
+                        <a class="dropdown-item" href="{{route('instituicao.listar')}}">Instituições</a>
+                        <a class="dropdown-item" href="{{route('instituicao.gerentes.listar')}}">Gerentes de instituição</a>
+                    @endif
+
                     <a class="dropdown-item" href="{{route('logout')}}" onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">
                         {{ __('Sair') }}

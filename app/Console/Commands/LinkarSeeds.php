@@ -40,7 +40,7 @@ class LinkarSeeds extends Command
      */
     public function handle()
     {
-        $id_novo_user = User::all()->count();
+        $id_novo_user = User::all()->last()->id;
         $atividade_user = new AtividadeUsuario;
         $atividade_user->user_id = $id_novo_user;
         $atividade_user->atividade_academica_id = 1;
@@ -48,6 +48,9 @@ class LinkarSeeds extends Command
         $papel_user = new Papel;
         $papel_user->nome = Papel::PROPRIETARIO;
         $papel_user->atividade_usuario_id = $atividade_user->id;
+        $user = User::find($id_novo_user);
+        $user->gerente_instituicoes = true;
+        $user->save();
         $papel_user->save();
         return 0;
     }

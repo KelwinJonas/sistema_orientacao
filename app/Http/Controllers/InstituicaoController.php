@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Instituicao;
 use App\Models\TemplateAtividade;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -129,6 +130,29 @@ class InstituicaoController extends Controller
             return view('Instituicao.template.novo', ["instituicao" => $instituicao]);
         }
         return redirect()->back();
+    }
+
+    public function lista_gerentes() {
+        return view('Instituicao.listar_gerentes', ["users" => User::where('gerente_instituicoes', 1)->get()]);
+    }
+
+    private function adicionar_remover_gerente(Request $request, $marcar_como) {
+        $request->validate([
+            'email' => 'required|exists:users,email'
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+        $user->gerente_instituicoes = $marcar_como;
+        $user->save();
+        return redirect()->back();                
+    }
+
+    public function salvar_adicionar_gerentes(Request $request) {
+        return $this->adicionar_remover_gerente($request, true);
+    }
+
+    public function remover_gerente(Request $request) {
+        return $this->adicionar_remover_gerente($request, false);
     }
     
 }
